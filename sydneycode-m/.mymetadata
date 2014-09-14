@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="sydneycode-m"
+  id="myeclipse.1410705820546"
+  context-root="/sydneycode-m"
+  j2ee-spec="5.0"
+  archive="sydneycode-m.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
