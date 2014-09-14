@@ -1,0 +1,156 @@
+body {
+	background: #eee;
+}
+
+#content {
+	background-color: #fff;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#content .main {
+	padding-top: 20px;
+}
+
+#content .tb {
+	padding-left: 20px;
+	font-size: 14px;
+	padding: 30px 40px;
+}
+
+.gallery {
+	font-size: 14px;
+	padding-left: 80px;
+	padding-bottom: 30px;
+}
+
+#content .bg {
+	height: 580px;
+	background: url(../images/bg.png);
+}
+
+.fill {
+	margin-left: 20px;
+	margin-right: 20px
+}
+
+.title {
+	text-align: center;
+	line-height: 20px;
+	margin: 20px auto 10px;
+	font-size: 20px;
+	font-weght: bold;
+	margin-bottom: 20px;
+}
+
+.nopadding {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.center {
+	text-align: center;
+}
+
+.select_box {
+	width: 50%;
+	margin: 10px auto;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 30px;
+}
+
+.caltalog_label {
+	float: left;
+	font-size: 18px;
+	font-wight: bold;
+	margin: 7px 5px 5px;
+}
+
+.caltalog_name {
+	width: auto;
+	font-size: 18px;
+	font-wight: bold;
+	margin: 0px 5px 0px;
+}
+
+.label1 {
+	display: inline-block;
+}
+
+.detail {
+	float: left;
+	font-size: 14px;
+	margin: 7px 5px 5px;
+	color: #006699;
+	font-style: italic;
+	font-wight: bold;
+}
+
+#catalogs {
+	float: left;
+	display: inline-block;
+}
+
+.square-thumb {
+	width: 150px;
+	height: 150px;
+	background-image: url("../images/loadingplaceholder.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.pull-middle {
+	margin: 10px;
+}
+
+.bs-callout {
+	padding: 10px;
+	margin: 0px 0;
+	border: 1px solid #eee;
+	border-left-width: 5px;
+	border-radius: 3px
+}
+
+.bs-callout h5 {
+	margin-top: 0;
+	margin-bottom: 5px
+}
+
+.bs-callout p:last-child {
+	margin-bottom: 0
+}
+
+.bs-callout code {
+	border-radius: 3px
+}
+
+.bs-callout+.bs-callout {
+	margin-top: -5px
+}
+
+.bs-callout-danger {
+	border-left-color: #d9534f
+}
+
+.bs-callout-danger h5 {
+	color: #d9534f
+}
+
+.bs-callout-warning {
+	border-left-color: #f0ad4e
+}
+
+.bs-callout-warning h5 {
+	color: #f0ad4e
+}
+
+.bs-callout-info {
+	border-left-color: #5bc0de
+}
+
+.bs-callout-info h5 {
+	color: #5bc0de
+}

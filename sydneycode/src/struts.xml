@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="false" />  
+    <!--<constant name="struts.devMode" value="true" />-->
+    <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <constant name="struts.locale" value="zh_CN" />
+   	<!-- 改变struts2默认为2M的上传文件大小限制 -->  
+    <constant name="struts.multipart.maxSize" value="1024000000"/>  
+    <package name="upload" namespace="/admin" extends="struts-default,json-default">  
+        <action name="UploadFile" class="com.sydenycode.web.action.UploadFileAction">  
+            <param name="savePath">/uploads</param>  
+            <result type="json"> 
+                <param name="root">result</param> 
+            </result>
+        </action> 
+    </package> 
+     
+    <package name="default" namespace="/admin" extends="struts-default,json-default">
+       	<!-- Catalog -->
+       	<action name="Catalog" class="com.sydenycode.web.action.CatalogAction">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
+	   	
+	   	<action name="Cataloglist" class="com.sydenycode.web.action.CatalogAction" method="listAll">   			   	
+        	<result type="json" >
+        		<param name="root">jsonMap</param>
+        	</result>
+	   	</action>
+	   	
+	   	
+	   	<!-- Suburb -->
+	   	<action name="Suburb" class="com.sydenycode.web.action.SuburbAction">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
+	   	
+	   	<action name="Suburblist" class="com.sydenycode.web.action.SuburbAction" method="listAll">   			   	
+        	<result type="json" >
+        		<param name="root">jsonMap</param>
+        	</result>
+	   	</action>
+	   	
+	   	<!-- Shop -->
+	   	<action name="Shop" class="com.sydenycode.web.action.ShopAction">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
+	   	<action name="Shoplist" class="com.sydenycode.web.action.ShopAction" method="list">   			   	
+        	<result type="json" >
+        		<param name="root">jsonMap</param>
+        	</result>
+	   	</action>
+	   	<action name="Showshop" class="com.sydenycode.web.action.ShopAction" method="show"> 
+        	<result name="GoToDetail">/admin/shop_detail.jsp</result>
+	   	</action>
+	   	
+        <!-- 验证是否登陆拦截器 
+	   	<interceptors>  
+	           <interceptor name="loginInterceptor" class="com.ycdx.experts.interceptor.LoginInterceptor"></interceptor>  
+	           <interceptor-stack name="loginDefaultStack">  
+	               <interceptor-ref name="loginInterceptor"></interceptor-ref>  
+	               <interceptor-ref name="defaultStack"></interceptor-ref>  
+	           </interceptor-stack>  
+	       </interceptors>  
+	       <default-interceptor-ref name="loginDefaultStack"></default-interceptor-ref> 
+	   	<global-results>  
+	           <result name="login" type="redirect">/login.jsp</result>  
+	       </global-results>
+	       
+	   <action name="Logon" class="com.ycdx.report.action.LoginAction" method="login">   
+			<result name="success" type="json" />
+			<interceptor-ref name="defaultStack"></interceptor-ref> 
+	   </action>
+	   <action name="Logout" class="com.ycdx.report.action.LogoutAction">   
+			<result name="quit" type="redirect">
+				/login.jsp
+			</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref> 
+	   </action>
+       		
+	   -->
+    </package>
+   
+</struts>
