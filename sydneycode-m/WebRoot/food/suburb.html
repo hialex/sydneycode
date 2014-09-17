@@ -1,0 +1,70 @@
+<!DOCTYPE html >
+<html>
+  <head>
+    <title>Step2:Where</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" >
+
+    <link rel="stylesheet" href="../css/jquery.mobile-1.4.4.css" >
+	<link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery.min.js" ></script>
+  	<script src="../js/jquery.mobile-1.4.4.min.js" ></script>
+	<script>
+
+		//显示加载器
+		function showLoader() {
+			//显示加载器.for jQuery Mobile 1.2.0
+			$.mobile.loading('show', {
+				text: '加载中...', //加载器中显示的文字
+				textVisible: true, //是否显示文字
+				theme: 'a',        //加载器主题样式a-e
+				textonly: false,   //是否只显示文字
+				html: ""           //要显示的html内容，如图片等
+			});
+		}
+
+		//隐藏加载器.for jQuery Mobile 1.2.0
+		function hideLoader()
+		{
+			//隐藏加载器
+			$.mobile.loading('hide');
+		}
+		$(document).ready(function(){
+			showLoader();
+			var id = window.sessionStorage.getItem('catalog_id');
+			$.ajax({
+				//获取地区餐馆数量列表
+				type:"post",
+				url:"http://202.102.41.153/sydneycode/mobile/MSuburb!getShopsCount.action",
+				dataType:"json",
+				data:{ "catalog_id": id},
+				success:function(json){
+					$.each(json.all,function(m,suburbshops){
+						$("#suburbshops").append("\<li\>\<a href=\"#\">"+suburbshops.suburb_name+"\<span class=\"ui-li-count\">"+suburbshops.total+"\<\/span\>\<\/a\>\<\/li\>");
+					});
+					$("#suburbshops").listview('refresh');
+					hideLoader();
+				}
+			});
+		});
+	</script>
+  </head>
+  
+  <body>
+  	<div data-role="page">
+		<div data-role="header">
+			<a href="#" data-rel="back" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
+			<div align="center"><img src="../images/logo.png"></div>
+		</div>
+		<div data-role="content">
+			<h3><i>Where do you want to eat?</i></h3>
+			<ul data-role="listview" data-inset="true" data-shadow="false" id="suburbshops" data-filter="true" data-filter-placeholder="Search Suburb..." data-count-theme="b">
+
+			</ul>
+		</div>
+		<div data-role="footer" >
+			<div id="footer"> &copy; Sydneycode.com.au 2014</div>
+		</div>
+  	</div>
+  </body>
+</html>
