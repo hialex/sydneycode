@@ -7,8 +7,8 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sydenycode.impl.SuburbImpl;
-import com.sydenycode.po.Suburb;
+import com.sydenycode.mobile.dto.MSuburbShop;
+import com.sydenycode.mobile.impl.MSuburbShopImpl;
 
 public class MSuburbAction extends ActionSupport {
 
@@ -17,9 +17,16 @@ public class MSuburbAction extends ActionSupport {
 	
 	private JSONObject result;//返回的json
     Map<String, Object> jsonMap = new HashMap<String, Object>();//定义map 
-	
+	private String catalog_id;
     
-    
+	public String getCatalog_id() {
+		return catalog_id;
+	}
+
+	public void setCatalog_id(String catalogId) {
+		catalog_id = catalogId;
+	}
+
 	public JSONObject getResult() {
 		return result;
 	}
@@ -44,9 +51,11 @@ public class MSuburbAction extends ActionSupport {
 
 
 
-	public String list(){
+	public String getShopsCount(){
+		//System.out.println("catalog_id===="+catalog_id);
 		Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
-    	List<Suburb> list = SuburbImpl.queryAllSuburbs();
+    	List<MSuburbShop> list = MSuburbShopImpl.queryAllMSuburbShops(Integer.parseInt(catalog_id));
+    	//System.out.println("list size===="+list.size());
     	tempMap.put("all", list);
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject
     	return SUCCESS;

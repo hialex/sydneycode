@@ -1,0 +1,71 @@
+<!DOCTYPE html >
+<html>
+  <head>
+    <title>Step1:What</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" >
+
+    <link rel="stylesheet" href="../css/jquery.mobile-1.4.4.css" >
+	<link rel="stylesheet" href="../css/style.css">
+    <script src="../js/jquery.min.js" ></script>
+  	<script src="../js/jquery.mobile-1.4.4.min.js" ></script>
+	<script>
+		//显示加载器
+		function showLoader() {
+			//显示加载器.for jQuery Mobile 1.2.0
+			$.mobile.loading('show', {
+				text: '加载中...', //加载器中显示的文字
+				textVisible: true, //是否显示文字
+				theme: 'a',        //加载器主题样式a-e
+				textonly: false,   //是否只显示文字
+				html: ""           //要显示的html内容，如图片等
+			});
+		}
+
+		//隐藏加载器.for jQuery Mobile 1.2.0
+		function hideLoader()
+		{
+			//隐藏加载器
+			$.mobile.loading('hide');
+		}
+
+		function goto(url){
+			window.location.href = url;
+		}
+
+		$(document).ready(function(){
+			showLoader();
+			$.ajax({
+				type:"post",
+				url:"http://202.102.41.153/sydneycode/admin/Catalog!listByParentId.action",
+				dataType:"json",
+				data:{ "parent_id": '1'},
+				success:function(json){
+					$.each(json.catalog_list,function(m,catalog){
+						$("#catalog1").append("\<li\>\<a href=\"javascript:goto('catalog.html?id="+catalog.id+"')\">"+catalog.name+"\<\/a\> \<\/li\>");
+					});
+					$("#catalog1").listview('refresh');
+					hideLoader();
+				}
+			});
+		});
+	</script>
+  </head>
+  
+  <body>
+  	<div data-role="page">
+		<div data-role="header">
+			<div align="center"><img src="../images/logo.png"></div>
+		</div>
+		<div data-role="content">
+			<h3><i>What would you'd like to eat?</i></h3>
+			<ul data-role="listview" data-inset="true" data-shadow="false" id="catalog1">
+
+			</ul>
+		</div>
+		<div data-role="footer" >
+			<div id="footer"> &copy; Sydneycode.com.au 2014</div>
+		</div>
+  	</div>
+  </body>
+</html>
