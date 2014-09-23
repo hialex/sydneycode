@@ -9,8 +9,8 @@ public class ShopDTO {
 	private String suburb_name;
 	private String shop_name;
 	private String[] catalog_names;
-	private String address;
-	private String tel;
+	//private String address;
+	//private String tel;
 
 	private Timestamp add_time;
 
@@ -45,7 +45,7 @@ public class ShopDTO {
 	public void setCatalog_names(String[] catalogNames) {
 		catalog_names = catalogNames;
 	}
-
+	/**
 	public String getAddress() {
 		return address;
 	}
@@ -61,7 +61,7 @@ public class ShopDTO {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	
+	*/
 	@JSON(format="yyyy-MM-dd HH:mm:ss")
 	public Timestamp getAdd_time() {
 		return add_time;

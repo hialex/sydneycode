@@ -98,7 +98,7 @@ public class SuburbAction extends ActionSupport {
         result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
     	return SUCCESS;
     }
-    //根据父分类id获取所有子分类
+    //根据父分类id获取所有地区
     public String listByParentId(){
     	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
     	List<Suburb> ret = new ArrayList<Suburb>();

@@ -20,6 +20,7 @@ import com.sydenycode.impl.ShopDTOImpl;
 import com.sydenycode.impl.ShopImpl;
 import com.sydenycode.impl.Shop_catalogImpl;
 import com.sydenycode.po.Bussiness_hour;
+import com.sydenycode.po.Catalog;
 import com.sydenycode.po.Pic;
 import com.sydenycode.po.Shop;
 import com.sydenycode.util.CONSTANT;
@@ -54,7 +55,7 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     private List<Pic> pics = new ArrayList<Pic>();
     
     //将查询出来的catalog names list返回至页面
-    private List<Object[]> catalog_names_list = new ArrayList<Object[]>();
+    private List<Catalog> catalog_names_list = new ArrayList<Catalog>();
     
     //接受列表页面传来的pic_id
     private String pic_id;
@@ -67,11 +68,13 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
 		pic_id = picId;
 	}
 
-	public List<Object[]> getCatalog_names_list() {
+	
+
+	public List<Catalog> getCatalog_names_list() {
 		return catalog_names_list;
 	}
 
-	public void setCatalog_names_list(List<Object[]> catalogNamesList) {
+	public void setCatalog_names_list(List<Catalog> catalogNamesList) {
 		catalog_names_list = catalogNamesList;
 	}
 

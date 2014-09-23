@@ -55,8 +55,8 @@
 	    			<div class="form-group">
 						<label for="catalog" class="col-sm-1 control-label">店铺分类</label>
 						<div class="col-sm-11" id="catalog_div">
-							<s:iterator value="catalog_names_list" var="catalog_names">
-								<div class="caltalog_label"><span class="label label-info label1"><s:property value="#catalog_names[0]"/></span></div>
+							<s:iterator value="catalog_names_list" var="catalog">
+								<div class="caltalog_label"><span class="label label-info label1"><s:property value="#catalog.name"/></span></div>
 							</s:iterator>
 						</div>
 					</div>

@@ -152,7 +152,8 @@ public class CatalogAction extends ActionSupport {
      */
     public String listCatalogNamesByShopId(){
     	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map
-    	List<Object[]> catalog_names = Shop_catalogImpl.getCatalogNames(id);
+    	List<Catalog> catalog_names = new ArrayList<Catalog>();
+    	catalog_names = Shop_catalogImpl.getCatalogNames(id);
     	tempMap.put("catalog_names", catalog_names);
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
     	return SUCCESS;

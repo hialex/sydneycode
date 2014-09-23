@@ -633,10 +633,9 @@
 		  			dataType:"json",
 		  			data:{ "id": id},
 		  			success:function(json){
-		  				var catalog_names =json.catalog_names;
-		  				for(var i=0;i<catalog_names.length;i++){
-		  					$('#catalog_div').append('\<div class=\"caltalog_label\"><span class=\"label label-default label1\"\>'+catalog_names[i]+'\<\/span\><\/div>');
-		  				}
+		  				$.each(json.catalog_names,function(m,catalog){
+		  					$('#catalog_div').append('\<div class=\"caltalog_label\"><span class=\"label label-default label1\"\>'+catalog.name+'\<\/span\><\/div>');
+		  				});
 		  				old_catalog = $('#catalog_div').html();
 		  			}
 		  		});

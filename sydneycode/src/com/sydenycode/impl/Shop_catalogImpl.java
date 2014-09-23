@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.log4j.Logger;
 
+import com.sydenycode.po.Catalog;
 import com.sydenycode.util.MyDbPool;
 
 public class Shop_catalogImpl {
@@ -57,17 +58,18 @@ public class Shop_catalogImpl {
 	 * @return
 	 */
 	
-	public static List<Object[]> getCatalogNames(String shop_id) {
+	@SuppressWarnings("unchecked")
+	public static List<Catalog> getCatalogNames(String shop_id) {
         
-        List<Object[]> result = new ArrayList<Object[]>();
-        String sql = "select name from shop_catalog,catalogs where shop_catalog.catalog_id=catalogs.id and shop_id=?";
+        List<Catalog> result = new ArrayList<Catalog>();
+        String sql = "select name,shop_catalog.catalog_id id from shop_catalog,catalogs where shop_catalog.catalog_id=catalogs.id and shop_id=?";
         //System.out.println(sql);
         Object[] params = {shop_id};
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         
         try {
-        	result =  qr.query(conn, sql, new ArrayListHandler(),params);
+        	result =  qr.query(conn, sql, new BeanListHandler(Catalog.class),params);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -65,6 +65,8 @@
         	<result name="GoToDetail">/admin/shop_detail.jsp</result>
 	   	</action>
 	   	
+	   	
+	   	
         <!-- 验证是否登陆拦截器 
 	   	<interceptors>  
 	           <interceptor name="loginInterceptor" class="com.ycdx.experts.interceptor.LoginInterceptor"></interceptor>  
@@ -99,5 +101,11 @@
                 <param name="root">result</param> 
             </result> 
 	   	</action>
+	   	<action name="MSearch" class="com.sydenycode.mobile.action.MSearchAction">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
+	   	
 	</package>
 </struts>
