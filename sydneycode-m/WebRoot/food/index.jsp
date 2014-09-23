@@ -11,8 +11,11 @@
 	<link rel="shortcut icon" href="../images/favicon.ico">
     <link rel="stylesheet" href="../css/jquery.mobile-1.4.4.css" >
 	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/jqm-datebox-1.4.4.css">
     <script src="../js/jquery.min.js" ></script>
   	<script src="../js/jquery.mobile-1.4.4.min.js" ></script>
+	<script src="../js/jquery.mobile.DateBox.js"></script>
+	<script src="../js/jqm-datebox.mode.customflip.min.js"></script>
 	<script>
 		//显示加载器
 		function showLoader() {
@@ -50,8 +53,6 @@
 			});
 			//子分类联动
 			$("#catalog1").bind("change",function(){
-				console.log("catalog1==="+$("#catalog1").val());
-				console.log("catalog2==="+$("#catalog2").val());
 				//重置联动选择框
 				$("#catalog2 option").each(function(){
 					if($(this).val()!='all'){
@@ -80,15 +81,34 @@
 			});
 			//监听按钮事件
 			$("#btn_search").click(function(){
-				//alert("提交搜索！");
-				console.log("提交搜索");
-				console.log("catalog1==="+$("#catalog1").val());
-				console.log("catalog2==="+$("#catalog2").val());
+				window.sessionStorage.setItem("catalog1",$("#catalog1").val());
+				window.sessionStorage.setItem("catalog2",$("#catalog2").val());
+				window.sessionStorage.setItem("suburb",$("#suburb").val());
+				window.sessionStorage.setItem("bh",$("#bussiness_hour").val());
 			});
+			initBussinessHourFlip();
+
 
 		});
+		function initBussinessHourFlip(){
+			var bh_data = [
+				{ "input": true, "name": "", "data": ["不限", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"] },
+				{ "input": true, "name": "", "data": ["-","0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"] },
+				{ "input": true, "name": "", "data": ["-","00", "10", "20", "30", "40", "50"] }
+			];
+			$("#bussiness_hour").datebox({
+				mode:"customflip",
+				customData:bh_data,
+				customHead:"何时抵达",
+				overrideCustomSet:"OK",
+				customFormat:"%Xa,%Xb:%Xc",
+				buttonIcon:"clock",
+				popupPosition:"window"
+			});
+		}
+
 		//监听地区select
-		$(document).on("pagebeforecreate", function (event){
+		$(document).on("pagebeforecreate", function (){
 			showLoader();
 			$("#suburb").append("<option value='hot'>---热门区域---</option>");
 			$.ajax({
@@ -129,7 +149,7 @@
 		<div data-role="content">
 			<form id="filterForm">
 				<div class="ui-block-b block-content">
-					<label for="catalog"><strong>饮食分类</strong></label>
+					<label for="catalog1"><strong>饮食分类</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
 						<select name="catalog1" id="catalog1">
 							<option value="all">不限</option>
@@ -148,15 +168,14 @@
 					</fieldset>
 				</div>
 				<div class="ui-block-b block-content">
-					<label for="bussiness_hour"><strong>营业时间</strong></label>
+					<label for="bussiness_hour"><strong>何时抵达</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
-						<select name="bussiness_hour" id="bussiness_hour">
-							<option value="all">不限</option>
-						</select>
+						<!--<input id="bussiness_hour" type="text" data-role="datebox" data-options='{"mode":"customflip"}' />-->
+						<input id="bussiness_hour" type="text" style="text-align: center;font-weight: bold" />
 					</fieldset>
 				</div>
 				<div class="ui-block-b block-content">
-					<button id="btn_search" class="ui-btn ui-btn-b ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</button>
+					<a href="result.jsp" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-btn-b ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</a>
 				</div>
 			</form>
 		</div>
