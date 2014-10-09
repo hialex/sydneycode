@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.sydenycode.impl.Shop_catalogImpl;
 import com.sydenycode.mobile.dto.MSearchResutlShopDTO;
+import com.sydenycode.util.CONSTANT;
 import com.sydenycode.util.MyDbPool;
 
 public class MSearchImpl {
@@ -18,7 +19,7 @@ public class MSearchImpl {
 	static Logger logger = Logger.getLogger(MSearchImpl.class.getName());
 	
 	@SuppressWarnings("unchecked")
-	public List<MSearchResutlShopDTO> getSearchResultShops(String catalog1,String catalog2,String suburb,String bh){
+	public List<MSearchResutlShopDTO> getSearchResultShops(String catalog1,String catalog2,String suburb,String bh,int pageNum){
 		
 		String sql = "";
         List<MSearchResutlShopDTO> shops = new ArrayList<MSearchResutlShopDTO>();
@@ -32,7 +33,7 @@ public class MSearchImpl {
         		getCatalogSQL(catalog1, catalog2)+
         		getSuburbSQL(suburb)+
         		getBhSQL(bh)+
-        		" limit 10";
+        		" limit "+(pageNum-1)*CONSTANT.MOBILE_PAGE_SIZE+","+CONSTANT.MOBILE_PAGE_SIZE;
         		
         //System.out.println(sql);
         Connection conn = new MyDbPool().getConnection();

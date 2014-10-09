@@ -106,6 +106,10 @@
                 <param name="root">result</param> 
             </result> 
 	   	</action>
-	   	
+	   	<action name="MShopDetail" class="com.sydenycode.mobile.action.MShopAction" method="show">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
 	</package>
 </struts>

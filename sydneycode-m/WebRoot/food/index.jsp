@@ -180,7 +180,7 @@
 			</form>
 		</div>
 		<div data-role="footer" >
-			<div id="footer"> &copy; Sydneycode.com.au 2014</div>
+			<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
 		</div>
   	</div>
   </body>

@@ -1,0 +1,235 @@
+{"catalog_names": [
+	{
+		"id": 58,
+		"name": "泰餐"
+	},
+	{
+		"id": 89,
+		"name": "中餐"
+	},
+	{
+		"id": 120,
+		"name": "海鲜烧烤"
+	},
+	{
+		"id": 121,
+		"name": "日本料理"
+	},
+	{
+		"id": 122,
+		"name": "外卖"
+	},
+	{
+		"id": 123,
+		"name": "川菜"
+	},
+	{
+		"id": 124,
+		"name": "淮扬菜"
+	}
+
+], "shop": {
+	"addr": "21A Campbell Street Haymarket NSW 2000 Australia",
+	"email": "hialex@yeah.net",
+	"facebook": "hialex",
+	"facebook_link": "https://facebook.com/hialex",
+	"id": 14,
+	"instagram": "@hialex",
+	"instagram_link": "http://instagram.com/user/hialex",
+	"intro": "Captail Thai是悉尼地区首屈一指的泰国餐馆，每天都要等位哦，要吃的提前预定...这里省略500字....",
+	"mobile": "18921884128",
+	"momo": "22131231",
+	"name": "Capital Thai",
+	"qq": "237988362",
+	"score": 0,
+	"suburb_id": 2,
+	"suburb_name": "Sydney（含Haymarket）",
+	"tel": "02 9211 1130",
+	"twitter": "hialex",
+	"twitter_link": "http://twitter.com/hialex",
+	"website": "http:\/\/www.capitalthai.com.au",
+	"weibo": "Captial Thai的官方微博",
+	"weibo_link": "http://weibo.com/hialex",
+	"weixin": "ct123456",
+	"youtube": "hialex",
+	"youtube_link": "http://youtube.com/hialex"
+},"pics": [
+	{
+		"id": 110,
+		"name": "http:\/\/202.102.41.153\/sydneycode\/uploads\/2014100816400897610.jpg",
+		"shop_id": 14,
+		"upload_time": {
+			"date": 8,
+			"day": 3,
+			"hours": 16,
+			"minutes": 40,
+			"month": 9,
+			"nanos": 0,
+			"seconds": 29,
+			"time": 1412757629000,
+			"timezoneOffset": -480,
+			"year": 114
+		}
+	},
+	{
+		"id": 111,
+		"name": "http:\/\/202.102.41.153\/sydneycode\/uploads\/2014100816401165045.jpg",
+		"shop_id": 14,
+		"upload_time": {
+			"date": 8,
+			"day": 3,
+			"hours": 16,
+			"minutes": 40,
+			"month": 9,
+			"nanos": 0,
+			"seconds": 29,
+			"time": 1412757629000,
+			"timezoneOffset": -480,
+			"year": 114
+		}
+	},
+	{
+		"id": 112,
+		"name": "http:\/\/202.102.41.153\/sydneycode\/uploads\/2014100816402773083.jpg",
+		"shop_id": 14,
+		"upload_time": {
+			"date": 8,
+			"day": 3,
+			"hours": 16,
+			"minutes": 40,
+			"month": 9,
+			"nanos": 0,
+			"seconds": 29,
+			"time": 1412757629000,
+			"timezoneOffset": -480,
+			"year": 114
+		}
+	}
+], "bussiness_hours": [
+	{
+		"end_time": "01:00",
+		"id": 104,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 6
+	},
+	{
+		"end_time": "01:00",
+		"id": 103,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 5
+	},
+	{
+		"end_time": "01:00",
+		"id": 102,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 4
+	},
+	{
+		"end_time": "01:00",
+		"id": 101,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 3
+	},
+	{
+		"end_time": "01:00",
+		"id": 100,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 2
+	},
+	{
+		"end_time": "01:00",
+		"id": 99,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 1
+	},
+	{
+		"end_time": "15:00",
+		"id": 98,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 7
+	},
+	{
+		"end_time": "15:00",
+		"id": 97,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 6
+	},
+	{
+		"end_time": "15:00",
+		"id": 96,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 5
+	},
+	{
+		"end_time": "15:00",
+		"id": 95,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 4
+	},
+	{
+		"end_time": "15:00",
+		"id": 94,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 3
+	},
+	{
+		"end_time": "15:00",
+		"id": 93,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 2
+	},
+	{
+		"end_time": "15:00",
+		"id": 92,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "11:00",
+		"weekday": 1
+	},
+	{
+		"end_time": "01:00",
+		"id": 105,
+		"is_need_book": false,
+		"is_open": true,
+		"shop_id": 14,
+		"start_time": "17:30",
+		"weekday": 7
+	}
+]}

@@ -10,5 +10,6 @@
                 <param name="root">result</param> 
             </result> 
 	   	</action>
+	   	
 	</package>
 </struts>
