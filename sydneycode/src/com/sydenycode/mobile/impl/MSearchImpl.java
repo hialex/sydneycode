@@ -120,7 +120,7 @@ public class MSearchImpl {
 			}
 			if((!day.equals("不限"))&&timeFlag){
 				//日期限制，时间限制
-				bhWhereClause += " and bussiness_hours.weekday="+convertWeekNum(day)+" andbussiness_hours.start_time<=TIME_FORMAT('"+time+"','%H:%i:%s') and bussiness_hours.end_time>=TIME_FORMAT('"+time+"','%H:%i:%s')";
+				bhWhereClause += " and bussiness_hours.weekday="+convertWeekNum(day)+" and bussiness_hours.start_time<=TIME_FORMAT('"+time+"','%H:%i:%s') and bussiness_hours.end_time>=TIME_FORMAT('"+time+"','%H:%i:%s')";
 			}
 		}
 		//System.out.println("bhWhereClause"+bhWhereClause);

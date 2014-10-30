@@ -96,11 +96,7 @@
     
     
    	<package name="mobile" namespace="/mobile" extends="struts-default,json-default">
-		<action name="MSuburb" class="com.sydenycode.mobile.action.MSuburbAction">
-	   		<result type="json"> 
-                <param name="root">result</param> 
-            </result> 
-	   	</action>
+		
 	   	<action name="MSearch" class="com.sydenycode.mobile.action.MSearchAction">
 	   		<result type="json"> 
                 <param name="root">result</param> 
