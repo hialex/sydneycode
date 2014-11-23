@@ -4,23 +4,23 @@
 <html>
 <head>
 
-	<title>饮食</title>
+	<title>店铺详情</title>
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1" >
-	<link rel="shortcut icon" href="../images/favicon.ico">
-	<link rel="stylesheet" href="../css/jquery.mobile-1.4.4.css" >
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/font-awesome.min.css" >
-	<link rel="stylesheet" href="../css/scrollbar.css">
-	<link rel="stylesheet" href="../css/jquery.bxslider.css">
-	<link rel="stylesheet" href="../css/iconfont/iconfont.css">
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" >
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css" >
+	<link rel="stylesheet" href="css/scrollbar.css">
+	<link rel="stylesheet" href="css/jquery.bxslider.css">
+	<link rel="stylesheet" href="css/iconfont/iconfont.css">
 
-	<script src="../js/jquery.min.js" ></script>
-	<script src="../js/jquery.mobile-1.4.4.min.js" ></script>
-	<script src="../js/user.js"></script>
-	<script src="../js/mustache.js"></script>
-	<script src="../js/jquery.bxslider.js"></script>
+	<script src="js/jquery.min.js" ></script>
+	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
+	<script src="js/user.js"></script>
+	<script src="js/mustache.js"></script>
+	<script src="js/jquery.bxslider.js"></script>
 	<script>
 
 		$(document).ready(function(){
@@ -29,17 +29,19 @@
 			$.ajax({
 				type: "POST",
 				dataType: "json",
-				//url: "http://202.102.41.153/m/food/data.json",
-				//url: "http://202.102.41.153/sydneycode/mobile/MShopDetail.action",
-				url: "http://sydneycode.com.au/mobile/MShopDetail.action",
+				url: "../mobile/MShopDetail.action",
 				data: { "id": id},
 				success: function(json) {
 					var shop_data = json.shop;
 					var shop_catalog_data = json.catalog_names;
 					//var shop_pics = json.pics;
 					showShop(shop_data);
-					showShopCatalog(json);
-					showShopBH(json);
+					if(shop_data.is_takeout){
+						$("#shop_bh_info").hide();
+					}else{
+						showShopBH(json);
+					}
+					
 					if(json.pics.length>0){
 						showShopPics(json);
 					}
@@ -66,29 +68,12 @@
 			$.mobile.loading('hide');
 		}
 		function showShop(shop_data){
-			/*ICON一行显示
+			$("#shop_info").append();
 			var source="<li><span id=\"shop_name\" class=\"shop_name\">{{name}}</span></li>"+
-					"<li><span id=\"shop_addr\"><i class=\"grey fa fa-map-marker\"></i>&nbsp;&nbsp;{{addr}}</span></li>"+
-					"<li><span id=\"shop_tel\"><i class=\"grey fa fa-phone\"></i>&nbsp;&nbsp;<a href=\"tel:{{tel}}\">{{tel}}</a></span></li>"+
-					"<li><span id=\"shop_icon\">"+
-						"{{#mobile}}<a href=\"javascript:showContact('mobile')\"><i class=\"grey fa fa-mobile fa-2x\"></i>&nbsp;</a>{{/mobile}}"+
-						"{{#website}}<i class=\"grey fa fa-home fa-2x\"></i>&nbsp;{{/website}}"+
-						"{{#email}}<i class=\"grey fa fa-envelope fa-2x\"></i>&nbsp;{{/email}}"+
-						"{{#facebook}}<i class=\"grey fa fa-facebook fa-2x\"></i>&nbsp;{{/facebook}}"+
-						"{{#twitter}}<i class=\"grey fa fa-twitter fa-2x\"></i>&nbsp;{{/twitter}}"+
-						"{{#weibo}}<i class=\"grey fa fa-weibo fa-2x\"></i>&nbsp;{{/weibo}}"+
-						"{{#qq}}<i class=\"grey fa fa-qq fa-2x\"></i>&nbsp;{{/qq}}"+
-						"{{#weixin}}<i class=\"grey fa fa-weixin fa-2x\"></i>&nbsp;{{/weixin}}"+
-						"{{#instagram}}<i class=\"grey fa fa-instagram fa-2x\"></i>&nbsp;{{/instagram}}"+
-						"{{#youtube}}<i class=\"grey fa fa-youtube fa-2x\"></i>&nbsp;{{/youtube}}"+
-						"</span>"+
-						"</li>"
-					;
-			*/
-			var source="<li><span id=\"shop_name\" class=\"shop_name\">{{name}}</span></li>"+
-							"{{#intro}}<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_addr\" class=\"wrap\">{{intro}}</span></li>{{/intro}}"+
-							"<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\">{{addr}}</span></li>"+
-							"<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{tel}}\">{{tel}}</a></span></li>"+
+							"{{#intro}}<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_intro\" class=\"wrap\">{{&intro}}</span></li>{{/intro}}"+
+							"{{#takeout_time}}<li><i class=\"grey fa fa-clock-o \"></i><span id=\"shop_takeout_time\" class=\"wrap\">{{&takeout_time}}</span></li>{{/takeout_time}}"+
+							"{{#addr}}<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\"><a href=\"https://www.google.com/maps/search/{{addr}}\">{{addr}}</a></span></li>{{/addr}}"+
+							"{{#tel}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{tel}}\">{{tel}}</a></span></li>{{/tel}}"+
 							"{{#mobile}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{mobile}}\">{{mobile}}</a></span></li>{{/mobile}}"+
 							"{{#website}}<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{website}}\">{{website}}</a></span></li>{{/website}}"+
 							"{{#email}}<li><i class=\"grey fa fa-envelope\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"mailto:{{email}}\">{{email}}</a></span></li>{{/email}}"+
@@ -104,14 +89,6 @@
 			$('#shop_info').listview('refresh');
 		}
 
-
-		//显示分类信息
-		function showShopCatalog(json){
-			var source="<li data-role=\"list-divider\"><span ><strong>Tags</strong></span></li>"+
-					"<li>{{#catalog_names}}<span id=\"shop_tag\"><i class=\"grey fa fa-tag\"></i>&nbsp;{{name}}</span>{{/catalog_names}}</li>";
-			$('#shop_catalog_info').append(Mustache.render(source,json));
-			$('#shop_catalog_info').listview('refresh');
-		}
 
 		//显示商铺照片
 		function showShopPics(json){
@@ -226,10 +203,12 @@
 
 <body>
 <div data-role="page">
-	<div data-role="header">
-		<div align="center"><img src="../images/logo.png"></div>
+	<div data-role="header" id="header">
+		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="fa fa-arrow-circle-left "></i></a> </div>
+		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="fa fa-home "></i></a></div>
+		<h2>悉 游 纪</h2>
 	</div>
-	<div data-role="content" class="detail" id="detail">
+	<div data-role="content"  id="detail">
 
 		<ul style="margin-bottom: 2em;"  data-role="listview" id="shop_info">
 		</ul>

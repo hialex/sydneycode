@@ -40,6 +40,8 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
+			//送餐时间
+			$("#takeout_time_div").hide();
 			var m = new Map(); 
 			var arr_catalogs = new Array();　
 			var arr_picurls = new Array();
@@ -500,6 +502,14 @@
 						
 					});
 	  				$('#myModal').modal('hide');
+	  				//送餐时间
+	  				if(level1_name=="外卖"){
+	  					$("#is_takeout").attr("value",'true');
+	  					$("#takeout_time_div").show();
+	  				}else{
+	  					$("#takeout_time_div").hide();
+	  					$("#is_takeout").removeAttr("value");
+	  				}
 		  		}
 	  		});
 	  		//监听保存信息按钮
@@ -606,10 +616,11 @@
 	  						"shop.name":$('#name').val(),"shop.suburb_id":$('#select_suburbs').val(),"shop.addr":$('#address').val(),
 	  						"shop.tel":toTelHTML('tel'),"shop.mobile":$('#mobile').val(),"shop.email":$('#email').val(),
 	  						"shop.website":$('#website').val(),"shop.weibo":$('#weibo').val(),"shop.weibo_link":$('#weibo_link').val(),
-	  						"shop.weixin":$('#weixin').val(),"shop.momo":$('#momo').val(),"shop.facebook":$('#facebook').val(),"shop.facebook_link":$('#facebook_link').val(),
+	  						"shop.weixin":$('#weixin').val(),"shop.momo":$('#momo').val(),"shop.facebook":$('#facebook').val(),
+	  						"shop.facebook_link":$('#facebook_link1').val(),
 	  						"shop.instagram":$('#instagram').val(),"shop.instagram_link":$('#instagram_link').val(),"shop.qq":$('#qq').val(),
 	  						"shop.twitter":$('#twitter').val(),"shop.twitter_link":$('#twitter_link').val(),"shop.youtube":$('#youtube').val(),"shop.youtube_link":$('#youtube_link').val(),
-	  						"shop.intro":toIntroHTML('intro')},
+	  						"shop.intro":toIntroHTML('intro'),"shop.is_takeout":$('#is_takeout').val(),"shop.takeout_time":toIntroHTML('takeout_time')},
 			  			success: function(json) {
 		                	if(json.status==1){
 		                		//保存成功
@@ -710,7 +721,7 @@
 							<input type="text" class="form-control" id="facebook" name="shop.facebook"  placeholder="Facebook name">
 						</div>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="facebook_link" name="shop.facebook_link"  placeholder="输入Facebook地址">
+							<input type="text" class="form-control" id="facebook_link1" name="shop.facebook_link"  placeholder="输入Facebook地址">
 						</div>
 						<label for="instagram" class="col-sm-1 control-label">Instagram</label>
 						<div class="col-sm-2">
@@ -751,6 +762,13 @@
 						<label for="weibo" class="col-sm-1 control-label">简介</label>
 						<div class="col-sm-11">
 							<textarea class="form-control"  id="intro" name="shop.intro"  rows="3" placeholder="请对商家做个简单介绍吧"></textarea>
+						</div>
+					</div>
+					<div class="form-group" id="takeout_time_div">
+						<label for="weibo" class="col-sm-1 control-label">送餐时间</label>
+						<div class="col-sm-11">
+							<textarea class="form-control"  id="takeout_time" name="shop.takeout_time"  rows="3" placeholder="请输入送餐时间"></textarea>
+							<input id="is_takeout" type="hidden" name="shop.is_takeout"/>
 						</div>
 					</div>
 					<div class="form-group">

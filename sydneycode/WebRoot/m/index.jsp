@@ -1,26 +1,38 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'index.jsp' starting page</title>
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-  </head>
-  
-  <body>
-    Hello World！ <br>
-  </body>
+<head>
+
+	<title>首页</title>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1" >
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" >
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/jqm-datebox-1.4.4.css">
+	<script src="js/jquery.min.js" ></script>
+	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
+
+</head>
+<body>
+	<div data-role="page">
+		<div data-role="header" id="header">
+			<h2>悉 游 纪</h2>
+		</div>
+		<div data-role="content">
+			<div class="ui-block-b block-content">
+				<a href="food.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Restaurant</a>
+				<a href="services.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Service</a>
+				<a href="shopping.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Shopping</a>
+				<a href="fun.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Fun</a>
+				<a href="sport.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Sport</a>
+			</div>
+		</div>
+		<div data-role="footer" >
+			<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+		</div>
+	</div>
+</body>
 </html>

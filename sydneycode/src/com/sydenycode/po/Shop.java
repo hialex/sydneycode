@@ -28,8 +28,24 @@ public class Shop {
 	private String intro;
 	private int score;
 	private Timestamp add_time;
+	private boolean is_takeout;
+	private String takeout_time;
 	
 	
+	
+	
+	public boolean isIs_takeout() {
+		return is_takeout;
+	}
+	public void setIs_takeout(boolean isTakeout) {
+		is_takeout = isTakeout;
+	}
+	public String getTakeout_time() {
+		return takeout_time;
+	}
+	public void setTakeout_time(String takeoutTime) {
+		takeout_time = takeoutTime;
+	}
 	public String getFacebook_link() {
 		return facebook_link;
 	}

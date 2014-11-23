@@ -55,6 +55,14 @@
 			});
 			//子分类联动
 			$("#catalog1").bind("change",function(){
+				//外卖
+				if($('#catalog1').children('option:selected').text()=='外卖'){
+					$('#div_area').hide();
+					$('#div_time').hide();
+				}else{
+					$('#div_area').show();
+					$('#div_time').show();
+				}
 				//重置联动选择框
 				$("#catalog2 option").each(function(){
 					if($(this).val()!='all'){
@@ -163,7 +171,7 @@
 						</select>
 					</fieldset>
 				</div>
-				<div class="ui-block-b block-content">
+				<div class="ui-block-b block-content" id="div_area">
 					<label for="suburb"><strong>区域选择</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
 						<select name="suburb" id="suburb">
@@ -171,7 +179,7 @@
 						</select>
 					</fieldset>
 				</div>
-				<div class="ui-block-b block-content">
+				<div class="ui-block-b block-content" id="div_time">
 					<label for="bussiness_hour"><strong>何时抵达</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
 						<input id="bussiness_hour" type="text" style="text-align: center;font-weight: bold" />

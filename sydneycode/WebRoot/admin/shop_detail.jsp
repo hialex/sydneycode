@@ -140,6 +140,16 @@
 							</span>
 						</div>
 					</div>
+					<s:if test="shop.is_takeout">
+						<div class="form-group">
+						<label for="weibo" class="col-sm-1 control-label">送餐时间</label>
+						<div class="col-sm-11">
+							<span class="detail">
+								<s:property value="shop.takeout_time" escape="false"/>
+							</span>
+						</div>
+					</div>
+					</s:if>
 				</div>
 			</div>
     		

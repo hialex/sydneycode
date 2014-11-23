@@ -4,20 +4,19 @@
 <html>
 <head>
 
-	<title>饮食</title>
+	<title>搜索结果</title>
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1" >
-	<link rel="shortcut icon" href="../images/favicon.ico">
-	<link rel="stylesheet" href="../css/jquery.mobile-1.4.4.css" >
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/font-awesome.min.css" >
-	<link rel="stylesheet" href="../css/scrollbar.css">
-	<script src="../js/jquery.min.js" ></script>
-	<script src="../js/jquery.mobile-1.4.4.min.js" ></script>
-	<script src="../js/handlebars-v2.0.0.js"></script>
-	<script src="../js/iscroll.js"></script>
-	<!--<script src="../js/iscroll-probe.js"></script>-->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" >
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css" >
+	<link rel="stylesheet" href="css/scrollbar.css">
+	<script src="js/jquery.min.js" ></script>
+	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
+	<script src="js/handlebars-v2.0.0.js"></script>
+	<script src="js/iscroll.js"></script>
 	<script>
 		var pageNum = 1;
 		var myScroll,
@@ -108,7 +107,7 @@
 				type: "POST",
 				dataType: "json",
 				//url: "http://202.102.41.153/sydneycode/mobile/MSearch.action",
-				url: "http://sydneycode.com.au/mobile/MSearch.action",
+				url: "../mobile/MSearch.action",
 				data: { "catalog1": catalog1, "catalog2": catalog2 ,"suburb":suburb,"bh":bh,"t":t,"pageNum":pageNum},
 				success: function(json) {
 					if(json.all.length==0){
@@ -117,10 +116,10 @@
 					}else{
 						var source="{{#all}}<li><a href=\"detail.jsp?id={{shop_id}}\"  data-ajax=\"false\"><h4>{{shop_name}}</h4>" +
 								"<p>" +
-								"<i class=\"fa fa-location-arrow\"></i>&nbsp;{{suburb_name}}&nbsp;" +
+								"<i class=\"fa fa-location-arrow grey\"></i>&nbsp;{{suburb_name}}&nbsp;" +
 								"</p>" +
 								"<p>" +
-								"{{#catalogs}}<i class=\"fa fa-tag\"></i>&nbsp;{{name}}&nbsp;&nbsp;{{/catalogs}}" +
+								"{{#catalogs}}<i class=\"fa fa-tag grey\"></i>&nbsp;{{name}}&nbsp;&nbsp;{{/catalogs}}" +
 								"</p>" +
 								"</a>" +
 								"</li>{{/all}}";
@@ -146,8 +145,10 @@
 
 <body>
 <div data-role="page">
-	<div data-role="header" data-position="fixed">
-		<div align="center"><img src="../images/logo.png"></div>
+	<div data-role="header" id="header">
+		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="fa fa-arrow-circle-left "></i></a> </div>
+		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="fa fa-home "></i></a></div>
+		<h2>悉 游 纪</h2>
 	</div>
 	<div id="wrapper" data-role="content">
 		<div id="scroller">

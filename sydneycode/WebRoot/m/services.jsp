@@ -4,18 +4,18 @@
 <html>
   <head>
     
-    <title>饮食</title>
+    <title>服务</title>
     
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1" >
-	<link rel="shortcut icon" href="../images/favicon.ico">
-    <link rel="stylesheet" href="../css/jquery.mobile-1.4.4.css" >
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/jqm-datebox-1.4.4.css">
-    <script src="../js/jquery.min.js" ></script>
-  	<script src="../js/jquery.mobile-1.4.4.min.js" ></script>
-	<script src="../js/jquery.mobile.DateBox.js"></script>
-	<script src="../js/jqm-datebox.mode.customflip.min.js"></script>
+	<link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" >
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/jqm-datebox-1.4.4.css">
+    <script src="js/jquery.min.js" ></script>
+  	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
+	<script src="js/jquery.mobile.DateBox.js"></script>
+	<script src="js/jqm-datebox.mode.customflip.min.js"></script>
 	<script>
 		//显示加载器
 		function showLoader() {
@@ -37,13 +37,13 @@
 		}
 		$(document).ready(function(){
 			showLoader();
+
 			//初始化饮食分类
 			$.ajax({
 				type:"post",
-				//url:"http://202.102.41.153/sydneycode/admin/Catalog!listByParentId.action",
-				url:"http://sydneycode.com.au/admin/Catalog!listByParentId.action",
+				url:"../admin/Catalog!listByParentId.action",
 				dataType:"json",
-				data:{ "parent_id": '1'},
+				data:{ "parent_id": '2'},
 				success:function(json){
 					$.each(json.catalog_list,function(m,catalog){
 						$("#catalog1").append("<option value="+catalog.id+">"+catalog.name+"</option>");
@@ -54,6 +54,7 @@
 			});
 			//子分类联动
 			$("#catalog1").bind("change",function(){
+
 				//重置联动选择框
 				$("#catalog2 option").each(function(){
 					if($(this).val()!='all'){
@@ -66,15 +67,17 @@
 					var paren_id = $(this).children('option:selected').val();
 					$.ajax({
 						type:"post",
-						//url:"http://202.102.41.153/sydneycode/admin/Catalog!listByParentId.action",
-						url:"http://sydneycode.com.au/admin/Catalog!listByParentId.action",
+						url:"../admin/Catalog!listByParentId.action",
 						dataType:"json",
 						data:{ "parent_id": paren_id},
 						success:function(json){
 							$.each(json.catalog_list,function(m,catalog){
 								$("#catalog2").append("<option value="+catalog.id+">"+catalog.name+"</option>");
+
 							});
-							//$("#catalog1").selectmenu('refresh');
+							if(json.catalog_list.length==1){
+								$("#catalog2").val(json.catalog_list[0].id);
+							}
 							$("#catalog2").selectmenu('refresh');
 							hideLoader();
 						}
@@ -89,7 +92,6 @@
 				window.sessionStorage.setItem("bh",$("#bussiness_hour").val());
 			});
 			initBussinessHourFlip();
-
 
 		});
 		function initBussinessHourFlip(){
@@ -115,10 +117,9 @@
 			$("#suburb").append("<option value='hot'>---热门区域---</option>");
 			$.ajax({
 				type:"post",
-				//url:"http://202.102.41.153/sydneycode/admin/Suburb!listHot.action",
-				url:"http://sydneycode.com.au/admin/Suburb!listHot.action",
+				url:"../admin/Suburb!listHot.action",
 				dataType:"json",
-				data:{ "parent_id": 1},
+				data:{ "parent_id": 1,"from":"mobile"},
 				success:function(json){
 					$.each(json.hot_suburb_list,function(m,suburb){
 						$("#suburb").append("<option value="+suburb.id+">"+suburb.name+"</option>");
@@ -126,10 +127,9 @@
 					$("#suburb").append("<option value='others'>---其他区域---</option>");
 					$.ajax({
 						type:"post",
-						//url:"http://202.102.41.153/sydneycode/admin/Suburb!listByParentId.action",
-						url:"http://sydneycode.com.au/admin/Suburb!listByParentId.action",
+						url:"../admin/Suburb!listByParentId.action",
 						dataType:"json",
-						data:{ "parent_id": 1},
+						data:{ "parent_id": 1,"from":"mobile"},
 						success:function(json){
 							$.each(json.suburb_list,function(m,suburb){
 								$("#suburb").append("<option value="+suburb.id+">"+suburb.name+"</option>");
@@ -147,13 +147,13 @@
   
   <body>
     <div data-role="page">
-		<div data-role="header">
-			<div align="center"><img src="../images/logo.png"></div>
+		<div data-role="header" id="header">
+			<h2>悉 游 纪</h2>
 		</div>
 		<div data-role="content">
 			<form id="filterForm">
 				<div class="ui-block-b block-content">
-					<label for="catalog1"><strong>饮食分类</strong></label>
+					<label for="catalog1"><strong>分类</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
 						<select name="catalog1" id="catalog1">
 							<option value="all">不限</option>
@@ -163,7 +163,7 @@
 						</select>
 					</fieldset>
 				</div>
-				<div class="ui-block-b block-content">
+				<div class="ui-block-b block-content" id="div_area">
 					<label for="suburb"><strong>区域选择</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
 						<select name="suburb" id="suburb">
@@ -171,15 +171,14 @@
 						</select>
 					</fieldset>
 				</div>
-				<div class="ui-block-b block-content">
+				<div class="ui-block-b block-content" id="div_time">
 					<label for="bussiness_hour"><strong>何时抵达</strong></label>
 					<fieldset data-role="controlgroup"data-mini="true">
-						<!--<input id="bussiness_hour" type="text" data-role="datebox" data-options='{"mode":"customflip"}' />-->
 						<input id="bussiness_hour" type="text" style="text-align: center;font-weight: bold" />
 					</fieldset>
 				</div>
 				<div class="ui-block-b block-content">
-					<a href="result.jsp" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-btn-b ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</a>
+					<a href="result.jsp" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</a>
 				</div>
 			</form>
 		</div>

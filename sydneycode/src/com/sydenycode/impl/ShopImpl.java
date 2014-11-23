@@ -54,15 +54,15 @@ public class ShopImpl {
 		        "youtube_link," +
 		        "intro," +
 		        "score," +
-		        "add_time)"+" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-		//System.out.println(sql);
+		        "add_time,is_takeout,takeout_time)"+" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		
 		Date date = new Date();
 		Timestamp add_time = new Timestamp(date.getTime());
 		Object[] params = {shop.getSuburb_id(),shop.getAddr(),shop.getName(),shop.getTel()
 				,shop.getMobile(),shop.getWeixin(),shop.getWeibo(),shop.getWeibo_link(),shop.getMomo()
 				,shop.getEmail(),shop.getWebsite(),shop.getFacebook(),shop.getFacebook_link(),shop.getInstagram(),shop.getInstagram_link()
 				,shop.getQq(),shop.getTwitter(),shop.getTwitter_link(),shop.getYoutube(),shop.getYoutube_link(),shop.getIntro()
-				,shop.getScore(),add_time};
+				,shop.getScore(),add_time,shop.isIs_takeout(),shop.getTakeout_time()};
 		Connection conn = new MyDbPool().getConnection();
 		QueryRunner qr = new QueryRunner();
 		int flag = 0;
@@ -129,7 +129,9 @@ public class ShopImpl {
 		        "youtube_link=?," +
 		        "intro=?," +
 		        "score=?," +
-		        "add_time=? where id=?;";
+		        "add_time=?," +
+		        "is_takeout=?," +
+		        "takeout_time=? where id=?;";
 	
 		Date date = new Date();
 		Timestamp add_time = new Timestamp(date.getTime());
@@ -137,7 +139,7 @@ public class ShopImpl {
 				,shop.getMobile(),shop.getWeixin(),shop.getWeibo(),shop.getWeibo_link(),shop.getMomo()
 				,shop.getEmail(),shop.getWebsite(),shop.getFacebook(),shop.getFacebook_link(),shop.getInstagram(),shop.getInstagram_link()
 				,shop.getQq(),shop.getTwitter(),shop.getTwitter_link(),shop.getYoutube(),shop.getYoutube_link(),shop.getIntro()
-				,shop.getScore(),add_time,id};
+				,shop.getScore(),add_time,shop.isIs_takeout(),shop.getTakeout_time(),id};
 		Connection conn = new MyDbPool().getConnection();
 		QueryRunner qr = new QueryRunner();
 		int flag = 0;

@@ -36,7 +36,12 @@
 					var shop_catalog_data = json.catalog_names;
 					//var shop_pics = json.pics;
 					showShop(shop_data);
-					showShopBH(json);
+					if(shop_data.is_takeout){
+						$("#shop_bh_info").hide();
+					}else{
+						showShopBH(json);
+					}
+					
 					if(json.pics.length>0){
 						showShopPics(json);
 					}
@@ -66,7 +71,8 @@
 			$("#shop_info").append();
 			var source="<li><span id=\"shop_name\" class=\"shop_name\">{{name}}</span></li>"+
 							"{{#intro}}<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_intro\" class=\"wrap\">{{&intro}}</span></li>{{/intro}}"+
-							"<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\"><a href=\"https://www.google.com/maps/search/{{addr}}\">{{addr}}</a></span></li>"+
+							"{{#takeout_time}}<li><i class=\"grey fa fa-clock-o \"></i><span id=\"shop_takeout_time\" class=\"wrap\">{{&takeout_time}}</span></li>{{/takeout_time}}"+
+							"{{#addr}}<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\"><a href=\"https://www.google.com/maps/search/{{addr}}\">{{addr}}</a></span></li>{{/addr}}"+
 							"{{#tel}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{tel}}\">{{tel}}</a></span></li>{{/tel}}"+
 							"{{#mobile}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{mobile}}\">{{mobile}}</a></span></li>{{/mobile}}"+
 							"{{#website}}<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{website}}\">{{website}}</a></span></li>{{/website}}"+
