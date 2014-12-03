@@ -19,15 +19,15 @@
 <body>
 	<div data-role="page">
 		<div data-role="header" id="header">
-			<h2>悉 游 纪</h2>
+			<div class="logo"><img src="images/logo.png" height="50px"></div>
 		</div>
 		<div data-role="content">
 			<div class="ui-block-b block-content">
-				<a href="food.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Restaurant</a>
-				<a href="services.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Service</a>
-				<a href="shopping.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Shopping</a>
-				<a href="fun.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Fun</a>
-				<a href="sport.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">Find Sport</a>
+				<a href="food.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">饮食</a>
+				<a href="services.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">服务</a>
+				<a href="shopping.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">购物</a>
+				<a href="fun.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">娱乐</a>
+				<a href="sport.jsp" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all   ui-shadow-icon">运动</a>
 			</div>
 		</div>
 		<div data-role="footer" >

@@ -9,9 +9,24 @@ public class MSearchResutlShopDTO {
 	private int shop_id;
 	private String shop_name;
 	private String suburb_name;
+	private boolean is_takeout;
 	private List<Catalog> catalogs;
+	private int top_id;
 	
 	
+	
+	public int getTop_id() {
+		return top_id;
+	}
+	public void setTop_id(int topId) {
+		top_id = topId;
+	}
+	public boolean isIs_takeout() {
+		return is_takeout;
+	}
+	public void setIs_takeout(boolean isTakeout) {
+		is_takeout = isTakeout;
+	}
 	public String getSuburb_name() {
 		return suburb_name;
 	}

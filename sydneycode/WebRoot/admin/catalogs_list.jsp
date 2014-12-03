@@ -54,6 +54,7 @@
 		        	{"data":"parentName"},
 		        	{"data":"id"},
 		        	{"data":"parentId"},
+		        	{"data":"orderId"}
 		        ],
 		        "columnDefs":[
 		        	{
@@ -128,6 +129,7 @@
 								<th>上级分类</th>
 								<th>选项</th>
 								<th>上级分类编号</th>
+								<th>分类排序</th>
 							</tr>
 						</thead>
 					</table>

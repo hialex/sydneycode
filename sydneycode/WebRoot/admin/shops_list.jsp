@@ -80,8 +80,9 @@
 		        	{
 		        		"data":5,
 		        		"render":function(data,type,row){
-		        			return '<a href="javascript:ShopDelete('+data+')">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;' +
-		        				   '<a href="shops_edit.jsp?id='+data+'">编辑</a>';
+		        			return '<a href="javascript:ShopDelete('+data+')">删除</a>&nbsp;&nbsp;' +
+		        				   '<a href="shops_edit.jsp?id='+data+'">编辑</a>&nbsp;&nbsp;'+
+		        				   '<a href="javascript:SetTop('+data+')">置顶</a>';
 		        		},
 		        		"targets":5
 		        	},
@@ -129,6 +130,32 @@
 			      }
 			    }
 			  }
+			});
+		}
+		function SetTop(id){
+			bootbox.prompt("请输入置顶序号，数字越大排序越前",function(result){
+				if(result === null||result==""){
+					alert("置顶操作取消，请输入有效数字！");
+				}else{
+					$.ajax({
+			  			type:"post",
+			  			url:"Shop!top.action",
+			  			dataType:"json",
+			  			data:{ "id": id,"top_id":result},
+			  			success:function(json){
+			  				if(json.status==1){
+		                		//保存成功
+		                		bootbox.alert(json.message, function() {
+		                			window.location.href = "shops_list.jsp";
+								});
+		                		
+		                	}else{
+		                		bootbox.alert(json.message, function() {
+								});
+		                	}
+			  			}
+			  		});
+				}
 			});
 		}
 	</script>

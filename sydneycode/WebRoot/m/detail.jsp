@@ -67,12 +67,19 @@
 			//隐藏加载器
 			$.mobile.loading('hide');
 		}
+		//GoogleMap搜索地址
+		function googlemap(){
+			var addr = $("#shop_addr").text();
+			window.location.href='https://www.google.com/maps/search/'+addr;
+		}
+
 		function showShop(shop_data){
 			$("#shop_info").append();
 			var source="<li><span id=\"shop_name\" class=\"shop_name\">{{name}}</span></li>"+
 							"{{#intro}}<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_intro\" class=\"wrap\">{{&intro}}</span></li>{{/intro}}"+
 							"{{#takeout_time}}<li><i class=\"grey fa fa-clock-o \"></i><span id=\"shop_takeout_time\" class=\"wrap\">{{&takeout_time}}</span></li>{{/takeout_time}}"+
-							"{{#addr}}<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\"><a href=\"https://www.google.com/maps/search/{{addr}}\">{{addr}}</a></span></li>{{/addr}}"+
+							"{{#takeout_route}}<li><i class=\"grey fa fa-bicycle \"></i><span id=\"shop_takeout_route\" class=\"wrap\">{{&takeout_route}}</span></li>{{/takeout_route}}"+
+							"{{#addr}}<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\">{{addr}}<a href=\"javascript:googlemap();\" data-ajax=\"false\">&nbsp;&nbsp;<i class=\"grey fa fa-search \"></i></a></span></li>{{/addr}}"+
 							"{{#tel}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{tel}}\">{{tel}}</a></span></li>{{/tel}}"+
 							"{{#mobile}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{mobile}}\">{{mobile}}</a></span></li>{{/mobile}}"+
 							"{{#website}}<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{website}}\">{{website}}</a></span></li>{{/website}}"+
@@ -206,7 +213,7 @@
 	<div data-role="header" id="header">
 		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="fa fa-arrow-circle-left "></i></a> </div>
 		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="fa fa-home "></i></a></div>
-		<h2>悉 游 纪</h2>
+		<div class="logo"><img src="images/logo.png" height="50px"></div>
 	</div>
 	<div data-role="content"  id="detail">
 
@@ -228,6 +235,13 @@
 	</div>
 	<div data-role="footer">
 		<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+	</div>
+	<div data-role="popup" id="addrMenu" >
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">地址操作：</li>
+			<li><a href="javascript:googlemap();">GoogleMap搜索</a></li>
+			<li><a href="javascript:copyaddr();">复制地址</a> </li>
+		</ul>
 	</div>
 </div>
 </body>

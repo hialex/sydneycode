@@ -60,7 +60,20 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     //接受列表页面传来的pic_id
     private String pic_id;
     
-    public String getPic_id() {
+    //接受置顶id
+    private String top_id;
+    
+    
+    
+    public String getTop_id() {
+		return top_id;
+	}
+
+	public void setTop_id(String topId) {
+		top_id = topId;
+	}
+
+	public String getPic_id() {
 		return pic_id;
 	}
 
@@ -358,4 +371,34 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
     	return SUCCESS;
     }
+    
+    /**
+     * 设置店铺置顶，写入top_id
+     * <p>Title: top</p>
+     * <p>Description: </p>
+     * @param id
+     * @param top_id
+     * @return
+     */
+    public String top(){
+    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
+    	//设置置顶id
+    	int flag = ShopImpl.topShop(id,top_id);
+    	if(flag==1){
+            //删除成功
+            status = 1;
+            message = "店铺置顶成功！";
+            tempMap.put("status", status);
+            tempMap.put("message", message);
+            
+        }else{
+            //删除失败
+            status = -1; 
+            message = "店铺置顶失败，请检查！";
+            tempMap.put("message", message);
+        }
+        result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
+    	return SUCCESS;
+    }
+    
 }

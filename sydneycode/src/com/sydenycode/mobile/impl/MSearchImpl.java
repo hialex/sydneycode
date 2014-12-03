@@ -24,7 +24,7 @@ public class MSearchImpl {
 		String sql = "";
         List<MSearchResutlShopDTO> shops = new ArrayList<MSearchResutlShopDTO>();
         List<MSearchResutlShopDTO> retSearchResutlShops = new ArrayList<MSearchResutlShopDTO>();
-        sql = "select distinct shops.id shop_id,shops.`name` shop_name,suburbs.`name` suburb_name " +
+        sql = "select distinct shops.id shop_id,shops.`name` shop_name,suburbs.`name` suburb_name,shops.is_takeout  is_takeout,shops.top_id top_id" +
         		" from shops,catalogs,shop_catalog,suburbs,bussiness_hours" +
         		" where shops.id=shop_catalog.shop_id" +
         		" and catalogs.id=shop_catalog.catalog_id" +
@@ -33,6 +33,7 @@ public class MSearchImpl {
         		getCatalogSQL(catalog1, catalog2)+
         		getSuburbSQL(suburb)+
         		getBhSQL(bh)+
+        		" order by top_id desc,shop_name asc"+
         		" limit "+(pageNum-1)*CONSTANT.MOBILE_PAGE_SIZE+","+CONSTANT.MOBILE_PAGE_SIZE;
         		
         //System.out.println(sql);

@@ -30,10 +30,24 @@ public class Shop {
 	private Timestamp add_time;
 	private boolean is_takeout;
 	private String takeout_time;
+	private String takeout_route;
+	private int top_id;
 	
 	
 	
 	
+	public int getTop_id() {
+		return top_id;
+	}
+	public void setTop_id(int topId) {
+		top_id = topId;
+	}
+	public String getTakeout_route() {
+		return takeout_route;
+	}
+	public void setTakeout_route(String takeoutRoute) {
+		takeout_route = takeoutRoute;
+	}
 	public boolean isIs_takeout() {
 		return is_takeout;
 	}

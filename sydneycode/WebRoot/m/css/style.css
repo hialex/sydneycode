@@ -34,7 +34,7 @@
 
 #wrapper {
     position:fixed;
-    top:2.8em;
+    top:3.5em;
     bottom:1em;
     margin-bottom: 1.2em;
     width:90%;
@@ -68,14 +68,15 @@
 .shop_name{
     font-size:18px;
     font-weight: bold;
-    color: #f39c12;
+    /*color: #f39c12;*/
+    color: #6f9dcc;
     white-space: normal !important;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
 .grey{
     /*  color: #5b6d82; */
-    color: #f2c479;
+    color: #6f9dcc;
 }
 #shop_icon a,a:hover,a:visited,a:active{
     text-decoration: none;
@@ -85,17 +86,6 @@
     text-decoration: none;
     color: #000;
 }
-/**
-#shop_tag{
-    margin-right: 0.5em;
-    border: 1px #5b6d82 dotted;
-    padding: 3px;
-    white-space: normal !important;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    line-height: 2em;
-}
-*/
 .wrap{
     margin-left: 0.5em;
     white-space: normal !important;
@@ -103,10 +93,20 @@
     overflow-wrap: break-word;
 }
 #header{
-    height: 40px;
-    background: #f39c12;
-    border-top:2px solid #e67e22;
+    text-align: center;
+    background: #d7ebff;
     border-bottom-color: #eee;
+}
+#header .logo{
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+#header .monkey{
+    float: left;
+    height: 30px;
+    margin-top:-30px;
 }
 #header h2{
     font-size: 28px;
@@ -124,11 +124,14 @@
 }
 #result p{
     font-size: 16px;
+    white-space: normal !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 #result li h4{
     font-size: 18px;
     font-weight: bold;
-    color: #f39c12;
+    color: #6f9dcc;
     white-space: normal !important;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -136,22 +139,18 @@
 #detail li{
     font-size: 16px;
 }
-.test{
-    background-color: #f39c12;
-    color: #ffffff;
-}
 #link_l{
     float: left;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
     margin-left: 0.3em;
     font-size: 24px;
     color: #ffffff;
 }
 #link_r{
     float: right;
-    height: 40px;
-    line-height: 40px;
+    height: 50px;
+    line-height: 50px;
     margin-right: 0.3em;
     font-size: 24px;
     color: #ffffff;

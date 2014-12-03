@@ -5,6 +5,13 @@ public class CatalogDTO {
 	private String name;
 	private String parentId;
 	private String parentName;
+	private String orderId;
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 	public String getParentId() {
 		return parentId;
 	}

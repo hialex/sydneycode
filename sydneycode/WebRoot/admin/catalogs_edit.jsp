@@ -55,6 +55,13 @@
 					    </div>
 					    <div class="col-sm-1"></div>
 					  </div>
+					  <div class="form-group">
+					    <label for="catalog_order_id" class="col-sm-2 control-label">分类排序</label>
+					    <div class="col-sm-8">
+					      <input type="text" class="form-control" id="catalog_order_id" placeholder="请输入分类序号">
+					    </div>
+					    <div class="col-sm-1"></div>
+					  </div>
 					
 	    		</div>
 	    		<div class="col-sm-1"></div>
@@ -83,7 +90,7 @@
 	    		<div class="col-sm-10">
 	    		    <form class="form-horizontal" role="form">
 					  <div class="form-group">
-					    <label for="catalog_top" class="col-sm-2 control-label">分类名称</label>
+					    <label for="catalog_top" class="col-sm-2 control-label">上级分类名称</label>
 					    <div class="col-sm-3">
 					      	<select class="form-control" id="select_top2">
 							  <option value="-1">请选择顶级分类</option>
@@ -132,6 +139,7 @@
 	  			success:function(json){
 	  				$('#catalog_name').val(json.catalog.name);
 	  				$('#parentName').text(json.catalog.parentName);
+	  				$('#catalog_order_id').val(json.catalog.orderId);
 	  			}
 	  		});
 	  		//编辑按钮
@@ -143,7 +151,9 @@
 	  				return false;
 	  			}else if(!$('#change_catalogs').is(":checked")){
 	  				//没有更改上级分类
-	  				SubmitEditCatalog(id,catalog_name,parent_id);
+	  				var order_id = $('#catalog_order_id').val();
+	  				order_id = (order_id=='')?0:order_id;
+	  				SubmitEditCatalog(id,catalog_name,parent_id,order_id);
 	  			}else{
 	  				//修改上级分类
 	  				var select_top = $('#select_top2').val();
@@ -159,7 +169,9 @@
 	  					//修改的是二级分类
 	  					parent_id = select_level1;
 	  				}
-	  				SubmitEditCatalog(id,catalog_name,parent_id);
+	  				var order_id = $('#catalog_order_id').val();
+	  				order_id = (order_id=='')?0:order_id;
+	  				SubmitEditCatalog(id,catalog_name,parent_id,order_id);
 	  			}
 	  			return false;
 	  		});
@@ -221,14 +233,14 @@
 	  			}
 	  			
 	  		});
-	  		function SubmitEditCatalog(id,name,parent_id){
+	  		function SubmitEditCatalog(id,name,parent_id,order_id){
 	  			var t = new Date().getTime();
 		  		$.ajax({
 	                type: "POST",
 	                dataType: "json",
 	                //cache:true,
 	                url: "Catalog!edit.action",
-	                data: { "catalog.id": id, "catalog.name": name, "catalog.parent_id": parent_id ,"t":t},                              
+	                data: { "catalog.id": id, "catalog.name": name, "catalog.parent_id": parent_id ,"catalog.order_id": order_id,"t":t},                              
 	                success: function(json) {
 	                	if(json.status==1){
 	                		//保存成功

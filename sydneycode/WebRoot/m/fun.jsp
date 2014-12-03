@@ -4,7 +4,7 @@
 <html>
   <head>
     
-    <title>饮食</title>
+    <title>娱乐</title>
     
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1" >
@@ -41,10 +41,9 @@
 			//初始化饮食分类
 			$.ajax({
 				type:"post",
-				//url:"http://202.102.41.153/sydneycode/admin/Catalog!listByParentId.action",
 				url:"../admin/Catalog!listByParentId.action",
 				dataType:"json",
-				data:{ "parent_id": '1'},
+				data:{ "parent_id": '4'},
 				success:function(json){
 					$.each(json.catalog_list,function(m,catalog){
 						$("#catalog1").append("<option value="+catalog.id+">"+catalog.name+"</option>");
@@ -55,14 +54,7 @@
 			});
 			//子分类联动
 			$("#catalog1").bind("change",function(){
-				//外卖
-				if($('#catalog1').children('option:selected').text()=='外卖'){
-					$('#div_area').hide();
-					$('#div_time').hide();
-				}else{
-					$('#div_area').show();
-					$('#div_time').show();
-				}
+
 				//重置联动选择框
 				$("#catalog2 option").each(function(){
 					if($(this).val()!='all'){
@@ -156,7 +148,7 @@
   <body>
     <div data-role="page">
 		<div data-role="header" id="header">
-			<div class="logo"><img src="images/logo.png" height="50px"></div>
+			<h2>悉 游 纪</h2>
 		</div>
 		<div data-role="content">
 			<form id="filterForm">

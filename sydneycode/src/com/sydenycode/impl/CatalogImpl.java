@@ -24,9 +24,9 @@ public class CatalogImpl {
         
         String sql = "insert into catalogs (" +
                 "name," +
-                "parent_id)"+" values(?,?);";
+                "parent_id,order_id)"+" values(?,?,?);";
         //System.out.println(sql);
-        Object[] params = {catalog.getName(),catalog.getParent_id()};
+        Object[] params = {catalog.getName(),catalog.getParent_id(),catalog.getOrder_id()};
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         int flag = 0;
@@ -52,9 +52,10 @@ public class CatalogImpl {
     //编辑分类
     public static int editCatalog(Catalog catalog){
         
-        String sql = "update catalogs set name=?,parent_id=? where id=?";
-        //System.out.println(sql);
-        Object[] params = {catalog.getName(),catalog.getParent_id(),catalog.getId()};
+        String sql = "update catalogs set name=?,parent_id=?,order_id=? where id=?";
+        String sql1 = "update catalogs set name="+catalog.getName()+",parent_id="+catalog.getParent_id()+",order_id="+catalog.getOrder_id()+" where id="+catalog.getId()+"";
+        System.out.println(sql1);
+        Object[] params = {catalog.getName(),catalog.getParent_id(),catalog.getOrder_id(),catalog.getId()};
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         int flag = 0;
@@ -84,9 +85,13 @@ public class CatalogImpl {
         if("-1".equals(parent_id)) {
         	//获取所有分类
             sql = "select * from catalogs order by id";
-        }else {
-            sql = "select * from catalogs where parent_id = '"+parent_id+"'";
+        }else if("77".equals(parent_id)){
+            //外卖处理
+        	sql = "select * from catalogs where parent_id = '"+parent_id+"' ORDER BY order_id desc ";
         }
+    	else{
+    		sql = "select * from catalogs where parent_id = '"+parent_id+"' ORDER BY order_id desc ";
+    	}
         //System.out.println(sql);
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();

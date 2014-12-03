@@ -40,8 +40,9 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-			//送餐时间
+			//外卖处理
 			$("#takeout_time_div").hide();
+			$("#takeout_route_div").hide();
 			var m = new Map(); 
 			var arr_catalogs = new Array();　
 			var arr_picurls = new Array();
@@ -506,8 +507,10 @@
 	  				if(level1_name=="外卖"){
 	  					$("#is_takeout").attr("value",'true');
 	  					$("#takeout_time_div").show();
+	  					$("#takeout_route_div").show();
 	  				}else{
 	  					$("#takeout_time_div").hide();
+	  					$("#takeout_route_div").hide();
 	  					$("#is_takeout").removeAttr("value");
 	  				}
 		  		}
@@ -620,7 +623,7 @@
 	  						"shop.facebook_link":$('#facebook_link1').val(),
 	  						"shop.instagram":$('#instagram').val(),"shop.instagram_link":$('#instagram_link').val(),"shop.qq":$('#qq').val(),
 	  						"shop.twitter":$('#twitter').val(),"shop.twitter_link":$('#twitter_link').val(),"shop.youtube":$('#youtube').val(),"shop.youtube_link":$('#youtube_link').val(),
-	  						"shop.intro":toIntroHTML('intro'),"shop.is_takeout":$('#is_takeout').val(),"shop.takeout_time":toIntroHTML('takeout_time')},
+	  						"shop.intro":toIntroHTML('intro'),"shop.is_takeout":$('#is_takeout').val(),"shop.takeout_time":toIntroHTML('takeout_time'),"shop.takeout_route":toIntroHTML('takeout_route')},
 			  			success: function(json) {
 		                	if(json.status==1){
 		                		//保存成功
@@ -759,16 +762,22 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="weibo" class="col-sm-1 control-label">简介</label>
+						<label for="info" class="col-sm-1 control-label">简介</label>
 						<div class="col-sm-11">
 							<textarea class="form-control"  id="intro" name="shop.intro"  rows="3" placeholder="请对商家做个简单介绍吧"></textarea>
 						</div>
 					</div>
 					<div class="form-group" id="takeout_time_div">
-						<label for="weibo" class="col-sm-1 control-label">送餐时间</label>
+						<label for="takeout_time" class="col-sm-1 control-label">送餐时间</label>
 						<div class="col-sm-11">
 							<textarea class="form-control"  id="takeout_time" name="shop.takeout_time"  rows="3" placeholder="请输入送餐时间"></textarea>
 							<input id="is_takeout" type="hidden" name="shop.is_takeout"/>
+						</div>
+					</div>
+					<div class="form-group" id="takeout_route_div">
+						<label for="takeout_route" class="col-sm-1 control-label">送餐路线</label>
+						<div class="col-sm-11">
+							<textarea class="form-control"  id="takeout_route" name="shop.takeout_route"  rows="3" placeholder="请输入送餐路线"></textarea>
 						</div>
 					</div>
 					<div class="form-group">

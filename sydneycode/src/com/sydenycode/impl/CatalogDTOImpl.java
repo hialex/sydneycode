@@ -51,7 +51,7 @@ public class CatalogDTOImpl {
 	public static List<CatalogDTO> queryAllCatalogs(){
         String sql = "";
         List<CatalogDTO> allCatalogs = new ArrayList<CatalogDTO>();
-        sql = "select a.id ,a.name name,a.parent_id parentId,b.name parentName from catalogs a,catalogs b where a.parent_id=b.id order by a.parent_id asc,a.id asc";
+        sql = "select a.id ,a.name name,a.parent_id parentId,b.name parentName,a.order_id orderId from catalogs a,catalogs b where a.parent_id=b.id order by a.parent_id asc,a.id asc";
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         //Object[] params = {area};
@@ -79,7 +79,7 @@ public class CatalogDTOImpl {
 	public static CatalogDTO queryCatalogById(String id){
         String sql = "";
         CatalogDTO catalog = new CatalogDTO();
-        sql = "select a.id ,a.name name,a.parent_id parentId,b.name parentName from catalogs a,catalogs b where a.parent_id=b.id and a.id=?";
+        sql = "select a.id ,a.name name,a.parent_id parentId,b.name parentName,a.order_id orderId from catalogs a,catalogs b where a.parent_id=b.id and a.id=?";
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         Object[] params = {id};

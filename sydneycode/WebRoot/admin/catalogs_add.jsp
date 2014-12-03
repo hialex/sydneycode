@@ -51,8 +51,12 @@
 	    		    	
 					  <div class="form-group">
 					    <label for="catalog_top" class="col-sm-2 control-label">分类名称</label>
-					    <div class="col-sm-8">
+					    <div class="col-sm-3">
 					      <input type="text" class="form-control" id="catalog_top" placeholder="请输入顶级分类名称">
+					    </div>
+					     <label for="catalog_top_order_id" class="col-sm-2 control-label">分类排序</label>
+					    <div class="col-sm-3">
+					      <input type="text" class="form-control" id="catalog_top_order_id" value="0">
 					    </div>
 					    <div class="col-sm-1">
 					      <button type="submit" id="btn_add_top_catalog" class="btn btn-default">添加</button>
@@ -86,9 +90,13 @@
 					    <div class="col-sm-7"></div>
 					  </div>
 					  <div class="form-group">
-					    <label for="catalog_top" class="col-sm-2 control-label">分类名称</label>
-					    <div class="col-sm-8">
+					    <label for="catalog_level1" class="col-sm-2 control-label">分类名称</label>
+					    <div class="col-sm-3">
 					      <input type="text" class="form-control" id="catalog_level1" placeholder="请输入一级分类名称">
+					    </div>
+					    <label for="catalog_level1_order_id" class="col-sm-2 control-label">分类排序</label>
+					    <div class="col-sm-3">
+					      <input type="text" class="form-control" id="catalog_level1_order_id" value="0">
 					    </div>
 					    <div class="col-sm-1">
 					      <button type="submit" id="btn_add_level1_catalog" class="btn btn-default">添加</button>
@@ -128,9 +136,13 @@
 					    <div class="col-sm-3"></div>
 					  </div>
 					  <div class="form-group">
-					    <label for="catalog_top" class="col-sm-2 control-label">分类名称</label>
-					    <div class="col-sm-8">
+					    <label for="catalog_level2" class="col-sm-2 control-label">分类名称</label>
+					    <div class="col-sm-3">
 					      <input type="text" class="form-control" id="catalog_level2" placeholder="请输入二级分类名称">
+					    </div>
+					    <label for="catalog_level2_order_id" class="col-sm-2 control-label">分类排序</label>
+					    <div class="col-sm-3">
+					      <input type="text" class="form-control" id="catalog_level2_order_id" value="0">
 					    </div>
 					    <div class="col-sm-1">
 					      <button type="submit" id="btn_add_level2_catalog" class="btn btn-default">添加</button>
@@ -187,11 +199,13 @@
   			//顶级分类添加按钮
 	  		$('#btn_add_top_catalog').click(function(){
 	  			var catalog_name = $('#catalog_top').val();
+	  			var order_id = $('#catalog_top_order_id').val();
 	  			if(catalog_name==''){
 	  				alert("顶级分类名称不能为空,请填写！");
 	  				$('#catalog_top').focus();
 	  			}else{
-	  				submitCatalog(catalog_name,0);
+	  				order_id = (order_id=='')?0:order_id;
+	  				submitCatalog(catalog_name,0,order_id);
 	  			}
 	  			return false;
 	  		});
@@ -200,6 +214,7 @@
 	  		$('#btn_add_level1_catalog').click(function(){
 	  			var parent_id = $('#select_top1').val();
 	  			var catalog_name = $('#catalog_level1').val();
+	  			var order_id = $('#catalog_level1_order_id').val();
 	  			if(parent_id=='-1'){
 	  				alert("请选择顶级分类！");
 	  				$('#select_top1').focus();
@@ -207,7 +222,8 @@
 	  				alert("一级分类名称不能为空,请填写！");
 	  				$('#catalog_level1').focus();
 	  			}else{
-	  				submitCatalog(catalog_name,parent_id);
+	  				order_id = (order_id=='')?0:order_id;
+	  				submitCatalog(catalog_name,parent_id,order_id);
 	  			}
 	  			return false;
 	  		});
@@ -217,6 +233,7 @@
 	  			var top = $('#select_top2').val();
 	  			var parent_id = $('#select_level1').val();
 	  			var catalog_name = $('#catalog_level2').val();
+	  			var order_id = $('#catalog_level1_order_id').val();
 	  			if(top=='-1'){
 	  				alert("请选择顶级分类！");
 	  				$('#select_top2').focus();
@@ -227,19 +244,20 @@
 	  				alert("二级分类名称不能为空,请填写！");
 	  				$('#catalog_level2').focus();
 	  			}else{
-	  				submitCatalog(catalog_name,parent_id);
+	  				order_id = (order_id=='')?0:order_id;
+	  				submitCatalog(catalog_name,parent_id,order_id);
 	  			}
 	  			return false;
 	  		});
 	  	});
-	  	function submitCatalog(catalog_name,parent_id){
+	  	function submitCatalog(catalog_name,parent_id,order_id){
 	  		var t = new Date().getTime();
 	  		$.ajax({
                 type: "POST",
                 dataType: "json",
                 //cache:true,
                 url: "Catalog!add.action",
-                data: { "catalog.name": catalog_name, "catalog.parent_id": parent_id ,"t":t},                              
+                data: { "catalog.name": catalog_name, "catalog.parent_id": parent_id , "catalog.order_id": order_id,"t":t},                              
                 success: function(json) {
                 	if(json.status==1){
                 		//保存成功

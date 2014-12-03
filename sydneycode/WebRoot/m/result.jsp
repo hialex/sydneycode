@@ -106,7 +106,6 @@
 			$.ajax({
 				type: "POST",
 				dataType: "json",
-				//url: "http://202.102.41.153/sydneycode/mobile/MSearch.action",
 				url: "../mobile/MSearch.action",
 				data: { "catalog1": catalog1, "catalog2": catalog2 ,"suburb":suburb,"bh":bh,"t":t,"pageNum":pageNum},
 				success: function(json) {
@@ -115,9 +114,9 @@
 						$(".pullUpLabel").html(nomore);
 					}else{
 						var source="{{#all}}<li><a href=\"detail.jsp?id={{shop_id}}\"  data-ajax=\"false\"><h4>{{shop_name}}</h4>" +
-								"<p>" +
+								"{{^is_takeout}}<p>" +
 								"<i class=\"fa fa-location-arrow grey\"></i>&nbsp;{{suburb_name}}&nbsp;" +
-								"</p>" +
+								"</p>{{/is_takeout}}" +
 								"<p>" +
 								"{{#catalogs}}<i class=\"fa fa-tag grey\"></i>&nbsp;{{name}}&nbsp;&nbsp;{{/catalogs}}" +
 								"</p>" +
@@ -146,9 +145,9 @@
 <body>
 <div data-role="page">
 	<div data-role="header" id="header">
-		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="fa fa-arrow-circle-left "></i></a> </div>
-		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="fa fa-home "></i></a></div>
-		<h2>悉 游 纪</h2>
+		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="grey fa fa-arrow-circle-left "></i></a> </div>
+		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="grey fa fa-home "></i></a></div>
+		<div class="logo"><img src="images/logo.png" height="50px"></div>
 	</div>
 	<div id="wrapper" data-role="content">
 		<div id="scroller">

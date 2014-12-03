@@ -54,7 +54,9 @@ public class ShopImpl {
 		        "youtube_link," +
 		        "intro," +
 		        "score," +
-		        "add_time,is_takeout,takeout_time)"+" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		        "add_time," +
+		        "is_takeout," +
+		        "takeout_time,takeout_route)"+" values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		
 		Date date = new Date();
 		Timestamp add_time = new Timestamp(date.getTime());
@@ -62,7 +64,7 @@ public class ShopImpl {
 				,shop.getMobile(),shop.getWeixin(),shop.getWeibo(),shop.getWeibo_link(),shop.getMomo()
 				,shop.getEmail(),shop.getWebsite(),shop.getFacebook(),shop.getFacebook_link(),shop.getInstagram(),shop.getInstagram_link()
 				,shop.getQq(),shop.getTwitter(),shop.getTwitter_link(),shop.getYoutube(),shop.getYoutube_link(),shop.getIntro()
-				,shop.getScore(),add_time,shop.isIs_takeout(),shop.getTakeout_time()};
+				,shop.getScore(),add_time,shop.isIs_takeout(),shop.getTakeout_time(),shop.getTakeout_route()};
 		Connection conn = new MyDbPool().getConnection();
 		QueryRunner qr = new QueryRunner();
 		int flag = 0;
@@ -103,6 +105,31 @@ public class ShopImpl {
 		}
 		return last_id;
 	}
+	//置顶店铺
+	public static int topShop(String id,String top_id){
+		String sql = "UPDATE shops SET top_id=? where id=?";
+		Object[] params = {top_id,id};
+		Connection conn = new MyDbPool().getConnection();
+		QueryRunner qr = new QueryRunner();
+		int flag = 0;
+		try {
+            flag = qr.update(conn,sql, params);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            logger.error("ShopImpl-topShop()-数据库操作失败！");
+            e.printStackTrace();
+        }finally{
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                logger.error("ShopImpl-topShop()-连接关闭失败");
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        //System.out.println(flag);
+        return flag;
+	}
 	
 	public static int  editShop(String id,Shop shop){
 		
@@ -131,7 +158,8 @@ public class ShopImpl {
 		        "score=?," +
 		        "add_time=?," +
 		        "is_takeout=?," +
-		        "takeout_time=? where id=?;";
+		        "takeout_time=?," +
+		        "takeout_route=? where id=?;";
 	
 		Date date = new Date();
 		Timestamp add_time = new Timestamp(date.getTime());
@@ -139,7 +167,7 @@ public class ShopImpl {
 				,shop.getMobile(),shop.getWeixin(),shop.getWeibo(),shop.getWeibo_link(),shop.getMomo()
 				,shop.getEmail(),shop.getWebsite(),shop.getFacebook(),shop.getFacebook_link(),shop.getInstagram(),shop.getInstagram_link()
 				,shop.getQq(),shop.getTwitter(),shop.getTwitter_link(),shop.getYoutube(),shop.getYoutube_link(),shop.getIntro()
-				,shop.getScore(),add_time,shop.isIs_takeout(),shop.getTakeout_time(),id};
+				,shop.getScore(),add_time,shop.isIs_takeout(),shop.getTakeout_time(),shop.getTakeout_route(),id};
 		Connection conn = new MyDbPool().getConnection();
 		QueryRunner qr = new QueryRunner();
 		int flag = 0;

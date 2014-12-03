@@ -133,7 +133,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="weibo" class="col-sm-1 control-label">简介</label>
+						<label for="info" class="col-sm-1 control-label">简介</label>
 						<div class="col-sm-11">
 							<span class="detail">
 								<s:property value="shop.intro" escape="false"/>
@@ -142,15 +142,23 @@
 					</div>
 					<s:if test="shop.is_takeout">
 						<div class="form-group">
-						<label for="weibo" class="col-sm-1 control-label">送餐时间</label>
-						<div class="col-sm-11">
-							<span class="detail">
-								<s:property value="shop.takeout_time" escape="false"/>
-							</span>
+							<label for="takeout_time" class="col-sm-1 control-label">送餐时间</label>
+							<div class="col-sm-11">
+								<span class="detail">
+									<s:property value="shop.takeout_time" escape="false"/>
+								</span>
+							</div>
 						</div>
-					</div>
+					
+						<div class="form-group">
+							<label for="takeout_route" class="col-sm-1 control-label">送餐路线</label>
+							<div class="col-sm-11">
+								<span class="detail">
+									<s:property value="shop.takeout_route" escape="false"/>
+								</span>
+							</div>
+						</div>
 					</s:if>
-				</div>
 			</div>
     		
     		

@@ -7,6 +7,8 @@ public class Catalog {
 	private String name;
 	//上一级地区id
 	private int parent_id;
+	//排序编号,2014-12-2
+	private int order_id;
 	public int getId() {
 		return id;
 	}
@@ -24,6 +26,12 @@ public class Catalog {
 	}
 	public void setParent_id(int parentId) {
 		parent_id = parentId;
+	}
+	public int getOrder_id() {
+		return order_id;
+	}
+	public void setOrder_id(int orderId) {
+		order_id = orderId;
 	}
 	
 }
