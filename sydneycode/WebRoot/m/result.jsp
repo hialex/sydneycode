@@ -101,13 +101,14 @@
 			var catalog2 = window.sessionStorage.getItem("catalog2");
 			var suburb = window.sessionStorage.getItem("suburb");
 			var bh = window.sessionStorage.getItem("bh");
+			var rootId = window.sessionStorage.getItem("rootId");
 			var t = new Date().getTime();
 			//初始化饮食分类
 			$.ajax({
 				type: "POST",
 				dataType: "json",
 				url: "../mobile/MSearch.action",
-				data: { "catalog1": catalog1, "catalog2": catalog2 ,"suburb":suburb,"bh":bh,"t":t,"pageNum":pageNum},
+				data: { "catalog1": catalog1, "catalog2": catalog2 ,"suburb":suburb,"bh":bh,"rootId":rootId,"t":t,"pageNum":pageNum},
 				success: function(json) {
 					if(json.all.length==0){
 						var nomore = '<i class="fa fa-frown-o"></i>&nbsp;抱歉，没有更多的数据！';

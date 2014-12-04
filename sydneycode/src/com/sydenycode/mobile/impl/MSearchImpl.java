@@ -19,11 +19,12 @@ public class MSearchImpl {
 	static Logger logger = Logger.getLogger(MSearchImpl.class.getName());
 	
 	@SuppressWarnings("unchecked")
-	public List<MSearchResutlShopDTO> getSearchResultShops(String catalog1,String catalog2,String suburb,String bh,int pageNum){
+	public List<MSearchResutlShopDTO> getSearchResultShops(String catalog1,String catalog2,String suburb,String bh,int pageNum,String rootId){
 		
 		String sql = "";
         List<MSearchResutlShopDTO> shops = new ArrayList<MSearchResutlShopDTO>();
         List<MSearchResutlShopDTO> retSearchResutlShops = new ArrayList<MSearchResutlShopDTO>();
+        /**
         sql = "select distinct shops.id shop_id,shops.`name` shop_name,suburbs.`name` suburb_name,shops.is_takeout  is_takeout,shops.top_id top_id" +
         		" from shops,catalogs,shop_catalog,suburbs,bussiness_hours" +
         		" where shops.id=shop_catalog.shop_id" +
@@ -35,8 +36,30 @@ public class MSearchImpl {
         		getBhSQL(bh)+
         		" order by top_id desc,shop_name asc"+
         		" limit "+(pageNum-1)*CONSTANT.MOBILE_PAGE_SIZE+","+CONSTANT.MOBILE_PAGE_SIZE;
-        		
-        //System.out.println(sql);
+        */		
+        if(bh==null||bh.equals("")){
+        	sql = "select distinct shops.id shop_id,shops.`name` shop_name,suburbs.`name` suburb_name,shops.is_takeout  is_takeout,shops.top_id top_id" +
+			" from shops,shop_catalog,suburbs,(select * from catalogs where FIND_IN_SET(id,getChildList("+rootId+"))) c" +
+			" where shops.id=shop_catalog.shop_id" +
+			" and c.id=shop_catalog.catalog_id" +
+			" and shops.suburb_id=suburbs.id" +
+			getCatalogSQL(catalog1, catalog2)+
+			getSuburbSQL(suburb)+
+			" order by top_id desc,shop_name asc"+
+			" limit "+(pageNum-1)*CONSTANT.MOBILE_PAGE_SIZE+","+CONSTANT.MOBILE_PAGE_SIZE;
+        }else {
+        	sql = "select distinct shops.id shop_id,shops.`name` shop_name,suburbs.`name` suburb_name,shops.is_takeout  is_takeout,shops.top_id top_id" +
+			" from shops,shop_catalog,suburbs,bussiness_hours,(select * from catalogs where FIND_IN_SET(id,getChildList("+rootId+"))) c" +
+			" where shops.id=shop_catalog.shop_id" +
+			" and c.id=shop_catalog.catalog_id" +
+			" and shops.suburb_id=suburbs.id" +
+			" and shops.id=bussiness_hours.shop_id"+
+			getCatalogSQL(catalog1, catalog2)+
+			getSuburbSQL(suburb)+
+			getBhSQL(bh)+
+			" order by top_id desc,shop_name asc"+
+			" limit "+(pageNum-1)*CONSTANT.MOBILE_PAGE_SIZE+","+CONSTANT.MOBILE_PAGE_SIZE;
+        }
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         //Object[] params = {area};
@@ -47,6 +70,7 @@ public class MSearchImpl {
 				searchResutlShopDTO.setCatalogs(Shop_catalogImpl.getCatalogNames(String.valueOf(shop_id)));
 				retSearchResutlShops.add(searchResutlShopDTO);
 			}
+        	//System.out.println(shops.size());
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             logger.error("MSearchImpl-getSearchResultShops()-数据库操作失败！");

@@ -22,11 +22,22 @@ public class MSearchAction extends ActionSupport {
 	private String suburb;
 	private String bh;
 	private String pageNum;
+	private String rootId;
 	private JSONObject result;//返回的json
     Map<String, Object> jsonMap = new HashMap<String, Object>();//定义map 
     
     
 	
+	public String getRootId() {
+		return rootId;
+	}
+
+
+	public void setRootId(String rootId) {
+		this.rootId = rootId;
+	}
+
+
 	public String getPageNum() {
 		return pageNum;
 	}
@@ -100,7 +111,7 @@ public class MSearchAction extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 		Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
-    	List<MSearchResutlShopDTO> list = new MSearchImpl().getSearchResultShops(catalog1, catalog2, suburb, bh,Integer.parseInt(pageNum));
+    	List<MSearchResutlShopDTO> list = new MSearchImpl().getSearchResultShops(catalog1, catalog2, suburb, bh,Integer.parseInt(pageNum),rootId);
     	tempMap.put("all", list);
     	JsonConfig config = new JsonConfig();
     	config.registerPropertyExclusions(Catalog.class, new String[]{"parent_id"});

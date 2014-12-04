@@ -84,14 +84,16 @@
 					});
 				}
 			});
+			initBussinessHourFlip();
 			//监听按钮事件
 			$("#btn_search").click(function(){
 				window.sessionStorage.setItem("catalog1",$("#catalog1").val());
 				window.sessionStorage.setItem("catalog2",$("#catalog2").val());
 				window.sessionStorage.setItem("suburb",$("#suburb").val());
 				window.sessionStorage.setItem("bh",$("#bussiness_hour").val());
+				window.sessionStorage.setItem("rootId",5);
+				window.location.href='result.jsp';
 			});
-			initBussinessHourFlip();
 
 		});
 		function initBussinessHourFlip(){
@@ -148,7 +150,7 @@
   <body>
     <div data-role="page">
 		<div data-role="header" id="header">
-			<h2>悉 游 纪</h2>
+			<div class="logo"><img src="images/logo.png" height="50px"></div>
 		</div>
 		<div data-role="content">
 			<form id="filterForm">
@@ -178,7 +180,7 @@
 					</fieldset>
 				</div>
 				<div class="ui-block-b block-content">
-					<a href="result.jsp" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</a>
+					<a href="#" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</a>
 				</div>
 			</form>
 		</div>

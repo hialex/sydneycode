@@ -211,8 +211,8 @@
 <body>
 <div data-role="page">
 	<div data-role="header" id="header">
-		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="fa fa-arrow-circle-left "></i></a> </div>
-		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="fa fa-home "></i></a></div>
+		<div id="link_l"><a href="#" onclick="history.back();" data-ajax="false"><i class="grey fa fa-arrow-circle-left "></i></a> </div>
+		<div id="link_r"><a href="index.jsp" data-ajax="false"><i class="grey fa fa-home "></i></a></div>
 		<div class="logo"><img src="images/logo.png" height="50px"></div>
 	</div>
 	<div data-role="content"  id="detail">
