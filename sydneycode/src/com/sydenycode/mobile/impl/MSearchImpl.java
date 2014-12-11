@@ -11,12 +11,46 @@ import org.apache.log4j.Logger;
 
 import com.sydenycode.impl.Shop_catalogImpl;
 import com.sydenycode.mobile.dto.MSearchResutlShopDTO;
+import com.sydenycode.po.Shop;
 import com.sydenycode.util.CONSTANT;
 import com.sydenycode.util.MyDbPool;
 
 public class MSearchImpl {
 	
 	static Logger logger = Logger.getLogger(MSearchImpl.class.getName());
+	
+	@SuppressWarnings("unchecked")
+	public List<Shop> getShopNameSearchResult(String rootId,String q){
+		String sql = "";
+        List<Shop> shops = new ArrayList<Shop>();
+        sql = "select shops.*" +
+        		" from shops,shop_catalog,(select * from catalogs where FIND_IN_SET(id,getChildList("+rootId+"))) c"+
+        		" where shops.id=shop_catalog.shop_id" +
+    			" and c.id=shop_catalog.catalog_id" +
+    			" and shops.`name` like ? "+
+    			" order by shops.`name` asc";
+        //System.out.println(sql);
+        Connection conn = new MyDbPool().getConnection();
+        QueryRunner qr = new QueryRunner();
+        Object[] params = {"%"+q+"%"};
+        try {
+        	shops = (List<Shop>) qr.query(conn, sql, new BeanListHandler(Shop.class),params);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            logger.error("MSearchImpl-getSearchResultShops()-数据库操作失败！");
+            e.printStackTrace();
+        }finally{
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                logger.error("MSearchImpl-getSearchResultShops()-连接关闭失败！");
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return shops;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<MSearchResutlShopDTO> getSearchResultShops(String catalog1,String catalog2,String suburb,String bh,int pageNum,String rootId){

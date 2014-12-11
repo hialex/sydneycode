@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sydenycode.mobile.dto.MSearchResutlShopDTO;
 import com.sydenycode.mobile.impl.MSearchImpl;
 import com.sydenycode.po.Catalog;
+import com.sydenycode.po.Shop;
 
 public class MSearchAction extends ActionSupport {
 
@@ -24,10 +25,21 @@ public class MSearchAction extends ActionSupport {
 	private String pageNum;
 	private String rootId;
 	private JSONObject result;//返回的json
+	private String q;
     Map<String, Object> jsonMap = new HashMap<String, Object>();//定义map 
     
     
 	
+	public String getQ() {
+		return q;
+	}
+
+
+	public void setQ(String q) {
+		this.q = q;
+	}
+
+
 	public String getRootId() {
 		return rootId;
 	}
@@ -119,6 +131,18 @@ public class MSearchAction extends ActionSupport {
     	return SUCCESS;
 		
 	}
-	
+	/**
+	 * 手机客户端根据店铺名称进行搜索
+	 * <p>Title: searchName</p>
+	 * <p>Description: </p>
+	 * @return
+	 */
+	public String searchName(){
+		Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
+		List<Shop> list = new MSearchImpl().getShopNameSearchResult(rootId,q);
+    	tempMap.put("all", list);
+    	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject
+    	return SUCCESS;
+	}
 	
 }

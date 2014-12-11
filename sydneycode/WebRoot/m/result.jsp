@@ -17,6 +17,7 @@
 	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
 	<script src="js/handlebars-v2.0.0.js"></script>
 	<script src="js/iscroll.js"></script>
+	<script src="js/jquery.cookie.js"></script>
 	<script>
 		var pageNum = 1;
 		var myScroll,
@@ -93,17 +94,20 @@
 
 		//初始化绑定iScroll控件
 		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-		//document.addEventListener('DOMContentLoaded', loaded, false);
 
 		function getData(pageNum){
 			showLoader();
-			var catalog1 = window.sessionStorage.getItem("catalog1");
-			var catalog2 = window.sessionStorage.getItem("catalog2");
-			var suburb = window.sessionStorage.getItem("suburb");
-			var bh = window.sessionStorage.getItem("bh");
-			var rootId = window.sessionStorage.getItem("rootId");
+			var catalog1 = $.cookie('catalog1');
+			var catalog2 = $.cookie('catalog2');
+			var suburb = $.cookie('suburb');
+			var bh = $.cookie('bh');
+			var rootId = $.cookie('rootId');
+			console.log("catalog1="+catalog1);
+			console.log("catalog2="+catalog2);
+			console.log("suburb="+suburb);
+			console.log("bh="+(typeof(bh)=="undefined"));
+
 			var t = new Date().getTime();
-			//初始化饮食分类
 			$.ajax({
 				type: "POST",
 				dataType: "json",

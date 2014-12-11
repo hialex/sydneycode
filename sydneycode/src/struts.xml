@@ -107,5 +107,10 @@
                 <param name="root">result</param> 
             </result> 
 	   	</action>
+	   	<action name="MShopNameSearch" class="com.sydenycode.mobile.action.MSearchAction"  method="searchName">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
 	</package>
 </struts>

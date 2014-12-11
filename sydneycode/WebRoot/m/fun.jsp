@@ -12,10 +12,14 @@
     <link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" >
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/jqm-datebox-1.4.4.css">
+	  <link rel="stylesheet" href="css/font-awesome.min.css" >
+	  <link rel="stylesheet" href="css/iconfont/iconfont.css">
     <script src="js/jquery.min.js" ></script>
   	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
 	<script src="js/jquery.mobile.DateBox.js"></script>
 	<script src="js/jqm-datebox.mode.customflip.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	  <script src="js/user.js"></script>
 	<script>
 		//显示加载器
 		function showLoader() {
@@ -88,11 +92,11 @@
 			initBussinessHourFlip();
 			//监听按钮事件
 			$("#btn_search").click(function(){
-				window.sessionStorage.setItem("catalog1",$("#catalog1").val());
-				window.sessionStorage.setItem("catalog2",$("#catalog2").val());
-				window.sessionStorage.setItem("suburb",$("#suburb").val());
-				window.sessionStorage.setItem("bh",$("#bussiness_hour").val());
-				window.sessionStorage.setItem("rootId",4);
+				$.cookie('catalog1',$("#catalog1").val(),{expires:1});
+				$.cookie('catalog2',$("#catalog2").val(),{expires:1});
+				$.cookie('suburb',$("#suburb").val(),{expires:1});
+				$.cookie('bh',$("#bussiness_hour").val(),{expires:1});
+				$.cookie('rootId',4,{expires:1});
 				window.location.href='result.jsp';
 			});
 
@@ -122,7 +126,7 @@
 				type:"post",
 				url:"../admin/Suburb!listHot.action",
 				dataType:"json",
-				data:{ "parent_id": 1,"from":"mobile"},
+				data:{ "parent_id": 1,"from":"mobile","rootId":4},
 				success:function(json){
 					$.each(json.hot_suburb_list,function(m,suburb){
 						$("#suburb").append("<option value="+suburb.id+">"+suburb.name+"</option>");
@@ -132,7 +136,7 @@
 						type:"post",
 						url:"../admin/Suburb!listByParentId.action",
 						dataType:"json",
-						data:{ "parent_id": 1,"from":"mobile"},
+						data:{ "parent_id": 1,"from":"mobile","rootId":4},
 						success:function(json){
 							$.each(json.suburb_list,function(m,suburb){
 								$("#suburb").append("<option value="+suburb.id+">"+suburb.name+"</option>");
@@ -151,6 +155,7 @@
   <body>
     <div data-role="page">
 		<div data-role="header" id="header">
+			<div id="link_r"><a href="search.jsp?rootId=4" data-ajax="false"><i class="grey fa fa-search "></i></a></div>
 			<div class="logo"><img src="images/logo.png" height="50px"></div>
 		</div>
 		<div data-role="content">
@@ -181,7 +186,7 @@
 					</fieldset>
 				</div>
 				<div class="ui-block-b block-content">
-					<a href="#" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all ui-icon-search ui-btn-icon-left ui-shadow-icon">马上搜索</a>
+					<a href="#" id="btn_search" data-ajax="false" data-transition="slidedown" class="ui-btn ui-corner-all">马上搜索</a>
 				</div>
 			</form>
 		</div>

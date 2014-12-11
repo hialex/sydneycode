@@ -50,7 +50,7 @@ public class SuburbImpl {
     
     //根据父节点id获取地区列表
     @SuppressWarnings("unchecked")
-	public static List<Suburb> getSuburbListByParentId(String parent_id,String from){
+	public static List<Suburb> getSuburbListByParentId(String parent_id,String from,String rootId){
         String sql = "";
         List<Suburb> allSuburbs = new ArrayList<Suburb>();
         if("-1".equals(parent_id)) {
@@ -58,7 +58,13 @@ public class SuburbImpl {
             sql = "select * from suburbs  order by name asc;";
         }else {
         	if(from.equals("mobile")){
-        		sql = "select distinct suburbs.id,suburbs.name from suburbs,shops where suburbs.id=shops.suburb_id and suburbs.parent_id = '"+parent_id+"' order by suburbs.name asc;";
+        		sql = "select distinct suburbs.id,suburbs.name " +
+        				"from suburbs,shops,shop_catalog,(SELECT * FROM catalogs WHERE FIND_IN_SET(id, getChildList("+rootId+")) )c "  +
+        				"where suburbs.id=shops.suburb_id " +
+        				"and shops.id=shop_catalog.shop_id "+
+        				"and shop_catalog.catalog_id=c.id "+
+        				"and suburbs.parent_id = '"+parent_id+"' " +
+        				"order by suburbs.name asc;";
         	}else{
         		sql = "select * from suburbs where parent_id = '"+parent_id+"' order by name asc;";
         	}
@@ -87,11 +93,17 @@ public class SuburbImpl {
     
     //获取热门地区
     @SuppressWarnings("unchecked")
-	public static List<Suburb> getHotSuburbList(String parent_id,String from){
+	public static List<Suburb> getHotSuburbList(String parent_id,String from,String rootId){
         String sql = "";
         List<Suburb> allHotSuburbs = new ArrayList<Suburb>();
         if(from.equals("mobile")){
-    		sql = "select distinct suburbs.id,suburbs.name from suburbs,shops where suburbs.id=shops.suburb_id and suburbs.is_hot=1  order by suburbs.name asc";
+    		sql = "select distinct suburbs.id,suburbs.name " +
+	    				"from suburbs,shops,shop_catalog,(SELECT * FROM catalogs WHERE FIND_IN_SET(id, getChildList("+rootId+")) )c " +
+    				"where suburbs.id=shops.suburb_id " +
+    				"and shops.id=shop_catalog.shop_id "+
+    				"and shop_catalog.catalog_id=c.id "+
+    				"and suburbs.is_hot=1 " +
+    				"order by suburbs.name asc";
     	}else{
     		sql = "select * from suburbs where is_hot=1  order by name asc";
     	}
@@ -176,7 +188,7 @@ public class SuburbImpl {
     public static int deleteSuburb(String id){
     	int flag = 0;
         //有下级地区不能删除
-    	if(getSuburbListByParentId(id,"web").size()>0){
+    	if(getSuburbListByParentId(id,"web",null).size()>0){
     		flag = -1;
     	}else if(ShopImpl.getShopBySuburbId(id).size()>0){
     		//有对应商家不能删除

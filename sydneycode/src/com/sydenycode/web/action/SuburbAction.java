@@ -23,7 +23,17 @@ public class SuburbAction extends ActionSupport {
     private String parent_id;
     private String id;
     private String from;
+    private String rootId;
     
+    
+
+	public String getRootId() {
+		return rootId;
+	}
+
+	public void setRootId(String rootId) {
+		this.rootId = rootId;
+	}
 
 	public String getFrom() {
 		return from;
@@ -115,7 +125,8 @@ public class SuburbAction extends ActionSupport {
     	if(from==null||from.equals("")){
     		from = "web";
     	}
-    	ret = SuburbImpl.getSuburbListByParentId(parent_id,from);
+    	ret = SuburbImpl.getSuburbListByParentId(parent_id,from,rootId);
+//    	System.out.println(ret.size());
     	tempMap.put("suburb_list", ret);
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject
     	return SUCCESS;
@@ -126,9 +137,12 @@ public class SuburbAction extends ActionSupport {
     	if(from==null||from.equals("")){
     		from = "web";
     	}
+    	if(rootId==null||rootId.equals("")){
+    		rootId = "0";
+    	}
     	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
     	List<Suburb> ret = new ArrayList<Suburb>();
-    	ret = SuburbImpl.getHotSuburbList(parent_id,from);
+    	ret = SuburbImpl.getHotSuburbList(parent_id,from,rootId);
     	tempMap.put("hot_suburb_list", ret);
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject
     	return SUCCESS;
