@@ -140,6 +140,7 @@ public class MSearchAction extends ActionSupport {
 	public String searchName(){
 		Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
 		List<Shop> list = new MSearchImpl().getShopNameSearchResult(rootId,q);
+		
     	tempMap.put("all", list);
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject
     	return SUCCESS;

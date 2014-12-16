@@ -23,7 +23,7 @@ public class MSearchImpl {
 	public List<Shop> getShopNameSearchResult(String rootId,String q){
 		String sql = "";
         List<Shop> shops = new ArrayList<Shop>();
-        sql = "select shops.*" +
+        sql = "select distinct shops.*" +
         		" from shops,shop_catalog,(select * from catalogs where FIND_IN_SET(id,getChildList("+rootId+"))) c"+
         		" where shops.id=shop_catalog.shop_id" +
     			" and c.id=shop_catalog.catalog_id" +
