@@ -63,9 +63,20 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     //接受置顶id
     private String top_id;
     
+    //接受root catalog id
+    private String root_catalog_id;
     
     
-    public String getTop_id() {
+    
+    public String getRoot_catalog_id() {
+		return root_catalog_id;
+	}
+
+	public void setRoot_catalog_id(String rootCatalogId) {
+		root_catalog_id = rootCatalogId;
+	}
+
+	public String getTop_id() {
 		return top_id;
 	}
 
@@ -298,6 +309,33 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     	pics = PicImpl.getPicsById(id);
     	tempMap.put("pics", pics);
     	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
+    	return SUCCESS;
+    }
+    
+    /**
+     * 设置店铺归属大类
+     * <p>Title: setRootCatalog</p>
+     * <p>Description: </p>
+     * @return
+     */
+    public String setRootCatalog(){
+    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
+    	//System.out.println("id==>"+id+",root_catalog_id==>"+root_catalog_id);
+    	int flag = ShopImpl.setRootCatalog(id,root_catalog_id);
+    	if(flag==1){
+            //删除成功
+            status = 1;
+            message = "设置成功！";
+            tempMap.put("status", status);
+            tempMap.put("message", message);
+            
+        }else{
+            //删除失败
+            status = -1; 
+            message = "设置失败，请检查！";
+            tempMap.put("message", message);
+        }
+        result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
     	return SUCCESS;
     }
     

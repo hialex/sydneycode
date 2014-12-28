@@ -19,7 +19,6 @@ body {
 	font-size: 14px;
 	padding: 30px 40px;
 }
-
 .gallery {
 	font-size: 14px;
 	padding-left: 80px;
@@ -75,11 +74,20 @@ body {
 	font-wight: bold;
 	margin: 0px 5px 0px;
 }
-
+.cellcenter{
+	text-align:center;
+	vertical-align:middle;
+}
+.cellleft{
+	text-align:left;
+	vertical-align:middle;
+}
 .label1 {
 	display: inline-block;
 }
-
+.well-top{
+	margin-top:20px;	
+}
 .detail {
 	float: left;
 	font-size: 14px;
@@ -88,7 +96,12 @@ body {
 	font-style: italic;
 	font-wight: bold;
 }
-
+.shop_name{
+	font-family: "Microsoft YaHei", "微软雅黑", "Arial";
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 24px;
+}
 #catalogs {
 	float: left;
 	display: inline-block;
@@ -153,4 +166,65 @@ body {
 
 .bs-callout-info h5 {
 	color: #5bc0de
+}
+
+.loginContainer{
+    background: #444 url("../images/carbon_fibre_big.png");
+    font-family: "Microsoft YaHei", "微软雅黑", "Arial";
+}
+.loginBox {
+    width: 420px;
+    height: 230px;
+    padding: 0 20px;
+    border: 1px solid #fff;
+    color: #000;
+    margin-top: 40px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 0 15px #222;
+    background: -moz-linear-gradient(top, #fff, #efefef 8%);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), to(#f4f4f4));
+    font: 11px/1.5em 'Microsoft YaHei';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -210px;
+    margin-top: -115px;
+}
+
+.loginBox h2 {
+    height: 45px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.loginBox .left {
+    border-right: 1px solid #ccc;
+    height: 100%;
+    padding-right: 20px;
+}
+
+.regBtn {
+    margin-top: 21px;
+}
+.loginLogo{
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    margin: 45px 5px 30px -5px;
+}
+.default_display{
+
+    font-family: "Microsoft YaHei", "微软雅黑", "Arial";
+    font-weight: bold;
+    color: #0099FF;
+}
+
+#myTabContent{
+    width: 95%;
+    margin:10px 10px 20px;
+    height: auto;
+}
+#myTabContent a{
+    padding: 3px;
 }

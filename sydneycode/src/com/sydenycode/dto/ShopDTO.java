@@ -9,10 +9,31 @@ public class ShopDTO {
 	private String suburb_name;
 	private String shop_name;
 	private String[] catalog_names;
+	//id
+	private String root_catalog_name;
+	private String root_catalog_id;
 	//private String address;
 	//private String tel;
 
 	private Timestamp add_time;
+	
+	
+	
+	public String getRoot_catalog_id() {
+		return root_catalog_id;
+	}
+
+	public void setRoot_catalog_id(String rootCatalogId) {
+		root_catalog_id = rootCatalogId;
+	}
+
+	public String getRoot_catalog_name() {
+		return root_catalog_name;
+	}
+
+	public void setRoot_catalog_name(String rootCatalogName) {
+		root_catalog_name = rootCatalogName;
+	}
 
 	public int getShop_id() {
 		return shop_id;

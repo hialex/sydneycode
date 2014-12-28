@@ -141,18 +141,6 @@
     		</div>
     		
     	</div>
-    	<div id="alertTest" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		        <h3 id="myModalLabel">提示标题</h3>
-		    </div>
-		    <div class="modal-body">
-		        <p>提示内容！</p>
-		    </div>
-		    <div class="modal-footer">
-		        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-		    </div>
-		</div>
     </div>  
  </body>
 </html>

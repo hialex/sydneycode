@@ -131,6 +131,31 @@ public class ShopImpl {
         return flag;
 	}
 	
+	public static int setRootCatalog(String id,String root_catalog_id){
+		String sql = "update shops set root_catalog_id=? where id=?";
+		Object[] params = {root_catalog_id,id};
+		Connection conn = new MyDbPool().getConnection();
+		QueryRunner qr = new QueryRunner();
+		int flag = 0;
+		try {
+            flag = qr.update(conn,sql, params);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            logger.error("ShopImpl-setRootCatalog()-数据库操作失败！");
+            e.printStackTrace();
+        }finally{
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                logger.error("ShopImpl-setRootCatalog()-连接关闭失败");
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        //System.out.println(flag);
+        return flag;
+	}
+	
 	public static int  editShop(String id,Shop shop){
 		
 		String sql = "UPDATE shops SET " +

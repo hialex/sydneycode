@@ -35,5 +35,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/tomcat-jdbc.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xwork-core-2.3.16.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/thumbnailator-0.4.8.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

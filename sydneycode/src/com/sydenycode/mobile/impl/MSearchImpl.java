@@ -27,7 +27,8 @@ public class MSearchImpl {
         		" from shops,shop_catalog,(select * from catalogs where FIND_IN_SET(id,getChildList("+rootId+"))) c"+
         		" where shops.id=shop_catalog.shop_id" +
     			" and c.id=shop_catalog.catalog_id" +
-    			" and shops.`name` like ? "+
+    			//" and TRIM(REPLACE(shops.`name`,' ','')) like TRIM(REPLACE(?,' ','') )"+
+    			" and shops.`name` like ?"+
     			" order by shops.`name` asc";
         //System.out.println(sql);
         Connection conn = new MyDbPool().getConnection();
@@ -35,6 +36,7 @@ public class MSearchImpl {
         Object[] params = {"%"+q+"%"};
         try {
         	shops = (List<Shop>) qr.query(conn, sql, new BeanListHandler(Shop.class),params);
+        	//System.out.println(shops.size());
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             logger.error("MSearchImpl-getSearchResultShops()-数据库操作失败！");

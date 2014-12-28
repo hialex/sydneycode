@@ -132,6 +132,14 @@ public class SuburbAction extends ActionSupport {
     	return SUCCESS;
     }
     
+    public String getSuburbById(){
+    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map
+    	suburb = SuburbImpl.querySuburbById(id);
+    	tempMap.put("suburb", suburb);
+    	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
+    	return SUCCESS;
+    }
+    
   //获取热门地区
     public String listHot(){
     	if(from==null||from.equals("")){
@@ -191,17 +199,7 @@ public class SuburbAction extends ActionSupport {
     	return SUCCESS;
     }
     
-    /**
-     * 获取地区详细信息
-     * @return
-     */
-    public String getCatalogById(){
-    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map
-    	suburb = SuburbImpl.querySuburbById(id);
-    	tempMap.put("suburb", suburb);
-    	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
-    	return SUCCESS;
-    }
+    
     
   //编辑地区
     public String edit(){

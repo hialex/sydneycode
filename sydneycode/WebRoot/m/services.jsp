@@ -58,7 +58,16 @@
 			});
 			//子分类联动
 			$("#catalog1").bind("change",function(){
-
+				//特殊处理
+				var arr = ['265','268','272','277','281','283','263'];
+				var catalog_id = $('#catalog1').val();
+				if($.inArray(catalog_id,arr)>-1){
+					$('#div_area').hide();
+					$('#div_time').hide();
+				}else{
+					$('#div_area').show();
+					$('#div_time').show();
+				}
 				//重置联动选择框
 				$("#catalog2 option").each(function(){
 					if($(this).val()!='all'){

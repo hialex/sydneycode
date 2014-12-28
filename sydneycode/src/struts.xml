@@ -13,16 +13,53 @@
     <constant name="struts.locale" value="zh_CN" />
    	<!-- 改变struts2默认为2M的上传文件大小限制 -->  
     <constant name="struts.multipart.maxSize" value="1024000000"/>  
-    <package name="upload" namespace="/admin" extends="struts-default,json-default">  
-        <action name="UploadFile" class="com.sydenycode.web.action.UploadFileAction">  
-            <param name="savePath">/uploads</param>  
+    <package name="default" namespace="/"
+		extends="struts-default,json-default">
+		
+		<interceptors>
+			<interceptor name="loginInterceptor"
+				class="com.sydenycode.web.interceptors.LoginInterceptor">
+			</interceptor>
+			<interceptor-stack name="loginDefaultStack">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="loginDefaultStack"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/index.jsp</result>
+		</global-results>
+		
+		<action name="Logon"
+			class="com.sydenycode.web.action.LoginAction" method="login">
+			<result name="success" type="json" />
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="Logout"
+			class="com.sydenycode.web.action.LogoutAction">
+			<result name="quit" type="redirect">/index.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="PhotoUpload" class="com.sydenycode.web.action.PhotoUploadAction"> 
+            <param name="savePath">/upload</param>
+            <param name="thumbPath">/upload/thumb</param>
             <result type="json"> 
                 <param name="root">result</param> 
             </result>
-        </action> 
-    </package> 
+        </action>
+        <action name="Photo" class="com.sydenycode.web.action.PhotoAction"> 
+            <result type="json"> 
+                <param name="root">result</param> 
+            </result>
+        </action>
+        <action name="Photolist" class="com.sydenycode.web.action.PhotoAction" method="listAll">   			   	
+        	<result type="json" >
+        		<param name="root">jsonMap</param>
+        	</result>
+	   	</action>
+	</package>
      
-    <package name="default" namespace="/admin" extends="struts-default,json-default">
+    <package name="admin" namespace="/admin" extends="struts-default,json-default">
        	<!-- Catalog -->
        	<action name="Catalog" class="com.sydenycode.web.action.CatalogAction">
 	   		<result type="json"> 
@@ -65,33 +102,30 @@
         	<result name="GoToDetail">/admin/shop_detail.jsp</result>
 	   	</action>
 	   	
+	   	<!-- PhotoCategory -->
+	   	<action name="PhotoCategory" class="com.sydenycode.web.action.PhotoCategoryAction">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
+	   	<action name="PhotoCategoryList" class="com.sydenycode.web.action.PhotoCategoryAction" method="listAll">   			   	
+        	<result type="json" >
+        		<param name="root">jsonMap</param>
+        	</result>
+	   	</action>
+	   	<!-- User -->
+	   	<action name="User" class="com.sydenycode.web.action.UserAction">
+	   		<result type="json"> 
+                <param name="root">result</param> 
+            </result> 
+	   	</action>
 	   	
+	   	<action name="Userlist" class="com.sydenycode.web.action.UserAction" method="listAll">   			   	
+        	<result type="json" >
+        		<param name="root">jsonMap</param>
+        	</result>
+	   	</action>
 	   	
-        <!-- 验证是否登陆拦截器 
-	   	<interceptors>  
-	           <interceptor name="loginInterceptor" class="com.ycdx.experts.interceptor.LoginInterceptor"></interceptor>  
-	           <interceptor-stack name="loginDefaultStack">  
-	               <interceptor-ref name="loginInterceptor"></interceptor-ref>  
-	               <interceptor-ref name="defaultStack"></interceptor-ref>  
-	           </interceptor-stack>  
-	       </interceptors>  
-	       <default-interceptor-ref name="loginDefaultStack"></default-interceptor-ref> 
-	   	<global-results>  
-	           <result name="login" type="redirect">/login.jsp</result>  
-	       </global-results>
-	       
-	   <action name="Logon" class="com.ycdx.report.action.LoginAction" method="login">   
-			<result name="success" type="json" />
-			<interceptor-ref name="defaultStack"></interceptor-ref> 
-	   </action>
-	   <action name="Logout" class="com.ycdx.report.action.LogoutAction">   
-			<result name="quit" type="redirect">
-				/login.jsp
-			</result>
-			<interceptor-ref name="defaultStack"></interceptor-ref> 
-	   </action>
-       		
-	   -->
     </package>
     
     

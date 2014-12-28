@@ -14,7 +14,7 @@
 	<link href="../css/style.css" rel="stylesheet">
    	<script src="../js/jquery.js"></script>
    	<script src="../js/bootstrap.min.js"></script>
-	
+	<script src="../js/user.js"></script>
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -85,11 +85,7 @@
     	</div>
     </div>
   	<script type="text/javascript">
-	  	function getQueryString(name) {
-		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		    var r = window.location.search.substr(1).match(reg);
-		    if (r != null) return unescape(r[2]); return null;
-   		}
+	  	
   		$(document).ready(function() {
 	  		var id = getQueryString("id");
 	  		//获取顶级地区填充
@@ -107,7 +103,7 @@
 	  		//查询suburb信息
 	  		$.ajax({
 	  			type:"post",
-	  			url:"Suburb!getCatalogById.action",
+	  			url:"Suburb!getSuburbById.action",
 	  			dataType:"json",
 	  			data:{ "id": id},
 	  			success:function(json){

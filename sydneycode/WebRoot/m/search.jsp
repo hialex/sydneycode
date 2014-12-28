@@ -40,6 +40,7 @@
 		{
 			$.mobile.loading('hide');
 		}
+
 		$(document).on("pagecreate","#myPage",function(){
 			var rootId = getQueryString("rootId");
 			$("#autocomplete").on("filterablebeforefilter",function(e,data){
@@ -49,8 +50,8 @@
 					html = "";
 				$ul.html("");
 				if(value && value.length>1){
-					$ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
-					$ul.listview("refresh");
+					$("#noresult").show();
+					$("#noresult").html('<i class="fa fa-spinner fa-spin"></i>&nbsp;正在搜索，请耐心等待...');
 					$.ajax({
 						type: "POST",
 						dataType: "json",
@@ -59,7 +60,7 @@
 					})
 					.then(function(response){
 						if(response.all.length==0){
-							$("#noresult").show();
+							$("#noresult").html('<i class="fa fa-frown-o"></i>&nbsp;Oops..没有结果，可能是漏了空格哦~');
 						}else{
 							$("#noresult").hide();
 							$.each(response.all,function(i,val){
@@ -88,7 +89,7 @@
 				<input id="autocomplete-input" data-type="search" placeholder="输入商铺名称,至少2个字符">
 			</form>
 			<ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
-			<div id="noresult" class="grey"><i class="fa fa-frown-o"></i>&nbsp;Oops...没有结果，换个关键词吧~</div>
+			<div id="noresult" class="grey"></div>
 		</div>
 		<div data-role="footer" >
 			<div id="copyright"> &copy; Sydneycode.com.au 2014</div>

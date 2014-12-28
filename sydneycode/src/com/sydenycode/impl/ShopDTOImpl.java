@@ -54,8 +54,8 @@ public class ShopDTOImpl {
 	public static List<ShopDTO> queryAllShops(){
         String sql = "";
         List<ShopDTO> allShops = new ArrayList<ShopDTO>();
-        sql = "select shops.id shop_id, suburbs.`name` suburb_name,shops.`name` shop_name,shops.add_time"+
-		" from shops,suburbs"+
+        sql = "select shops.id shop_id, suburbs.`name` suburb_name,shops.`name` shop_name,catalogs.`name` root_catalog_name ,shops.root_catalog_id root_catalog_id,shops.add_time"+
+		" from suburbs,shops left join catalogs on shops.root_catalog_id = catalogs.id"+
 		" where shops.suburb_id = suburbs.id order by shops.add_time desc,shop_id asc";
         /*
          *  sql = "select shops.id shop_id, suburbs.`name` suburb_name,shops.`name` shop_name,shops.addr address,shops.tel,shops.add_time"+
