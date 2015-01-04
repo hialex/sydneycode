@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>编辑地区</title>
+    <title>编辑用户</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -14,7 +14,8 @@
 	<link href="../css/style.css" rel="stylesheet">
    	<script src="../js/jquery.js"></script>
    	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/user.js"></script>
+   	<script src="../js/user.js"></script>
+
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -33,14 +34,13 @@
   	<div class="container">
 	  	<!-- 导航菜单 -->
 	    <s:include value="nav_bar.jsp" >
-	    	<s:param name="title">catalogs</s:param>
 	    </s:include>
     	<div id="content">
     		<!-- 添加地区 -->
     		<div class="row">
     			<div class="col-sm-1"></div>
 	    		<div class="col-sm-10 main">
-	    		    <div class="well well-sm"><strong>编辑Suburbs</strong></div>
+	    		    <div class="well well-sm"><strong>编辑用户</strong></div>
 	    		</div>
 	    		<div class="col-sm-1"></div>
     		</div>
@@ -49,32 +49,32 @@
 	    		<div class="col-sm-10">
 	    		    <form class="form-horizontal" role="form">
 	    		      <div class="form-group">
-					    <label for="catalog_top" class="col-sm-2 control-label">Suburb归属</label>
-					    <div class="col-sm-3">
-					      	<select class="form-control" id="select_top">
-							</select>
+					    <label for="loginname" class="col-sm-4 control-label">登录名</label>
+					    <div class="col-sm-4">
+							<input type="text" class="form-control" id="loginname" placeholder="请填入包含字母或数字的组合">
 					    </div>
-					    <div class="col-sm-7"></div>
+					    <div class="col-sm-4"></div>
 					  </div>
 					  <div class="form-group">
-					    <label for="catalog_top" class="col-sm-2 control-label">Suburb Name</label>
-					    <div class="col-sm-8">
-					      <input type="text" class="form-control" id="suburb_name" placeholder="请输入Suburb Name">
+					    <label for="nickname" class="col-sm-4 control-label">姓名</label>
+					    <div class="col-sm-4">
+					      <input type="text" class="form-control" id="nickname" placeholder="显示名称，可填写中文">
 					    </div>
+						  <div class="col-sm-4"></div>
 					  </div>
+						<div class="form-group">
+							<label for="role" class="col-sm-4 control-label">角色</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="role">
+									<option value="0">管理员</option>
+									<option value="1">超级管理员</option>
+								</select>
+							</div>
+							<div class="col-sm-4"></div>
+						</div>
 					  <div class="form-group">
-					    <label for="catalog_top" class="col-sm-2 "></label>
-					    <div class="col-sm-8">
-					      <div class="checkbox">
-						    <label>
-						      <input type="checkbox" id="hot_suburb"> 设置为常用地区
-						    </label>
-						  </div>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-2">
-					      <button type="submit" id="btn_edit_suburb" class="btn btn-default">更新</button>
+					    <div class="col-sm-offset-7 col-sm-2">
+					      <button type="submit" id="btn_edit_user" class="btn btn-primary">编辑</button>
 					    </div>
 					  </div>
 					</form>
@@ -85,69 +85,52 @@
     	</div>
     </div>
   	<script type="text/javascript">
-	  	
-  		$(document).ready(function() {
-	  		var id = getQueryString("id");
-	  		//获取顶级地区填充
-	  		$.ajax({
-	  			type:"post",
-	  			url:"Suburb!listByParentId.action",
-	  			dataType:"json",
-	  			data:{ "parent_id": 0},
-	  			success:function(json){
-	  				$.each(json.suburb_list,function(m,suburb){
-	  					$("#select_top").append("<option value="+suburb.id+">"+suburb.name+"</option>");
-	  				});
-	  			}
-	  		});
-	  		//查询suburb信息
-	  		$.ajax({
-	  			type:"post",
-	  			url:"Suburb!getSuburbById.action",
-	  			dataType:"json",
-	  			data:{ "id": id},
-	  			success:function(json){
-	  				$('#suburb_name').val(json.suburb.name);
-					if(json.suburb.is_hot){
-						$('#hot_suburb').attr("checked",true);
-					}
-	  			}
-	  		});
-	  		
+
+		$(document).ready(function(){
+			var id = getQueryString("id");
+
+			//查询suburb信息
+			$.ajax({
+				type:"post",
+				url:"User!getUserById.action",
+				dataType:"json",
+				data:{ "uid": id},
+				success:function(json){
+					$('#loginname').val(json.user.username);
+					$('#nickname').val(json.user.nickname);
+					$('#role').val(json.user.role);
+				}
+			});
+			//添加按钮
+			$('#btn_edit_user').click(function(){
+				var username = $('#loginname').val();
+				var nickname = $('#nickname').val();
+				var role = $('#role').val();
+				if(username==''){
+					alert("登录名不能为空,请填写！");
+					$('#loginname').focus();
+				}else if(nickname==''){
+					alert("用户名不能为空,请填写！");
+					$('#nickname').focus();
+				}else{
+					updateUser(username,nickname,role,id);
+				}
+				return false;
+			});
 	  	});
-  		$(function(){
-  			//顶级分类编辑按钮
-	  		$('#btn_edit_suburb').click(function(){
-	  			var suburb_name = $('#suburb_name').val();
-	  			var parent_id = $('#select_top').val();
-	  			var hot_suburb = false;
-	  			if($('#hot_suburb').is(':checked')){
-	  				hot_suburb = true;
-	  			}
-	  			if(suburb_name==''){
-	  				alert("Suburb Name不能为空,请填写！");
-	  				$('#suburb_name').focus();
-	  			}else{
-	  				var s_id = getQueryString("id");
-	  				editSuburb(s_id,suburb_name,parent_id,hot_suburb);
-	  			}
-	  			return false;
-	  		});
-	  		
-	  	});
-	  	function editSuburb(id,suburb_name,parent_id,hot_suburb){
+	  	function updateUser(username,nickname,role,id){
 	  		var t = new Date().getTime();
 	  		$.ajax({
                 type: "POST",
                 dataType: "json",
                 //cache:true,
-                url: "Suburb!edit.action",
-                data: { "suburb.id": id,"suburb.name": suburb_name, "suburb.parent_id": parent_id,"suburb.is_hot": hot_suburb,"t":t},                              
+                url: "User!edit.action",
+                data: { "user.username": username, "user.nickname": nickname,"user.role": role,"user.id":id,"t":t},
                 success: function(json) {
-                	if(json.status==1){
+                	if(json.success){
                 		//保存成功
                 		alert(json.message);
-                		window.location.href = "suburbs_list.jsp";
+                		window.location.href = "users_list.jsp";
                 	}else{
                 		alert(json.message);
                 	}

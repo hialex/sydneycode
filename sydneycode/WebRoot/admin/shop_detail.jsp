@@ -17,9 +17,17 @@
 	<link href="../css/style.css" type="text/css" rel="stylesheet" />
    	<script src="../js/jquery.js"></script>
    	<script src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.nailthumb.min.js"></script>
-    <script type="text/javascript" src="../js/shadowbox.js"></script>
-	
+    <script type="text/javascript" src="../js/base64.js"></script>
+
+	<script>
+		$(document).ready(function(){
+			var id = '<s:property value="shop.id"/>';
+			var root_catalog_id = '<s:property value="shop.root_catalog_id"/>';
+			var name = new Base64().encode('<s:property value="shop.name"/>');
+			$("#photolist").attr('href','photos_list.jsp?id='+id+'&root_catalog_id='+root_catalog_id+'&name='+name);
+		});
+	</script>
+
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -43,7 +51,7 @@
     	<div id="content" class="row-fluid">
     		<form class="form-horizontal fill" id="addShopForm" role="form">
     		<div class="row">
-    			<div class="col-sm-12 title">商户信息查看</div>
+    			<div class="col-sm-12 title">店铺详情&nbsp;&nbsp;<a id="photolist" href="" target="_blank"><span class="glyphicon glyphicon-picture"></span></a></div>
     		</div>
     		<div class="row">
 	    		<div class="col-sm-12 ">
@@ -310,30 +318,9 @@
 					</div>
     			</div>
     		</div>
-    		<div class="row">
-	    		<div class="col-sm-12">
-	    		    <div class="well well-sm"><strong>Gallery</strong></div>
-	    		</div>
-    		</div>
-    		<div class="row gallery">
-	    		<div class="span12 ">
-	    			<s:iterator value="pics" var="pic">
-   		    			<a class="square-thumb " rel="shadowbox[gallery]" href='<s:property value="#pic.name"/>'></a>
-   		    		</s:iterator>
-	    		</div>
-    		</div>
-    		
     		</form>
     	</div>
     </div>
-  	<script type="text/javascript">
-	  	jQuery(document).ready(function() {
-           jQuery('.square-thumb').nailthumb({
-               imageFromWrappingLink:true
-           });
-           Shadowbox.init();
-       });
-	  	
-  	</script>
+  	
   </body>
 </html>

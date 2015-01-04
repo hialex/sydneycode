@@ -18,13 +18,15 @@
 
 	<script src="js/jquery.min.js" ></script>
 	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
-	<script src="js/user.js"></script>
+	<script src="../js/user.js"></script>
 	<script src="js/mustache.js"></script>
 	<script src="js/jquery.bxslider.js"></script>
+	<script src="../js/base64.js"></script>
 	<script>
 
 		$(document).ready(function(){
 			var id = getQueryString("id");
+			$('#div_photos').hide();
 			showLoader();
 			$.ajax({
 				type: "POST",
@@ -41,9 +43,11 @@
 					}else{
 						showShopBH(json);
 					}
-					
-					if(json.pics.length>0){
-						showShopPics(json);
+					if(json.photos.length>0){
+						$('#div_photos').show();
+						showShopPhotos(json);
+					}else{
+						$('#div_photos').hide();
 					}
 					hideLoader();
 				}
@@ -74,35 +78,91 @@
 		}
 
 		function showShop(shop_data){
+			//console.log(shop_data);
 			$("#shop_info").append();
-			var source="<li><span id=\"shop_name\" class=\"shop_name\">{{name}}</span></li>"+
-							"{{#intro}}<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_intro\" class=\"wrap\">{{&intro}}</span></li>{{/intro}}"+
-							"{{#takeout_time}}<li><i class=\"grey fa fa-clock-o \"></i><span id=\"shop_takeout_time\" class=\"wrap\">{{&takeout_time}}</span></li>{{/takeout_time}}"+
-							"{{#takeout_route}}<li><i class=\"grey fa fa-bicycle \"></i><span id=\"shop_takeout_route\" class=\"wrap\">{{&takeout_route}}</span></li>{{/takeout_route}}"+
-							"{{#addr}}<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\">{{addr}}<a href=\"javascript:googlemap();\" data-ajax=\"false\">&nbsp;&nbsp;<i class=\"grey fa fa-search \"></i></a></span></li>{{/addr}}"+
-							"{{#tel}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{tel}}\">{{tel}}</a></span></li>{{/tel}}"+
-							"{{#mobile}}<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:{{mobile}}\">{{mobile}}</a></span></li>{{/mobile}}"+
-							"{{#website}}<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{website}}\">{{website}}</a></span></li>{{/website}}"+
-							"{{#email}}<li><i class=\"grey fa fa-envelope\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"mailto:{{email}}\">{{email}}</a></span></li>{{/email}}"+
-							"{{#facebook}}<li><i class=\"grey fa fa-facebook\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{facebook_link}}\">{{facebook}}</a></span></li>{{/facebook}}"+
-							"{{#twitter}}<li><i class=\"grey fa fa-twitter\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{twitter_link}}\">{{twitter}}</a></span></li>{{/twitter}}"+
-							"{{#weibo}}<li><i class=\"grey fa fa-weibo\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{weibo_link}}\">{{weibo}}</a></span></li>{{/weibo}}"+
-							"{{#qq}}<li><i class=\"grey fa fa-qq\"></i><span id=\"shop_icon\" class=\"wrap\">{{qq}}</span></li>{{/qq}}"+
-							"{{#weixin}}<li><i class=\"grey fa fa-weixin\"></i><span id=\"shop_icon\" class=\"wrap\">{{weixin}}</span></li>{{/weixin}}"+
-							"{{#momo}}<li><i class=\"grey icon iconfont\">&#xe626;</i><span id=\"shop_icon\" class=\"wrap\">{{momo}}</span></li>{{/momo}}"+
-							"{{#instagram}}<li><i class=\"grey fa fa-instagram\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{instagram_link}}\">{{instagram}}</a></span></li>{{/instagram}}"+
-							"{{#youtube}}<li><i class=\"grey fa fa-youtube\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"{{youtube_link}}\">{{youtube}}</a></span></li>{{/youtube}}";
-			$('#shop_info').append(Mustache.render(source,shop_data));
+			var s = "";
+			if(shop_data.hasOwnProperty("name")){
+				s+="<li><span id=\"shop_name\" class=\"shop_name\">"+shop_data.name+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("intro")){
+				s+="<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_intro\" class=\"wrap\">"+shop_data.intro+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("takeout_time")&&shop_data.takeout_time){
+				s+="<li><i class=\"grey fa fa-clock-o \"></i><span id=\"shop_takeout_time\" class=\"wrap\">"+shop_data.takeout_time+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("takeout_route")&&shop_data.takeout_route){
+				s+="<li><i class=\"grey fa fa-bicycle \"></i><span id=\"shop_takeout_route\" class=\"wrap\">"+shop_data.takeout_route+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("addr")&&shop_data.addr){
+				s+="<li><i class=\"grey fa fa-map-marker\"></i><span id=\"shop_addr\" class=\"wrap\">"+shop_data.addr+"<a href=\"javascript:googlemap();\" data-ajax=\"false\">&nbsp;&nbsp;<i class=\"grey fa fa-search \"></i></a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("tel")&&shop_data.tel){
+				var tels = shop_data.tel;
+				tels = tels.replace(/\ +/g,"");
+				var arr_tel = tels.split("/");
+				$.each(arr_tel,function(index,tel){
+					s+="<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+tel+"\">"+tel+"</a></span></li>";
+				});
+			}
+			if(shop_data.hasOwnProperty("mobile")&&shop_data.mobile){
+				s+="<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+shop_data.mobile+"\">"+shop_data.mobile+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("website")&&shop_data.website){
+				s+="<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.website+"\">"+shop_data.website+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("email")&&shop_data.email){
+				s+="<li><i class=\"grey fa fa-envelope\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"mailto:"+shop_data.email+"\">"+shop_data.email+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("facebook")&&shop_data.facebook){
+				s+="<li><i class=\"grey fa fa-facebook\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.facebook_link+"\">"+shop_data.facebook+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("twitter")&&shop_data.twitter){
+				s+="<li><i class=\"grey fa fa-twitter\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.twitter_link+"\">"+shop_data.twitter+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("weibo")&&shop_data.weibo){
+				s+="<li><i class=\"grey fa fa-weibo\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.weibo_link+"\">"+shop_data.weibo+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("qq")&&shop_data.qq){
+				s+="<li><i class=\"grey fa fa-qq\"></i><span id=\"shop_icon\" class=\"wrap\">"+shop_data.qq+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("weixin")&&shop_data.weixin){
+				s+="<li><i class=\"grey fa fa-weixin\"></i><span id=\"shop_icon\" class=\"wrap\">"+shop_data.weixin+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("momo")&&shop_data.momo){
+				s+="<li><i class=\"grey icon iconfont\">&#xe626;</i><span id=\"shop_icon\" class=\"wrap\">"+shop_data.momo+"</span></li>";
+			}
+			if(shop_data.hasOwnProperty("instagram")&&shop_data.instagram){
+				s+="<li><i class=\"grey fa fa-instagram\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.instagram_link+"\">"+shop_data.instagram+"</a></span></li>";
+			}
+			if(shop_data.hasOwnProperty("youtube")&&shop_data.youtube){
+				s+="<li><i class=\"grey fa fa-youtube\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.youtube_link+"\">"+shop_data.youtube+"</a></span></li>";
+			}
+
+			$('#shop_info').append(s);
 			$('#shop_info').listview('refresh');
 		}
 
-
+		
 		//显示商铺照片
-		function showShopPics(json){
-			var source="<ul style=\"margin-bottom: 2em;\" id=\"shop_pics\" class=\"bxslider\">{{#pics}}<li><img src=\"{{name}}\"/> </li>{{/pics}}</ul>";
-			$("#detail").append(Mustache.render(source,json));
+		function showShopPhotos(json){
+			var s = "";
+			var root_catalog_id = json.shop.root_catalog_id;
+			var shop_name = new Base64().encode(json.shop.name);
+			//alert(root_catalog_id);
+			$.each(json.photos,function(index,photo){
+				s+="<div class=\"slide\"><a data-ajax='false' href=\"gallery.jsp?shop_id="+photo.shop_id+"&root_catalog_id="+root_catalog_id+"&shop_name="+shop_name+"\"><img src=\""+getRootPath()+"/upload/thumb/"+photo.filename +"\"   title=\""+photo.name+"\"></a></div>"
+			});
+			s+="";
+			$("#shop_photos").html(s);
 			$(".bxslider").bxSlider({
-				controls:false
+				slideWidth:130,
+				minSlides:2,
+				maxSlides:10,
+				slideMargin:5,
+				captions:true,
+				adaptiveHeight:true,
+				infiniteLoop:false,
+				hideControlOnEnd:true
 			});
 
 		}
@@ -231,17 +291,15 @@
 			<li><i class="grey fa fa-calendar"></i>&nbsp;星期六：<span id="sat"></span></li>
 			<li><i class="grey fa fa-calendar"></i>&nbsp;星期日：<span id="sun"></span></li>
 		</ul>
+		<div id="div_photos" style="margin: .5em;">
+			<div  id="shop_photos" class="bxslider">
 
+			</div>
+			<button class="ui-btn ui-corner-all"><i class="grey fa fa-photo"></i> 我来晒图</button>
+		</div>
 	</div>
 	<div data-role="footer">
 		<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
-	</div>
-	<div data-role="popup" id="addrMenu" >
-		<ul data-role="listview" data-inset="true">
-			<li data-role="list-divider">地址操作：</li>
-			<li><a href="javascript:googlemap();">GoogleMap搜索</a></li>
-			<li><a href="javascript:copyaddr();">复制地址</a> </li>
-		</ul>
 	</div>
 </div>
 </body>

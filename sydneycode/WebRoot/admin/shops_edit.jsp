@@ -47,8 +47,7 @@
    		}
   		$(document).ready(function(){
 			var m = new Map(); 
-			var arr_catalogs = new Array();　
-			var arr_picurls = new Array();
+			var arr_catalogs = new Array();
 			var arr_bussiness_hour = new Array();
   			//获取id
 	  		var id = getQueryString("id");
@@ -359,20 +358,7 @@
 	  				getSuburbs(json.shop.suburb_id);
 	  			}
 	  		});
-  			//获取照片列表
-  			$.ajax({
-	  			type:"post",
-	  			url:"Shop!getPicsById.action",
-	  			dataType:"json",
-	  			data:{ "id": id},
-	  			success:function(json){
-	  				var pics =json.pics;
-	  				$.each(pics,function(n,pic){
-	  					var s = "<a href='"+pic.name+"' target='_blank'>"+pic.name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:DeletePic("+id+","+pic.id+")'>删除</a><br/>";
-	  					$('#piclist').append(s);
-	  				});
-	  			}
-	  		});
+  			
   			//监听添加分类提示按钮
 	  		$('#edit_catalog').click(function(){
 	  			//清除原分类信息
@@ -390,20 +376,7 @@
 	  			getTopCatalog();
 	  			$('#myModal').modal('show');
 	  		});
-			//添加照片checkbox监听
-			$('#pics_div').hide();
-			$('#add_pics').click(function(){
-				if($('#add_pics').is(":checked")){
-					$('#pics_div').show();
-				}else{
-					$('#pics_div').hide();
-				}
-			});
-			//监听上传按钮
-	  		$('#btn_upload').click(function(){
-	  			//alert("上传！");
-	  			$('#uploadify').uploadify('upload', '*');
-	  		});
+			
 			
 			//监听顶级分类，获取一级分类并填充
 	  		$("#select_top").change(function(){
@@ -458,90 +431,7 @@
 	  			}
 	  			
 	  		});
-	  		//重写上传控件错误提示
-	  		var uploadify_onSelectError = function(file, errorCode, errorMsg) {
-				var msgText = "上传失败\n";
-				switch (errorCode) {
-					case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
-						//this.queueData.errorMsg = "每次最多上传 " + this.settings.queueSizeLimit + "个文件";
-						msgText += "每次最多上传 " + this.settings.queueSizeLimit + "个文件";
-						break;
-					case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-						msgText += "文件大小超过限制( " + this.settings.fileSizeLimit + " )";
-						break;
-					case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-						msgText += "文件大小为0";
-						break;
-					case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-						msgText += "文件格式不正确，仅限 " + this.settings.fileTypeExts;
-						break;
-					default:
-						msgText += "错误代码：" + errorCode + "\n" + errorMsg;
-				}
-				alert(msgText);
-			};
-			var uploadify_onUploadError = function(file, errorCode, errorMsg, errorString) {
-		        // 手工取消不弹出提示
-		        if (errorCode == SWFUpload.UPLOAD_ERROR.FILE_CANCELLED
-		                || errorCode == SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED) {
-		            return;
-		        }
-	        	var msgText = "上传失败\n";
-		        switch (errorCode) {
-		            case SWFUpload.UPLOAD_ERROR.HTTP_ERROR:
-		                msgText += "HTTP 错误\n" + errorMsg;
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL:
-		                msgText += "上传文件丢失，请重新上传";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.IO_ERROR:
-		                msgText += "IO错误";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.SECURITY_ERROR:
-		                msgText += "安全性错误\n" + errorMsg;
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-		                msgText += "每次最多上传 " + this.settings.uploadLimit + "个";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
-		                msgText += errorMsg;
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.SPECIFIED_FILE_ID_NOT_FOUND:
-		                msgText += "找不到指定文件，请重新操作";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED:
-		                msgText += "参数错误";
-		                break;
-		            default:
-		                msgText += "文件:" + file.name + "\n错误码:" + errorCode + "\n"
-		                        + errorMsg + "\n" + errorString;
-			        }
-		    	alert(msgText);
-		    };
-	  		//初始化上传控件
-	  		$('#uploadify').uploadify({  
-	  			buttonClass:'btn btn-primary nopadding',
-		        uploader: 'UploadFile',          // 服务器端处理地址  
-		        swf: '../css/uploadify.swf',    // 上传使用的 Flash  
-		        buttonText: "SELECT FILES",                 // 按钮上的文字  
-		        buttonCursor: 'hand',                // 按钮的鼠标图标  
-		        fileObjName: 'fileName',            // 上传参数名称 后台action里面的属性uploadify
-		        // 两个配套使用  
-		        fileTypeExts: "*.jpg;*.png;*.jpeg;*.gif;*.bmp",             // 扩展名  
-		        fileTypeDesc: "请选择图片文件",     // 文件说明  
-		        auto: false,                // 选择之后，自动开始上传  
-		        multi: true,               // 是否支持同时上传多个文件  
-		        queueSizeLimit: 5 ,         // 允许多文件上传的时候，同时上传文件的个数  
-		        removeCompleted:false,
-		        onUploadSuccess  : function(file,data,response) {  
-                    //当每个文件上传完成后的操作
-                    var pic_url = eval("("+data+")").photo;
-                    arr_picurls.push(pic_url);
-                },
-                overrideEvents : [  'onUploadError', 'onSelectError' ],
-    			onSelectError : uploadify_onSelectError,
-    			onUploadError : uploadify_onUploadError
-		    });
+	  		
 	  		//监听添加分类提示按钮
 	  		$('#btn_add_catalog').click(function(){
 	  			var top = $('#select_top').val();
@@ -689,10 +579,7 @@
 	  					var param_catalogs = JSON.stringify(arr_catalogs);
 	  					//alert(param_catalogs);
 	  				}
-	  				if($('#add_pics').is(":checked")){
-	  					//2.获取照片信息arr_picurls
-		  				var param_picurls = JSON.stringify(arr_picurls);
-	  				}
+	  				
 	  				if($('#add_bh_new').is(":checked")){
 	  					var param_bussiness_hours = JSON.stringify(arr_bussiness_hour);
 	  					//alert(param_bussiness_hours);
@@ -701,7 +588,7 @@
 			  			type:"post",
 			  			url:"Shop!edit.action",
 			  			dataType:"json",
-			  			data:{ "id":shop_id,"catalogs": param_catalogs,"picurls":param_picurls,"bussiness_hours":param_bussiness_hours,
+			  			data:{ "id":shop_id,"catalogs": param_catalogs,"bussiness_hours":param_bussiness_hours,
 	  						"shop.name":$('#name').val(),"shop.suburb_id":$('#select_suburbs').val(),"shop.addr":$('#address').val(),
 	  						"shop.tel":toTelHTML('tel'),"shop.mobile":$('#mobile').val(),"shop.email":$('#email').val(),
 	  						"shop.website":$('#website').val(),"shop.weibo":$('#weibo').val(),"shop.weibo_link":$('#weibo_link').val(),
@@ -729,58 +616,6 @@
 	  			}
 	  		});
   		});
-  		function DeletePic(id,pic_id){
-				bootbox.dialog({
-				  message: "删除之后不能恢复，确认要删除这张图片吗？",
-				  title: "Confirm",
-				  buttons: {
-				    delete: {
-				      label: "删除",
-				      className: "btn-danger",
-				      callback: function() {
-				        //
-				        $.ajax({
-				  			type:"post",
-				  			url:"Shop!deletePic.action",
-				  			dataType:"json",
-				  			data:{ "pic_id": pic_id},
-				  			success:function(json){
-				  				if(json.status==1){
-			                		//保存成功
-			                		bootbox.alert(json.message, function() {
-			                			$('#piclist').html('');
-			                			$.ajax({
-								  			type:"post",
-								  			url:"Shop!getPicsById.action",
-								  			dataType:"json",
-								  			data:{ "id": id},
-								  			success:function(json){
-								  				var pics =json.pics;
-								  				$.each(pics,function(n,pic){
-								  					var s = "<a href='"+pic.name+"' target='_blank'>"+pic.name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:DeletePic("+id+","+pic.id+")'>删除</a><br/>";
-								  					$('#piclist').append(s);
-								  				});
-								  			}
-								  		});
-									});
-			                		
-			                	}else{
-			                		bootbox.alert(json.message, function() {
-									});
-			                	}
-				  			}
-				  		});
-				      }
-				    },
-				    cancel: {
-				      label: "取消",
-				      className: "btn-default",
-				      callback: function() {
-				      }
-				    }
-				  }
-				});
-			}
 	</script>
   </head>
   
@@ -975,36 +810,7 @@
     			</div>
     		</div>
     		<!----新营业时间end-->
-   			<div class="row">
-	    		<div class="col-sm-12">
-	    		    <div class="well well-sm">
-		    		    <strong>照片管理</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-	    		    	<label>
-					      <input type="checkbox" id="add_pics"> 添加
-					    </label>
-					</div>
-	    		</div>
-    		</div>
-    		<div class="row">
-	    		<div class="col-sm-offset-3 col-sm-8">
-	    		    <div id="piclist" style="margin-bottom:10px;"></div>
-	    		</div>
-    		</div>
-    		<div id="pics_div" class="row">
-	    		<div class="col-sm-offset-4 col-sm-6">
-	    			<div class="form-group">
-		    			<div>
-			    			<input type="file" name="fileName" id="uploadify" /> 
-		        			<button type="button" class="btn btn-success" id="btn_upload">开 始 上 传</button>
-		    			</div>
-		    		</div>
-	    		</div>
-    		</div>
-    		<div class="row">
-	    		<div class="col-sm-12">
-	    		    <div class="well well-sm"><strong>保存信息</strong></div>
-	    		</div>
-    		</div>
+   			
     		<div class="row">
 	    		<div class="col-sm-12">
 	    			<div class="form-group">

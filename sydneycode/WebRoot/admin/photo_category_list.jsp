@@ -123,9 +123,9 @@
 				}
 			});
 		}
-		function SuburbDelete(id){
+		function CategoryDelete(id){
 			bootbox.dialog({
-			  message: "删除之后不能恢复，确认要删除这条数据吗？",
+			  message: "删除之后不能恢复，确认要删除吗？",
 			  title: "Confirm",
 			  buttons: {
 			    delete: {
@@ -135,14 +135,14 @@
 			        //
 			        $.ajax({
 			  			type:"post",
-			  			url:"Suburb!delete.action",
+			  			url:"PhotoCategory!delete.action",
 			  			dataType:"json",
 			  			data:{ "id": id},
 			  			success:function(json){
 			  				if(json.status==1){
 		                		//保存成功
 		                		bootbox.alert(json.message, function() {
-		                			window.location.href = "suburbs_list.jsp";
+		                			window.location.href = "photo_category_list.jsp";
 								});
 		                		
 		                	}else{

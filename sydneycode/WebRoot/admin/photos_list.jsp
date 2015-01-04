@@ -34,7 +34,8 @@
 			var root_catalog_id = getQueryString("root_catalog_id");
 			$("#shop_name").text(new Base64().decode(shop_name));
 			$("#detail").attr('href','Showshop.action?id='+shop_id);
-			//获取照片分类--todo
+			$("#photoupload").attr('href','photo_upload.jsp?id='+shop_id+'&root_catalog_id='+root_catalog_id+'&name='+shop_name);
+			//获取照片分类
 			$.ajax({
 				type:"post",
 				url:"PhotoCategory!getPhotoCategoryByCatalogId.action",
@@ -89,7 +90,7 @@
 
 			<div class="row">
 	    		<div class="col-sm-12 ">
-	    		    <div class="well well-sm well-top"><span id="shop_name" class="shop_name"></span>&nbsp;&nbsp;<a id="detail" href="" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></div>
+	    		    <div class="well well-sm well-top"><span id="shop_name" class="shop_name"></span>&nbsp;&nbsp;<a id="detail" href="" target="_blank"><span class="glyphicon glyphicon-info-sign">店铺详情</span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a id="photoupload" href="" target="_blank"><span class="glyphicon glyphicon-camera">上传图片</span></a></div>
 	    		</div>
     		</div>
     		<div class="row">

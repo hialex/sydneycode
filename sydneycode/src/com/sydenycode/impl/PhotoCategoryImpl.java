@@ -216,17 +216,13 @@ public class PhotoCategoryImpl {
         return allCategories;
     }
     //删除图片分类
-    /*
-    public static int deleteSuburb(String id){
+    public static int deleteCategory(String id){
     	int flag = 0;
-        //有下级地区不能删除
-    	if(getSuburbListByParentId(id,"web",null).size()>0){
-    		flag = -1;
-    	}else if(ShopImpl.getShopBySuburbId(id).size()>0){
-    		//有对应商家不能删除
+        if(PhotoImpl.getPhotoByCategoryId(id).size()>0){
+    		//有图片不能删除
     		flag = -2;
     	}else{
-    		String sql = "delete from suburbs where id=?;";
+    		String sql = "delete from photo_category where id=?;";
 		    //System.out.println(sql);
 		    Object[] params = {id};
 		    Connection conn = new MyDbPool().getConnection();
@@ -235,26 +231,21 @@ public class PhotoCategoryImpl {
 		        flag = qr.update(conn,sql, params);
 		    } catch (SQLException e) {
 		        // TODO Auto-generated catch block
-		        logger.error("SururbImpl-deleteSuburb()-数据库操作失败！");
+		        logger.error("PhotoCategoryImpl-deleteCategory()-数据库操作失败！");
 		        e.printStackTrace();
 		    }finally{
 		        try {
 		            conn.close();
 		        } catch (SQLException e) {
-		            logger.error("SururbImpl-deleteSuburb()-连接关闭失败");
+		            logger.error("PhotoCategoryImpl-deleteCategory()-连接关闭失败");
 		            // TODO Auto-generated catch block
 		            e.printStackTrace();
 		        }
 		    }
     	}
     	if(flag==1){
-	    	logger.info("编号为"+id+"的Suburb被删除！");
+	    	logger.info("编号为"+id+"的图片分类被删除！");
 	    }
         return flag;
     }
-    
-  
-    
-  
-    */
 }

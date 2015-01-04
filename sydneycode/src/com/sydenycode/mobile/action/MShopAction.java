@@ -11,12 +11,12 @@ import net.sf.json.processors.JsonValueProcessor;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sydenycode.impl.Bussiness_hourImpl;
-import com.sydenycode.impl.PicImpl;
+import com.sydenycode.impl.PhotoImpl;
 import com.sydenycode.impl.ShopImpl;
 import com.sydenycode.impl.Shop_catalogImpl;
 import com.sydenycode.po.Bussiness_hour;
 import com.sydenycode.po.Catalog;
-import com.sydenycode.po.Pic;
+import com.sydenycode.po.Photo;
 import com.sydenycode.po.Shop;
 
 public class MShopAction extends ActionSupport{
@@ -63,11 +63,14 @@ public class MShopAction extends ActionSupport{
         Shop shop = ShopImpl.getShopById(id);
         //System.out.println(shop.getName());
         ArrayList<Bussiness_hour> bussiness_hours_list = (ArrayList<Bussiness_hour>) Bussiness_hourImpl.getBussinessHourById(id);
-        ArrayList<Pic> pics = (ArrayList<Pic>) PicImpl.getPicsById(id);
+        ArrayList<Photo> photos = (ArrayList<Photo>) PhotoImpl.getPhotosById(id);
         ArrayList<Catalog> catalog_names_list = (ArrayList<Catalog>) Shop_catalogImpl.getCatalogNames(id);
-    	tempMap.put("shop", shop);
+    	
+        
+        
+        tempMap.put("shop", shop);
     	tempMap.put("bussiness_hours", bussiness_hours_list);
-    	tempMap.put("pics", pics);
+    	tempMap.put("photos", photos);
     	tempMap.put("catalog_names", catalog_names_list);
     	JsonConfig config = new JsonConfig();
     	config.registerPropertyExclusions(Shop.class, new String[]{"add_time"});

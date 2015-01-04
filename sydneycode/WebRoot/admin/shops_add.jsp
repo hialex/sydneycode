@@ -376,95 +376,6 @@
 	  		
 	  		getSuburbs();
 	  		
-	  		//重写上传控件错误提示
-	  		var uploadify_onSelectError = function(file, errorCode, errorMsg) {
-				var msgText = "上传失败\n";
-				switch (errorCode) {
-					case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
-						//this.queueData.errorMsg = "每次最多上传 " + this.settings.queueSizeLimit + "个文件";
-						msgText += "每次最多上传 " + this.settings.queueSizeLimit + "个文件";
-						break;
-					case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-						msgText += "文件大小超过限制( " + this.settings.fileSizeLimit + " )";
-						break;
-					case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-						msgText += "文件大小为0";
-						break;
-					case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-						msgText += "文件格式不正确，仅限 " + this.settings.fileTypeExts;
-						break;
-					default:
-						msgText += "错误代码：" + errorCode + "\n" + errorMsg;
-				}
-				alert(msgText);
-			};
-			var uploadify_onUploadError = function(file, errorCode, errorMsg, errorString) {
-		        // 手工取消不弹出提示
-		        if (errorCode == SWFUpload.UPLOAD_ERROR.FILE_CANCELLED
-		                || errorCode == SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED) {
-		            return;
-		        }
-	        	var msgText = "上传失败\n";
-		        switch (errorCode) {
-		            case SWFUpload.UPLOAD_ERROR.HTTP_ERROR:
-		                msgText += "HTTP 错误\n" + errorMsg;
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL:
-		                msgText += "上传文件丢失，请重新上传";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.IO_ERROR:
-		                msgText += "IO错误";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.SECURITY_ERROR:
-		                msgText += "安全性错误\n" + errorMsg;
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-		                msgText += "每次最多上传 " + this.settings.uploadLimit + "个";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
-		                msgText += errorMsg;
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.SPECIFIED_FILE_ID_NOT_FOUND:
-		                msgText += "找不到指定文件，请重新操作";
-		                break;
-		            case SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED:
-		                msgText += "参数错误";
-		                break;
-		            default:
-		                msgText += "文件:" + file.name + "\n错误码:" + errorCode + "\n"
-		                        + errorMsg + "\n" + errorString;
-			        }
-		    	alert(msgText);
-		    };
-	  		//初始化上传控件
-	  		$('#uploadify').uploadify({  
-	  			buttonClass:'btn btn-primary nopadding',
-		        uploader: 'UploadFile',          // 服务器端处理地址  
-		        swf: '../css/uploadify.swf',    // 上传使用的 Flash  
-		        buttonText: "SELECT FILES",                 // 按钮上的文字  
-		        buttonCursor: 'hand',                // 按钮的鼠标图标  
-		        fileObjName: 'fileName',            // 上传参数名称 后台action里面的属性uploadify
-		        // 两个配套使用  
-		        fileTypeExts: "*.jpg;*.png;*.jpeg;*.gif;*.bmp",             // 扩展名  
-		        fileTypeDesc: "请选择图片文件",     // 文件说明  
-		        auto: false,                // 选择之后，自动开始上传  
-		        multi: true,               // 是否支持同时上传多个文件  
-		        queueSizeLimit: 5 ,         // 允许多文件上传的时候，同时上传文件的个数  
-		        removeCompleted:false,
-		        onUploadSuccess  : function(file,data,response) {  
-                    //当每个文件上传完成后的操作
-                    var pic_url = eval("("+data+")").photo;
-                    arr_picurls.push(pic_url);
-                },
-                overrideEvents : [  'onUploadError', 'onSelectError' ],
-    			onSelectError : uploadify_onSelectError,
-    			onUploadError : uploadify_onUploadError
-		    }); 
-	  		//监听上传按钮
-	  		$('#btn_upload').click(function(){
-	  			//alert("上传！");
-	  			$('#uploadify').uploadify('upload', '*');
-	  		});
 	  		//监听添加分类提示按钮
 	  		$('#btn_add_catalog_info').click(function(){
 	  			resetSelect();
@@ -601,10 +512,7 @@
 	  				//提交参数
 	  				//1.获取分类信息arr_catalogs
 	  				var param_catalogs = JSON.stringify(arr_catalogs);
-	  				if($('#add_pics').is(":checked")){
-	  					//2.获取照片信息arr_picurls
-		  				var param_picurls = JSON.stringify(arr_picurls);
-	  				}
+	  				
 	  				if($('#add_bh_new').is(":checked")){
 	  					var param_bussiness_hours = JSON.stringify(arr_bussiness_hour);
 	  				}
@@ -615,7 +523,7 @@
 			  			type:"post",
 			  			url:"Shop!add.action",
 			  			dataType:"json",
-			  			data:{ "catalogs": param_catalogs,"picurls":param_picurls,"bussiness_hours":param_bussiness_hours,
+			  			data:{ "catalogs": param_catalogs,"bussiness_hours":param_bussiness_hours,
 	  						"shop.name":$('#name').val(),"shop.suburb_id":$('#select_suburbs').val(),"shop.addr":$('#address').val(),
 	  						"shop.tel":toTelHTML('tel'),"shop.mobile":$('#mobile').val(),"shop.email":$('#email').val(),
 	  						"shop.website":$('#website').val(),"shop.weibo":$('#weibo').val(),"shop.weibo_link":$('#weibo_link').val(),
@@ -832,31 +740,6 @@
     		</div>
     		<!----新营业时间end-->
     		
-    		<div class="row">
-	    		<div class="col-md-12">
-	    		    <div class="well well-sm">
-		    		    <strong>上传照片</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-	    		    	<label>
-					      <input type="checkbox" id="add_pics"> 添加
-					    </label>
-					</div>
-	    		</div>
-    		</div>
-    		<div id="pics_div" class="row">
-	    		<div class="col-md-offset-4 col-md-6">
-	    			<div class="form-group">
-		    			<div>
-			    			<input type="file" name="fileName" id="uploadify" /> 
-		        			<button type="button" class="btn btn-success" id="btn_upload">开 始 上 传</button>
-		    			</div>
-		    		</div>
-	    		</div>
-    		</div>
-    		<div class="row">
-	    		<div class="col-md-12">
-	    		    <div class="well well-sm"><strong>保存信息</strong></div>
-	    		</div>
-    		</div>
     		<div class="row">
 	    		<div class="col-md-12">
 	    			<div class="form-group">

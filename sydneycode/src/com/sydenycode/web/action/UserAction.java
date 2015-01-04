@@ -98,7 +98,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 			if(flag==1){
 				//添加成功
 				success = true;
-				message = "密码修改成功，请牢记您的密码！";
+				message = "修改成功，务必牢记您的密码！请重新登录！";
 			}else{
 				//添加不成功
 				success = false;

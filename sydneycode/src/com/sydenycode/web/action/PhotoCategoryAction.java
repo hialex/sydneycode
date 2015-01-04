@@ -162,4 +162,26 @@ public class PhotoCategoryAction extends ActionSupport {
         result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
     	return SUCCESS;
     }
+    
+  //删除图片分类
+    public String delete(){
+    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
+    	
+    	int flag = PhotoCategoryImpl.deleteCategory(id);
+    	if(flag==1){
+            //删除成功
+            status = 1;
+            message = "图片分类删除成功！";
+            tempMap.put("status", status);
+            tempMap.put("message", message);
+            
+        }else if(flag==-2){
+            //删除失败
+            status = -2; 
+            message = "图片分类下有图片，不能删除！若要删除请先删除分类下的图片！";
+            tempMap.put("message", message);
+        }
+        result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
+    	return SUCCESS;
+    }
 }

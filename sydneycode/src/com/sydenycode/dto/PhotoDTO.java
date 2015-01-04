@@ -9,12 +9,14 @@ public class PhotoDTO {
 	private String filename;
 	private int shop_id;
 	private String shop_name;
+	private int catalog_id;
 	private String catalog_name;
 	private String category_name;
 	private String source;
 	private int status;
 	private Timestamp add_time;
 	private String author_name;
+	private String type;
 	public int getId() {
 		return id;
 	}
@@ -75,6 +77,18 @@ public class PhotoDTO {
 	}
 	public void setAuthor_name(String authorName) {
 		author_name = authorName;
+	}
+	public int getCatalog_id() {
+		return catalog_id;
+	}
+	public void setCatalog_id(int catalogId) {
+		catalog_id = catalogId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

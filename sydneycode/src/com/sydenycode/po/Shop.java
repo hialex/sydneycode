@@ -32,17 +32,13 @@ public class Shop {
 	private String takeout_time;
 	private String takeout_route;
 	private int top_id;
-	private int root_parent_id;
+	private int root_catalog_id;
 	
-	
-	
-	
-	
-	public int getRoot_parent_id() {
-		return root_parent_id;
+	public int getRoot_catalog_id() {
+		return root_catalog_id;
 	}
-	public void setRoot_parent_id(int rootParentId) {
-		root_parent_id = rootParentId;
+	public void setRoot_catalog_id(int rootCatalogId) {
+		root_catalog_id = rootCatalogId;
 	}
 	public int getTop_id() {
 		return top_id;

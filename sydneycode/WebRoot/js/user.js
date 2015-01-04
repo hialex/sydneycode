@@ -15,5 +15,35 @@ function getRootPath(){
 	var localhostPaht=curWwwPath.substring(0,pos);
 	//获取带"/"的项目名，如：/uimcardprj
 	var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
-	return(localhostPaht+projectName);
+	if(localhostPaht.indexOf("com")>0){
+		return(localhostPaht);
+	}else{
+		return(localhostPaht+projectName);
+	}
+
 }
+
+function renderTitle(photo){
+	var name = photo.name;
+	var intro = photo.intro;
+	var add_time = photo.add_time;
+	var author_name = photo.author_name;
+	var s = "";
+	if(name!=''){
+		s += "<strong>"+name+"</strong> ";
+	}
+	if(author_name!=''){
+		s += " By";
+		s += author_name+" ";
+	}
+	s += "On ";
+	s += add_time;
+	if(intro!=''){
+		s += "<br/>";
+		s += intro;
+	}
+	return s;
+
+
+}
+

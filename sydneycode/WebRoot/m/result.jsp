@@ -102,10 +102,10 @@
 			var suburb = $.cookie('suburb');
 			var bh = $.cookie('bh');
 			var rootId = $.cookie('rootId');
-			console.log("catalog1="+catalog1);
-			console.log("catalog2="+catalog2);
-			console.log("suburb="+suburb);
-			console.log("bh="+(typeof(bh)=="undefined"));
+//			console.log("catalog1="+catalog1);
+//			console.log("catalog2="+catalog2);
+//			console.log("suburb="+suburb);
+//			console.log("bh="+(typeof(bh)=="undefined"));
 
 			var t = new Date().getTime();
 			$.ajax({

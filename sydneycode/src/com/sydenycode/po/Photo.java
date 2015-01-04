@@ -18,10 +18,15 @@ public class Photo {
 	//图片说明
 	private String intro;
 	
-	//图片类型
-	//mobile.网友上传图(默认)
-	//web.后台上传图
+	//图片来源
+	//mobile.手机上传
+	//web.后台上传
 	private String source;
+	
+	//图片类型
+	//网友晒图
+	//
+	private String type;
 	
 	//图片状态
 	//0.未审核（默认）
@@ -109,6 +114,13 @@ public class Photo {
 	public void setOrder_id(int orderId) {
 		order_id = orderId;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	
 	
 }

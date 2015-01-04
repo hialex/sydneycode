@@ -72,7 +72,7 @@ public class PhotoDTOImpl {
         List<PhotoDTO> allPhotos = new ArrayList<PhotoDTO>();
         if(Integer.parseInt(category_id)==0){
 	        sql = "SELECT "+
-				"b.id,b.filename,b.shop_id,a.`name` shop_name,c.catalog_name,c.`name` category_name,b.source,b.`status`,b.add_time,b.author_name "+
+				"b.id,b.filename,b.shop_id,b.type,a.`name` shop_name,c.catalog_id,c.catalog_name,c.`name` category_name,b.source,b.`status`,b.add_time,b.author_name "+
 				"FROM "+
 					"shops a,"+
 					"photos b,"+
@@ -83,7 +83,7 @@ public class PhotoDTOImpl {
 				"ORDER BY add_time desc";
         }else{
         	sql = "SELECT "+
-			"b.id,b.filename,b.shop_id,a.`name` shop_name,c.catalog_name,c.`name` category_name,b.source,b.`status`,b.add_time,b.author_name "+
+			"b.id,b.filename,b.shop_id,b.type,a.`name` shop_name,c.catalog_id,c.catalog_name,c.`name` category_name,b.source,b.`status`,b.add_time,b.author_name "+
 			"FROM "+
 				"shops a,"+
 				"photos b,"+

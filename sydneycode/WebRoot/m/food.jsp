@@ -22,7 +22,7 @@
 	<script src="js/jqm-datebox.mode.customflip.min.js"></script>
 	<script src="js/jquery.cookie.js"></script>
 
-	<script src="js/user.js"></script>
+	<script src="../js/user.js"></script>
 	<script>
 		//显示加载器
 		function showLoader() {

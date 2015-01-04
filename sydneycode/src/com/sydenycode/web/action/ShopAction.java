@@ -5,29 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSONObject;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sydenycode.dto.ShopDTO;
 import com.sydenycode.impl.Bussiness_hourImpl;
 import com.sydenycode.impl.CatalogImpl;
-import com.sydenycode.impl.PicImpl;
 import com.sydenycode.impl.ShopDTOImpl;
 import com.sydenycode.impl.ShopImpl;
 import com.sydenycode.impl.Shop_catalogImpl;
 import com.sydenycode.po.Bussiness_hour;
 import com.sydenycode.po.Catalog;
-import com.sydenycode.po.Pic;
 import com.sydenycode.po.Shop;
-import com.sydenycode.util.CONSTANT;
 
-public class ShopAction extends ActionSupport implements ServletRequestAware{
+public class ShopAction extends ActionSupport{
 	
-	private HttpServletRequest request;
 	
 	/** serialVersionUID*/
 	private static final long serialVersionUID = -5276907166989129940L;
@@ -40,7 +32,7 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     private String catalogs;
    
     //接受添加页面传来的pic urls json串
-	private String picurls;
+	//private String picurls;
 	
 	//接受添加页面传来的bussiness_hours json串
     private String bussiness_hours;
@@ -52,7 +44,7 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     private List<Bussiness_hour> bussiness_hours_list = new ArrayList<Bussiness_hour>();
     
     //将查询出来的图片list返回至页面
-    private List<Pic> pics = new ArrayList<Pic>();
+    //private List<Pic> pics = new ArrayList<Pic>();
     
     //将查询出来的catalog names list返回至页面
     private List<Catalog> catalog_names_list = new ArrayList<Catalog>();
@@ -102,13 +94,6 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
 		catalog_names_list = catalogNamesList;
 	}
 
-	public List<Pic> getPics() {
-		return pics;
-	}
-
-	public void setPics(List<Pic> pics) {
-		this.pics = pics;
-	}
 
 	public List<Bussiness_hour> getBussiness_hours_list() {
 		return bussiness_hours_list;
@@ -134,13 +119,6 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
 		this.catalogs = catalogs;
 	}
 
-	public String getPicurls() {
-		return picurls;
-	}
-
-	public void setPicurls(String picurls) {
-		this.picurls = picurls;
-	}
 
 	public String getBussiness_hours() {
 		return bussiness_hours;
@@ -199,12 +177,6 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     		int[] catalog_ids = new CatalogImpl().getCatalogsFromJSON(catalogs);
     		//2.写入商户-分类数据
     		Shop_catalogImpl.addShop_catalogs(shop_id, catalog_ids);
-    		if((picurls!=null)&&(picurls.length()!=0)){
-    			String[] pic_names = new PicImpl().getPicNamesFromJSON(picurls);
-    			//1.写入商户-照片数据
-        		PicImpl.addPics(shop_id, pic_names);
-    		}
-    		
     		if((bussiness_hours!=null)&&(bussiness_hours.length()!=0)){
     			List<Bussiness_hour> bussinessHours = new Bussiness_hourImpl().getBussinessHoursFromJSON(bussiness_hours);
     			//3.写入商户-营业时间数据
@@ -240,11 +212,6 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
 	    	Shop_catalogImpl.delete(id);
 			Shop_catalogImpl.addShop_catalogs(Integer.parseInt(id), catalog_ids);
     	}
-		if((picurls!=null)&&(picurls.length()!=0)){
-			String[] pic_names = new PicImpl().getPicNamesFromJSON(picurls);
-			//1.写入商户-照片数据
-    		PicImpl.addPics(Integer.parseInt(id), pic_names);
-		}
 		if((bussiness_hours!=null)&&(bussiness_hours.length()!=0)){
 			List<Bussiness_hour> bussinessHours = new Bussiness_hourImpl().getBussinessHoursFromJSON(bussiness_hours);
 			//3.清除原营业时间数据,写入商户-营业时间数据
@@ -295,22 +262,11 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
         shop = ShopImpl.getShopById(id);
         //System.out.println(shop.getName());
         bussiness_hours_list = Bussiness_hourImpl.getBussinessHourById(id);
-        pics = PicImpl.getPicsById(id);
         catalog_names_list = Shop_catalogImpl.getCatalogNames(id);
         return "GoToDetail";
     }
     
-    /**
-     * 根据shop_id获取照片列表，用于编辑
-     * @return
-     */
-    public String getPicsById(){
-    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map
-    	pics = PicImpl.getPicsById(id);
-    	tempMap.put("pics", pics);
-    	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
-    	return SUCCESS;
-    }
+    
     
     /**
      * 设置店铺归属大类
@@ -342,10 +298,8 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     //删除商铺
     public String delete(){
     	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
-    	//删除店铺_图片数据
-    	String url = request.getSession().getServletContext().getRealPath(CONSTANT.UPLOAD_PATH);
-    	//System.out.println(url);
-    	PicImpl.delete(url,id);
+    	
+    	
     	//删除营业时间数据
     	Bussiness_hourImpl.delete(id);
     	//删除店铺-分类数据
@@ -370,34 +324,6 @@ public class ShopAction extends ActionSupport implements ServletRequestAware{
     }
     
     
-    //删除商铺图片
-    public String deletePic(){
-    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
-    	//删除店铺_图片数据
-    	String url = request.getSession().getServletContext().getRealPath(CONSTANT.UPLOAD_PATH);
-    	int flag = PicImpl.deletePicById(url,pic_id);
-    	if(flag==1){
-            //删除成功
-            status = 1;
-            message = "商铺图片信息删除成功！";
-            tempMap.put("status", status);
-            tempMap.put("message", message);
-            
-        }else{
-            //删除失败
-            status = -1; 
-            message = "商铺图片信息删除失败，请检查！";
-            tempMap.put("message", message);
-        }
-        result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
-    	return SUCCESS;
-    }
-
-	public void setServletRequest(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		this.request=req;
-	}
-	
 	/**
      * 获取商铺详细信息
      * @return
