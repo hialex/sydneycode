@@ -43,7 +43,6 @@ public class SessionCheckFilter implements Filter {
 		boolean admin_jsp = (currentPath.indexOf("/admin/")>0)&&(currentPath.indexOf("*.jsp")>0);
 		//对手机/m/不进行过滤
 		String  fromUrl = request.getHeader("Referer");
-		//System.out.println(fromUrl);
 		if(fromUrl!=null && fromUrl.indexOf("/m/")>0){
 			filterChain.doFilter(servletRequest, servletResponse);
 			return;

@@ -19,6 +19,7 @@
 	<script src="../js/user.js"></script>
 	<script src="../js/base64.js"></script>
 	<script type="text/javascript" src="../js/jquery.fancybox.js"></script>
+	<script type="text/javascript" src="../js/jquery.nailthumb.min.js"></script>
 	<script>
 
 		$(document).on("pagecreate","#page1",function(){
@@ -79,14 +80,14 @@
 
 		function showPhotos(json){
 			$.each(json.category,function(index,category){
-				$('#category-'+category.id).append('<div id="official-category-'+category.id+'" class="ui-body ui-body-a ui-corner-all"></div><div id="fans_share" class="ui-corner-all custom-corners"><div class="ui-bar ui-bar-a"><h4>网友晒图</h4></div><div id="fans-category-'+category.id+'" class="ui-body ui-body-a"></div></div>');
+				$('#category-'+category.id).append('<div id="official-category-'+category.id+'" class="ui-body ui-body-a ui-corner-all header"></div><div id="fans_share" class="ui-corner-all custom-corners "><div class="ui-bar ui-bar-a"><h4>网友晒图</h4></div><div id="fans-category-'+category.id+'" class="ui-body ui-body-a header"></div></div>');
 				var json_fans = "fans_"+category.id;
 				var json_official = "official_"+category.id;
 				if(json[json_official].length>0){
 					var s = "";
 					$.each(json[json_official],function(index_official,photo_official){
 						//s += '<img src="'+getRootPath()+'/upload/thumb/'+photo_official.filename+'">';
-						s += '<a class="fancybox" rel="official-gallery-'+category.id+'" href="'+getRootPath()+'/upload/'+photo_official.filename+'" title="'+renderTitle(photo_official)+'"><img src="'+getRootPath()+'/upload/thumb/'+photo_official.filename+'" alt="" /></a>';
+						s += '<a class="fancybox" rel="official-gallery-'+category.id+'" href="'+getRootPath()+'/upload/'+photo_official.filename+'"><img src="'+getRootPath()+'/upload/thumb/'+photo_official.filename+'" alt="" /></a>';
 					});
 					$('#official-category-'+category.id).html(s);
 				}else{
@@ -95,7 +96,6 @@
 				if(json[json_fans].length>0){
 					var s = "";
 					$.each(json[json_fans],function(index_fans,photo_fans){
-						//s += '<img src="'+getRootPath()+'/upload/thumb/'+photo_fans.filename+'">';
 						s += '<a class="fancybox" rel="fans-gallery-'+category.id+'" href="'+getRootPath()+'/upload/'+photo_fans.filename+'" title="'+renderTitle(photo_fans)+'"><img src="'+getRootPath()+'/upload/thumb/'+photo_fans.filename+'" alt="" /></a>';
 
 					});
@@ -108,12 +108,13 @@
 			});
 			$('#tabs').tabs("refresh");
 			$(".fancybox").fancybox({
-				helpers:{
-					title:{
-						type:'inside'
-					}
-				}
+				caption:{
+					type:'inside'
+				},
+				arrows:false,
+				theme:'light'
 			});
+			$('.ui-body-a img').nailthumb({width:100,height:100});
 		}
 
 	</script>

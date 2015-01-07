@@ -22,7 +22,7 @@
 		</init-param>
 		<init-param>
 			<param-name>notCheckURLList</param-name>
-			<param-value>Suburb.action,Catalog.action</param-value>
+			<param-value>Suburb.action,Catalog.action,PhotoUpload.action</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

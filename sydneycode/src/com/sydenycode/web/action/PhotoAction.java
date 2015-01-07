@@ -1,5 +1,6 @@
 package com.sydenycode.web.action;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 
@@ -16,6 +18,7 @@ import com.sydenycode.dto.PhotoDTO;
 import com.sydenycode.impl.PhotoDTOImpl;
 import com.sydenycode.impl.PhotoImpl;
 import com.sydenycode.po.Photo;
+import com.sydenycode.util.DateJsonValueProcessor;
 
 public class PhotoAction extends ActionSupport implements ServletRequestAware{
 
@@ -30,10 +33,20 @@ public class PhotoAction extends ActionSupport implements ServletRequestAware{
     private String filename;
     private String type;
     private Photo photo;
+    private boolean needCheck;
 	int status;
     String message;
 	
     private HttpServletRequest request;
+    
+	public boolean isNeedCheck() {
+		return needCheck;
+	}
+
+	public void setNeedCheck(boolean needCheck) {
+		this.needCheck = needCheck;
+	}
+
 	public void setServletRequest(HttpServletRequest req) {
 		this.request=req;
 	}
@@ -124,7 +137,9 @@ public class PhotoAction extends ActionSupport implements ServletRequestAware{
     	List<Photo> photos = new ArrayList<Photo>();
     	photos = PhotoImpl.getPhotosByShopIdAndCategoryId(shop_id,category_id,null);
     	tempMap.put("photos", photos);
-    	result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
+    	JsonConfig config = new JsonConfig();
+		config.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor("yyyy-MM-dd"));
+    	result = JSONObject.fromObject(tempMap,config);//格式化result   一定要是JSONObject 
     	return SUCCESS;
     }
     
@@ -134,9 +149,17 @@ public class PhotoAction extends ActionSupport implements ServletRequestAware{
      * <p>Description: </p>
      * @return
      */
-    public String listAll(){  
-    	int total = PhotoDTOImpl.getTotal(category_id);//获取数据总量
-        List<PhotoDTO> list = PhotoDTOImpl.queryAllPhotos(category_id);//获取客户数据，放入list 
+    public String listAll(){
+    	int total = 0;
+    	List<PhotoDTO> list = new ArrayList<PhotoDTO>();
+    	if(needCheck){
+    		total = PhotoDTOImpl.getTotal(true);//获取数据总量
+        	list = PhotoDTOImpl.queryAllPhotos(true);//获取客户数据，放入list 
+    	}else{
+    		total = PhotoDTOImpl.getTotal(category_id);//获取数据总量
+        	list = PhotoDTOImpl.queryAllPhotos(category_id);//获取客户数据，放入list 
+    	}
+    	
         //System.out.println(total);
         jsonMap.clear();
         jsonMap.put("draw", 1);
@@ -207,7 +230,7 @@ public class PhotoAction extends ActionSupport implements ServletRequestAware{
     	return SUCCESS;
     }
     //设置图片类别，小编精选/网友晒图
-    public String setType(){
+    public String setPhotoType(){
     	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
     	
     	int flag = PhotoImpl.setType(id,type);
@@ -222,6 +245,28 @@ public class PhotoAction extends ActionSupport implements ServletRequestAware{
             //设置失败
             status = 0; 
             message = "图片类别设置失败，请重试！！";
+            tempMap.put("message", message);
+        }
+        result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
+    	return SUCCESS;
+    }
+    
+  //审核图片，设置审核状态，小编精选/网友晒图，图片分类
+    public String approve(){
+    	Map<String, Object> tempMap = new HashMap<String, Object>();//定义map 
+    	
+    	int flag = PhotoImpl.approve(id,type,category_id);
+    	if(flag==1){
+            //设置成功
+            status = 1;
+            message = "图片审核成功！";
+            tempMap.put("status", status);
+            tempMap.put("message", message);
+            
+        }else{
+            //设置失败
+            status = 0; 
+            message = "图片审核失败，请重试！！";
             tempMap.put("message", message);
         }
         result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 

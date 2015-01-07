@@ -51,7 +51,7 @@
 	          	<li><a href="photo_category_list.jsp">分类列表</a></li>
 	            <li class="divider"></li>
 	            <li><a href="photos_lib.jsp">图片库</a></li>
-	           	<li><a href="photos_approve.jsp">图片审核(未实现)</a></li>
+	           	<li><a href="photos_approve.jsp">图片审核</a></li>
 	          </ul>
 	        </li>
 			<s:if test="#session.user.role==1">

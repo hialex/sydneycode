@@ -14,6 +14,7 @@ public class CONSTANT {
 	public static final String THUMBPATH = "/upload/thumb";
 	public static final String FANSUPLOADPHOTOS = "网友晒图";
 	public static final String OFFICIALPHOTOS = "小编精选";
+	public static final String ANONYMOUSAUTHOR = "网友小明";
 	
 	public static final int MOBILE_PAGE_SIZE = 10;
 }

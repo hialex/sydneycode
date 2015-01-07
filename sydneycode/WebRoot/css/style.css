@@ -227,4 +227,6 @@ body {
 }
 #myTabContent a{
     padding: 3px;
+    margin: 3px;
+    float: left;
 }

@@ -6,7 +6,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>图片库</title>
+    <title>图片审核</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -37,11 +37,10 @@
 		var category_id;
 		var photo_id;
 		var status;
+		var root_catalog_id;
 		$(document).ready(function() {
-			category_id = getQueryString("category_id");
-			if(category_id==null)category_id = 0;
 			var t = new Date().getTime();
-			var params = {t:t,category_id:category_id};
+			var params = {t:t,needCheck:true};
 			//alert(t);
 			$('#example').dataTable( {
 	            "language": {
@@ -117,7 +116,7 @@
 									+"    <span class=\"caret\"></span>"
 									+"  </button>"
 									+"  <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">"
-									+"    <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:setPhotoType("+data+")\">验明正身</a></li>"
+									+"    <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:PhotoApprove("+data+","+row['catalog_id']+")\">审核</a></li>"
 									+"    <li role=\"presentation\" class=\"divider\"></li>"
 									+"    <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"photo_edit.jsp?id="+data+"&root_catalog_id="+row['catalog_id']+"\">编辑</a></li>"
 									+"    <li role=\"presentation\"><a role=\"menuitem\" tabindex=\"-1\" href=\"javascript:DeletePhoto('"+data+"','"+row['filename']+"')\">删除</a></li>"
@@ -137,34 +136,43 @@
 		        ]
 	        } );
 
-			$('#btn_set_type').click(function () {
+			$('#btn_approve').click(function () {
 				var type = $('#type').val();
+				var category_id = $('#select_category').val();
 				var t = new Date().getTime();
 				$.ajax({
 					type: "POST",
 					dataType: "json",
 					//cache:true,
-					url: "../Photo!setPhotoType.action",
-					data: { "id": photo_id,"type":type,"t":t},
+					url: "../Photo!approve.action",
+					data: { "id": photo_id,"type":type,"category_id":category_id,"t":t},
 					success: function(json) {
 						alert(json.message);
 						$('#myModal').modal('hide');
-						if(category_id==0){
-							window.location.href = "photos_lib.jsp";
-						}else{
-							window.location.href = "photos_lib.jsp?category_id="+category_id;
-						}
+						window.location.href = "photos_approve.jsp";
 
 					},
 					error: function() {
-						alert("Oops...设置失败...\n请联系管理员！");
+						alert("Oops...审核失败...\n请联系管理员！");
 					}
 				});
 			});
 		} );
 
-		function setPhotoType(id){
+		function PhotoApprove(id,catalog_id){
 			photo_id = id;
+			root_catalog_id = catalog_id;
+			$.ajax({
+				type:"post",
+				url:"PhotoCategory!getPhotoCategoryByCatalogId.action",
+				dataType:"json",
+				data:{ "root_catalog_id":root_catalog_id},
+				success:function(json){
+					$.each(json.allCategories,function(m,category){
+						$("#select_category").append("<option value="+category.id+">"+category.name+"</option>");
+					});
+				}
+			});
 			$('#myModal').modal('show');
 		}
 
@@ -187,11 +195,7 @@
 			  				if(json.status==1){
 		                		//保存成功
 		                		bootbox.alert(json.message, function() {
-									if(category_id==0){
-										window.location.href = "photos_lib.jsp";
-									}else{
-										window.location.href = "photos_lib.jsp?category_id="+category_id;
-									}
+									window.location.href = "photos_approve.jsp";
 								});
 		                		
 		                	}else{
@@ -249,10 +253,17 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
-					<h4 class="modal-title">请选择类别</h4>
+					<h4 class="modal-title">图片审核</h4>
 				</div>
 				<div class="modal-body center">
 					<div class="form-group select_box">
+						<label for="select_category" class="control-label">图片分类</label>
+						<select class="form-control" id="select_category">
+						</select>
+
+					</div>
+					<div class="form-group select_box">
+						<label for="type" class="control-label">照片专辑</label>
 						<select class="form-control" id="type">
 							<option>小编精选</option>
 							<option>网友晒图</option>
@@ -262,7 +273,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" id="btn_set_type">设置</button>
+					<button type="button" class="btn btn-primary" id="btn_approve">审核</button>
 				</div>
 			</div>
 		</div>

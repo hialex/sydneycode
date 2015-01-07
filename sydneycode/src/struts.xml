@@ -46,6 +46,7 @@
             <result type="json"> 
                 <param name="root">result</param> 
             </result>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>
         <action name="Photo" class="com.sydenycode.web.action.PhotoAction"> 
             <result type="json"> 

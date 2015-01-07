@@ -34,10 +34,10 @@ public class PhotoImpl {
                 "author_name," +
                 "author_ip," +
                 "add_time," +
-                "order_id)"+" values(?,?,?,?,?,?,?,?,?,?,?);";
+                "order_id,type)"+" values(?,?,?,?,?,?,?,?,?,?,?,?);";
         //System.out.println(sql);
         Object[] params = {photo.getCategory_id(),photo.getShop_id(),photo.getName(),photo.getFilename(),photo.getIntro()
-        		,photo.getSource(),photo.getStatus(),photo.getAuthor_name(),photo.getAuthor_ip(),photo.getAdd_time(),photo.getOrder_id()};
+        		,photo.getSource(),photo.getStatus(),photo.getAuthor_name(),photo.getAuthor_ip(),photo.getAdd_time(),photo.getOrder_id(),photo.getType()};
         Connection conn = new MyDbPool().getConnection();
         QueryRunner qr = new QueryRunner();
         int flag = 0;
@@ -290,6 +290,41 @@ public class PhotoImpl {
                conn.close();
            } catch (SQLException e) {
                logger.error("PhotoImpl-setType()-连接关闭失败");
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+           }
+       }
+       //System.out.println(flag);
+       return flag;
+   }
+   /**
+    * 图片审核
+    * <p>Title: approve</p>
+    * <p>Description: </p>
+    * @param id
+    * @param type
+    * @param category_id
+    * @return
+    */
+   public static int approve(String id,String type,String category_id){
+       String sql = "update photos set " +
+       		   "type=?,category_id=?,status=1 where id=?;";
+       //System.out.println(sql);
+       Object[] params = {type,category_id,id};
+       Connection conn = new MyDbPool().getConnection();
+       QueryRunner qr = new QueryRunner();
+       int flag = 0;
+       try {
+           flag = qr.update(conn,sql, params);
+       } catch (SQLException e) {
+           // TODO Auto-generated catch block
+           logger.error("PhotoImpl-approve()-数据库操作失败！");
+           e.printStackTrace();
+       }finally{
+           try {
+               conn.close();
+           } catch (SQLException e) {
+               logger.error("PhotoImpl-approve()-连接关闭失败");
                // TODO Auto-generated catch block
                e.printStackTrace();
            }

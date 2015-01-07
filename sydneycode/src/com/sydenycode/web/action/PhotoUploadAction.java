@@ -24,6 +24,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sydenycode.impl.PhotoImpl;
 import com.sydenycode.po.Photo;
 import com.sydenycode.po.User;
+import com.sydenycode.util.CONSTANT;
 import com.sydenycode.util.Utils;
 
 public class PhotoUploadAction extends ActionSupport implements ServletRequestAware{
@@ -117,10 +118,6 @@ public class PhotoUploadAction extends ActionSupport implements ServletRequestAw
 	}
 	@Override
 	public String execute() throws Exception {
-//		System.out.println("排序==="+photo.getOrder_id());
-//		System.out.println("分类==="+photo.getCategory_id());
-//		System.out.println("名称==="+photo.getName());
-//		System.out.println("介绍==="+photo.getIntro());
 		Map<String, Object> tempMap = new HashMap<String, Object>();//定义map
 		
 		File dir=new File(getSavePath());
@@ -173,20 +170,30 @@ public class PhotoUploadAction extends ActionSupport implements ServletRequestAw
 		if("web".equals(photo.getSource())){
 			//后台上传，默认已审核
 			photo.setStatus(1);
+			photo.setType(CONSTANT.OFFICIALPHOTOS);
 			//后台上传，补全author信息
 			Map<String, Object> session = ActionContext.getContext().getSession();
 			User user = (User) session.get("user");
 			if(user!=null){
 				photo.setAuthor_name(user.getNickname());
 			}
+		}else{
+			photo.setOrder_id(0);
+			photo.setType(CONSTANT.FANSUPLOADPHOTOS);
+			if("".equals(photo.getAuthor_name())||photo.getAuthor_name()==null){
+				photo.setAuthor_name(CONSTANT.ANONYMOUSAUTHOR);
+			}
 		}
 		photo.setAuthor_ip(Utils.getIpAddr(request));
 		photo.setAdd_time(new Timestamp(new Date().getTime()));
 		//存入数据表
-		PhotoImpl.addPhoto(photo);
+		int flag = PhotoImpl.addPhoto(photo);
 		//返回页面信息
 		tempMap.put("oldName", oldFileName);
 		tempMap.put("newName", newFileName);
+		if(flag==1){
+			tempMap.put("status", flag);
+		}
 		
 		result = JSONObject.fromObject(tempMap);//格式化result   一定要是JSONObject 
     	return SUCCESS;

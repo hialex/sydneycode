@@ -137,6 +137,9 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+#detail{
+    padding:0.5em
+}
 #detail li{
     font-size: 16px;
 }
@@ -188,12 +191,38 @@
     border-bottom-right-radius: inherit;
 }
 .photoarea{
-    padding:5px;
+    padding:5px 0;
 }
 .photoarea a{
-    padding:3px;
+    margin: 0 10px 0 -10px;
+    padding:2px;
+    float: left;
 }
 #fans_share{
+    width: 100%;
     margin: 5px 0;
 }
-
+.fileinput-button{
+    position: relative;
+    overflow: hidden;
+    float: left;
+    margin-right: 1em;
+    width: 100%;
+    padding: 0.4em 1em;
+}
+.fileinput-button input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin:0;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    transform:translate(-300px,0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+#fileList{
+    text-align: center;
+    margin: 0 auto;
+}

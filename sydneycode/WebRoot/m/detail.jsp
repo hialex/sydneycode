@@ -12,7 +12,6 @@
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" >
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css" >
-	<link rel="stylesheet" href="css/scrollbar.css">
 	<link rel="stylesheet" href="css/jquery.bxslider.css">
 	<link rel="stylesheet" href="css/iconfont/iconfont.css">
 
@@ -22,11 +21,14 @@
 	<script src="js/mustache.js"></script>
 	<script src="js/jquery.bxslider.js"></script>
 	<script src="../js/base64.js"></script>
+	<script src="../js/jquery.nailthumb.min.js"></script>
 	<script>
 
 		$(document).ready(function(){
 			var id = getQueryString("id");
-			$('#div_photos').hide();
+			var shop_name;
+			var root_catalog_id;
+			$('#shop_photos').hide();
 			showLoader();
 			$.ajax({
 				type: "POST",
@@ -35,8 +37,9 @@
 				data: { "id": id},
 				success: function(json) {
 					var shop_data = json.shop;
-					var shop_catalog_data = json.catalog_names;
-					//var shop_pics = json.pics;
+					//var shop_catalog_data = json.catalog_names;
+					shop_name = shop_data.name;
+					root_catalog_id = shop_data.root_catalog_id;
 					showShop(shop_data);
 					if(shop_data.is_takeout){
 						$("#shop_bh_info").hide();
@@ -44,14 +47,18 @@
 						showShopBH(json);
 					}
 					if(json.photos.length>0){
-						$('#div_photos').show();
+						$('#shop_photos').show();
 						showShopPhotos(json);
 					}else{
-						$('#div_photos').hide();
+						$('#shop_photos').hide();
 					}
 					hideLoader();
 				}
 
+			});
+
+			$("#btn_fans_share").click(function(){
+				window.location.href ="upload.jsp?id="+id+"&root_catalog_id="+root_catalog_id+"&name="+new Base64().encode(shop_name);
 			});
 		});
 		//显示加载器
@@ -84,7 +91,7 @@
 			if(shop_data.hasOwnProperty("name")){
 				s+="<li><span id=\"shop_name\" class=\"shop_name\">"+shop_data.name+"</span></li>";
 			}
-			if(shop_data.hasOwnProperty("intro")){
+			if(shop_data.hasOwnProperty("intro")&&shop_data.intro){
 				s+="<li><i class=\"grey fa fa-bullhorn \"></i><span id=\"shop_intro\" class=\"wrap\">"+shop_data.intro+"</span></li>";
 			}
 			if(shop_data.hasOwnProperty("takeout_time")&&shop_data.takeout_time){
@@ -105,7 +112,7 @@
 				});
 			}
 			if(shop_data.hasOwnProperty("mobile")&&shop_data.mobile){
-				s+="<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+shop_data.mobile+"\">"+shop_data.mobile+"</a></span></li>";
+				s+="<li><i class=\"grey fa fa-mobile fa-2x\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+shop_data.mobile+"\">"+shop_data.mobile+"</a></span></li>";
 			}
 			if(shop_data.hasOwnProperty("website")&&shop_data.website){
 				s+="<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.website+"\">"+shop_data.website+"</a></span></li>";
@@ -154,16 +161,17 @@
 			});
 			s+="";
 			$("#shop_photos").html(s);
+			$(".slide img").nailthumb({height:100});
 			$(".bxslider").bxSlider({
-				slideWidth:130,
+				slideWidth:100,
 				minSlides:2,
 				maxSlides:10,
 				slideMargin:5,
 				captions:true,
-				adaptiveHeight:true,
 				infiniteLoop:false,
 				hideControlOnEnd:true
 			});
+
 
 		}
 
@@ -266,6 +274,11 @@
 
 
 	</script>
+	<style>
+		.slide img{
+			left:0px !important;
+		}
+	</style>
 </head>
 
 <body>
@@ -295,7 +308,7 @@
 			<div  id="shop_photos" class="bxslider">
 
 			</div>
-			<button class="ui-btn ui-corner-all"><i class="grey fa fa-photo"></i> 我来晒图</button>
+			<button class="ui-btn ui-corner-all" id="btn_fans_share"><i class="grey fa fa-photo"></i> 我来晒图</button>
 		</div>
 	</div>
 	<div data-role="footer">
