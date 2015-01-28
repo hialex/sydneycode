@@ -205,7 +205,7 @@ public class ShopAction extends ActionSupport{
     	//写入shop对象，返回shop_id
 //    	System.out.println("catalogs====>"+catalogs);
 //    	System.out.println("picurls====>"+picurls);
-//    	System.out.println("bussiness_hours====>"+bussiness_hours);
+    	//System.out.println("bussiness_hours====>"+bussiness_hours);
     	if((catalogs!=null)&&(catalogs.length()!=0)){
 	    	int[] catalog_ids = new CatalogImpl().getCatalogsFromJSON(catalogs);
 	    	//2.清除原分类数据，写入商户-分类数据

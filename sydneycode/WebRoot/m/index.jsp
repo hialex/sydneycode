@@ -14,6 +14,15 @@
 	<link rel="stylesheet" href="css/jqm-datebox-1.4.4.css">
 	<script src="js/jquery.min.js" ></script>
 	<script src="js/jquery.mobile-1.4.4.min.js" ></script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?f480371228f8df00343e783f935450a0";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
 
 </head>
 <body>
@@ -31,7 +40,7 @@
 			</div>
 		</div>
 		<div data-role="footer" >
-			<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+			<div id="copyright"> &copy; Sydneycode.com.au 2015</div>
 		</div>
 	</div>
 </body>

@@ -149,6 +149,16 @@
 
 		});
 	</script>
+	  <script>
+		  var _hmt = _hmt || [];
+		  (function() {
+			  var hm = document.createElement("script");
+			  hm.src = "//hm.baidu.com/hm.js?f480371228f8df00343e783f935450a0";
+			  var s = document.getElementsByTagName("script")[0];
+			  s.parentNode.insertBefore(hm, s);
+		  })();
+	  </script>
+
   </head>
   
   <body>
@@ -190,7 +200,7 @@
 			</form>
 		</div>
 		<div data-role="footer" >
-			<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+			<div id="copyright"> &copy; Sydneycode.com.au 2015</div>
 		</div>
   	</div>
   </body>

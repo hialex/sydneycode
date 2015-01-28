@@ -36,9 +36,15 @@ public class Bussiness_hourImpl {
 				bussinessHour.setIs_need_book(o.getBoolean("is_need_book"));
 				if(!bussinessHour.isIs_need_book()){
 					bussinessHour.setStart_time(TimeUtils.getTime(o.getString("start_time").toString()));
-					bussinessHour.setEnd_time(TimeUtils.getTime(o.getString("end_time").toString()));
+					String end_time = o.getString("end_time").toString();
+					//System.out.println("old--"+end_time);
+					//结束时间处理
+					end_time = ("23:55".equals(end_time))?"23:59:59":end_time;
+					//System.out.println("new--"+end_time);
+					bussinessHour.setEnd_time(TimeUtils.getTime(end_time));
 				}
 			}
+			//System.out.println(bussinessHour.getEnd_time());
 			bhList.add(bussinessHour);
 		}
     	
@@ -97,7 +103,7 @@ public class Bussiness_hourImpl {
     public static List<Bussiness_hour> getBussinessHourById(String shop_id) {
         
         ArrayList<Bussiness_hour> result = new ArrayList<Bussiness_hour>();
-        String sql = "select * from bussiness_hours where shop_id = ?";
+        String sql = "select * from bussiness_hours where shop_id = ? order by id asc";
         //System.out.println(sql);
         Object[] params = {shop_id};
         Connection conn = new MyDbPool().getConnection();

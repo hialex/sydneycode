@@ -105,14 +105,21 @@
 			}
 			if(shop_data.hasOwnProperty("tel")&&shop_data.tel){
 				var tels = shop_data.tel;
+				var tels_with_space = tels.split("/");
 				tels = tels.replace(/\ +/g,"");
 				var arr_tel = tels.split("/");
 				$.each(arr_tel,function(index,tel){
-					s+="<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+tel+"\">"+tel+"</a></span></li>";
+					s+="<li><i class=\"grey fa fa-phone\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+tel+"\">"+tels_with_space[index]+"</a></span></li>";
 				});
 			}
 			if(shop_data.hasOwnProperty("mobile")&&shop_data.mobile){
-				s+="<li><i class=\"grey fa fa-mobile fa-2x\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+shop_data.mobile+"\">"+shop_data.mobile+"</a></span></li>";
+				var mobiles = shop_data.mobile;
+				var mobiles_with_space = mobiles.split("/");
+				mobiles = mobiles.replace(/\ +/g,"");
+				var arr_mobile = mobiles.split("/");
+				$.each(arr_mobile,function(index,mobile){
+					s+="<li><i class=\"grey fa fa-mobile fa-2x\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\"tel:"+mobile+"\">"+mobiles_with_space[index]+"</a></span></li>";
+				});
 			}
 			if(shop_data.hasOwnProperty("website")&&shop_data.website){
 				s+="<li><i class=\"grey fa fa-home\"></i><span id=\"shop_icon\" class=\"wrap\"><a href=\""+shop_data.website+"\">"+shop_data.website+"</a></span></li>";
@@ -279,6 +286,16 @@
 			left:0px !important;
 		}
 	</style>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?f480371228f8df00343e783f935450a0";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
 </head>
 
 <body>
@@ -296,13 +313,13 @@
 		</ul>
 		<ul style="margin-bottom: 2em;"  data-role="listview" id="shop_bh_info">
 			<li data-role="list-divider"><span ><strong>营业时间</strong></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期一：<span id="mon"></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期二：<span id="tues"></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期三：<span id="wed"></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期四：<span id="thur"></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期五：<span id="fri"></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期六：<span id="sat"></span></li>
-			<li><i class="grey fa fa-calendar"></i>&nbsp;星期日：<span id="sun"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期一：<span id="mon" class="wrap"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期二：<span id="tues" class="wrap"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期三：<span id="wed" class="wrap"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期四：<span id="thur" class="wrap"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期五：<span id="fri" class="wrap"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期六：<span id="sat" class="wrap"></span></li>
+			<li><i class="grey fa fa-calendar"></i>&nbsp;星期日：<span id="sun" class="wrap"></span></li>
 		</ul>
 		<div id="div_photos" style="margin: .5em;">
 			<div  id="shop_photos" class="bxslider">
@@ -312,7 +329,7 @@
 		</div>
 	</div>
 	<div data-role="footer">
-		<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+		<div id="copyright"> &copy; Sydneycode.com.au 2015</div>
 	</div>
 </div>
 </body>

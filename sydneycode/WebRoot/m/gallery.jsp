@@ -112,12 +112,24 @@
 					type:'inside'
 				},
 				arrows:false,
-				theme:'light'
+				theme:'light',
+				padding:5,
+				margin:[20,15,20,5]
 			});
 			$('.ui-body-a img').nailthumb({width:100,height:100});
 		}
 
 	</script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?f480371228f8df00343e783f935450a0";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
 </head>
 
 <body>
@@ -136,7 +148,7 @@
 		</div>
 	</div>
 	<div data-role="footer">
-		<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+		<div id="copyright"> &copy; Sydneycode.com.au 2015</div>
 	</div>
 </div>
 </body>

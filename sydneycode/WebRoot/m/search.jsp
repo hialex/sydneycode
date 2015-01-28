@@ -60,7 +60,7 @@
 					})
 					.then(function(response){
 						if(response.all.length==0){
-							$("#noresult").html('<i class="fa fa-frown-o"></i>&nbsp;Oops..没有结果，可能是漏了空格哦~');
+							$("#noresult").html('<i class="fa fa-frown-o"></i>&nbsp;呀~！不是网速慢就是漏掉空格了，点击“前往”或“转到”没有结果的话请换个关键字吧~');
 						}else{
 							$("#noresult").hide();
 							$.each(response.all,function(i,val){
@@ -76,6 +76,16 @@
 			});
 		});
 	</script>
+	  <script>
+		  var _hmt = _hmt || [];
+		  (function() {
+			  var hm = document.createElement("script");
+			  hm.src = "//hm.baidu.com/hm.js?f480371228f8df00343e783f935450a0";
+			  var s = document.getElementsByTagName("script")[0];
+			  s.parentNode.insertBefore(hm, s);
+		  })();
+	  </script>
+
   </head>
   
   <body>
@@ -92,7 +102,7 @@
 			<div id="noresult" class="grey"></div>
 		</div>
 		<div data-role="footer" >
-			<div id="copyright"> &copy; Sydneycode.com.au 2014</div>
+			<div id="copyright"> &copy; Sydneycode.com.au 2015</div>
 		</div>
   	</div>
   </body>

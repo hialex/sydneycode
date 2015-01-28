@@ -112,11 +112,10 @@
 			});
 			//初始化timepicker
 			$('#bh_start_time,#bh_end_time').datetimepicker({
-				format: 'HH:ii P',
+				format: 'hh:ii',
 				startView:'day',
 				minView:'hour',
 				maxView:'day',
-				showMeridian:true,
 				initialDate:new Date(),
 				autoclose:true
 			});

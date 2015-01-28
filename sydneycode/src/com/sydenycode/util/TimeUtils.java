@@ -11,7 +11,7 @@ public class TimeUtils {
 	public static Time getTime(String s){
 		Date d ;
 		Time time = new Time(System.currentTimeMillis());
-		SimpleDateFormat sdFormat = new SimpleDateFormat("h:mm a",Locale.US);
+		SimpleDateFormat sdFormat = new SimpleDateFormat("H:mm",Locale.US);
 		try {
 			d = (Date) sdFormat.parse(s);
 			time = new Time(d.getTime());
@@ -20,6 +20,7 @@ public class TimeUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//System.out.println(time);
 		return time;
 	}
 }
