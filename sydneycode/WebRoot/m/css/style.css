@@ -226,3 +226,25 @@
     text-align: center;
     margin: 0 auto;
 }
+.latestCurrency{
+    font-family: Georgia, serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.update{
+    font-family: Georgia, serif;
+    font-size: 12px;
+    text-align: center;
+}
+.latestCurrency img{
+    vertical-align: middle;
+}
+.latestCurrency .base{
+
+    color: #6f9dcc;
+}
+.latestCurrency .symbol{
+
+    color: #dca7a7;
+}
